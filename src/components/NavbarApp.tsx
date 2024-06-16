@@ -54,7 +54,7 @@ const NavbarApp = () => {
             } px-3 rounded-md items-center text-xl gap-2`}
           >
             <FaCartShopping />
-            <p className="text-lg ">{cart}</p>
+            <p className="text-lg ">Cart{cart}</p>
           </div>
         </div>
       </Section>

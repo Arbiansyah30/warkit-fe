@@ -1,5 +1,5 @@
 import { ProductModel } from "@model/product";
-import { formatRupiah } from "../services";
+import { formatRupiah } from "../libs/helper";
 
 export interface ProductQty {
   id: string;
