@@ -1,8 +1,6 @@
 import { useCategory } from "@hooks/home/useCategory";
 import { CategoryModel } from "@model/category";
 import { useState } from "react";
-import { IoFilter } from "react-icons/io5";
-import { MdOutlineSort } from "react-icons/md";
 import { useSearchParams } from "react-router-dom";
 import { searchParamsToObject } from "../libs/helper";
 const FilterProduct = () => {
@@ -22,7 +20,7 @@ const FilterProduct = () => {
 
   return (
     <div className="flex flex-col gap-2">
-      <div className="flex gap-3 flex-wrap text-md">
+      {/* <div className="flex gap-3 flex-wrap text-md">
         <button className="bg-white px-3 py-1 flex gap-1 items-center">
           {" "}
           <IoFilter /> Filter
@@ -39,7 +37,7 @@ const FilterProduct = () => {
           {" "}
           <MdOutlineSort /> Urutkan
         </button>
-      </div>
+      </div> */}
       <div className="flex gap-2 flex-wrap text-sm">
         <button
           className={`border border-primary px-3 py-1 rounded-full ${
@@ -60,8 +58,6 @@ const FilterProduct = () => {
             {item.name}
           </button>
         ))}
-        {/* <button className={`border border-primary px-3 py-1 rounded-full ${isActive === "makanan" && "bg-primary text-white"}`} onClick={() => setIsActive("makanan")}>Makanan</button>
-        <button className={`border border-primary px-3 py-1 rounded-full ${isActive === "minuman" && "bg-primary text-white"}`} onClick={() => setIsActive("minuman")}>Minuman</button> */}
       </div>
     </div>
   );

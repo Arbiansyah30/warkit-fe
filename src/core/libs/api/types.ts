@@ -13,7 +13,6 @@ export interface MetaResponse {
 }
 
 export interface ApiResponse<Res = unknown> {
-  massege?: string,
   status?: string,
   message?: string,
   data?: Res,

@@ -5,4 +5,5 @@ export const CONFIG_APP = {
 export const API_ENDPOINT = {
     products: `${CONFIG_APP.base_url}/product`,
     category: `${CONFIG_APP.base_url}/category`,
+    login: `${CONFIG_APP.base_url}/auth/login`,
 }
