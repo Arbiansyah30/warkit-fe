@@ -5,13 +5,19 @@ export interface ApiOption {
   path?: string;
 }
 
+export interface MetaResponse {
+  page?: number,
+  perPage?: number,
+  totalData?: number,
+  totalPages?: number
+}
+
 export interface ApiResponse<Res = unknown> {
-  massege?:string,
-  status?:string,
-  message?:string,
-  Anggota?:Res,
-  Angkatan?:Res,
-  Pengurus?:Res
+  massege?: string,
+  status?: string,
+  message?: string,
+  data?: Res,
+  meta: MetaResponse
 }
 
 export const getContentType = (type?: ApiOption["contentType"]) => {

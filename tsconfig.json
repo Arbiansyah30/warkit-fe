@@ -22,7 +22,8 @@
     "paths": {
       "@core/*": ["./src/core/*"],
       "@hooks/*": ["./src/hooks/*"],
-      "@pages/*": ["./src/pages/*"]
+      "@pages/*": ["./src/pages/*"],
+      "@model/*": ["./src/model/*"]
     }
   },
   "include": ["src"],

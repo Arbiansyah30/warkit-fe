@@ -1,4 +1,4 @@
-import { Outlet, ScrollRestoration } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 import Navbar from "../components/NavbarApp";
 
 const Users = () => {
@@ -6,7 +6,7 @@ const Users = () => {
     <>
       <Navbar />
       <Outlet />
-      <ScrollRestoration />
+      {/* <ScrollRestoration /> */}
     </>
   );
 };
