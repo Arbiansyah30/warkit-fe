@@ -31,6 +31,14 @@ const FilterProduct = () => {
           {" "}
           <MdOutlineSort /> Urutkan
         </button>
+        <button className="bg-white px-3 py-1 flex gap-1 items-center shadow-sm shadow-slate-600 hover:scale-105">
+          {" "}
+          <IoFilter /> Filter
+        </button>
+        <button className="bg-white px-3 py-1 flex gap-1 items-center shadow-sm shadow-slate-600 hover:scale-105">
+          {" "}
+          <MdOutlineSort /> Urutkan
+        </button>
       </div>
       <div className="flex gap-2 flex-wrap text-sm">
         <button

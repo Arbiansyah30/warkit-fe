@@ -1,44 +1,10 @@
-import { CONFIG_APP } from "@core/config/app";
 import { useProduct } from "@hooks/home/useProduct";
 import Section from "../container/Section";
 import CardProduct from "./CardProduct";
 import FilterProduct from "./FilterProduct";
 
-// export interface ProductItem {
-//   id: number;
-//   img: string;
-//   name: string;
-//   price: number;
-//   type: string;
-// }
-
-// const product: ProductItem[] = [
-//   {
-//     id: 1,
-//     img: "https://picsum.photos/id/1/200/300?random=2",
-//     name: "Product 1",
-//     price: 1000,
-//     type: "makanan",
-//   },
-//   {
-//     id: 2,
-//     img: "https://picsum.photos/id/1/200/300?random=2",
-//     name: "Product 2",
-//     price: 2000,
-//     type: "minuman",
-//   },
-//   {
-//     id: 3,
-//     img: "https://picsum.photos/id/1/200/300?random=2",
-//     name: "Product 3",
-//     price: 3000,
-//     type: "makanan",
-//   },
-// ];
-
 const ListProduct = () => {
   const { data: products } = useProduct();
-  console.log(CONFIG_APP);
 
   return (
     <div className="min-h-[300px] bg-[#dddddd] rounded-t-[50px] py-10 -m-4 z-10 relative">
