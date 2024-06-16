@@ -8,6 +8,7 @@ export interface ProductItem {
   name: string;
   price: number;
   type: string;
+  stock: number;
 }
 
 const product: ProductItem[] = [
@@ -17,6 +18,7 @@ const product: ProductItem[] = [
     name: "Product 1",
     price: 1000,
     type: "makanan",
+    stock: 10,
   },
   {
     id: 2,
@@ -24,6 +26,7 @@ const product: ProductItem[] = [
     name: "Product 2",
     price: 2000,
     type: "minuman",
+    stock: 5,
   },
   {
     id: 3,
@@ -31,6 +34,7 @@ const product: ProductItem[] = [
     name: "Product 3",
     price: 3000,
     type: "makanan",
+    stock: 0,
   },
 ];
 
