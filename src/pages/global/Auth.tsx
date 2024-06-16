@@ -1,10 +1,12 @@
 import { Outlet } from "react-router-dom";
+import Section from "../../container/Section";
 
 const AuthView = () => {
   return (
     <div className="flex items-center w-full h-screen">
-      <div className="w-[50vw]"></div>
-      <Outlet />
+      <Section className="max-w-xl w-full mx-auto">
+        <Outlet />
+      </Section>
     </div>
   );
 };

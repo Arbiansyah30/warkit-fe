@@ -10,7 +10,7 @@ export interface SectionTypes {
 const Section = ({ children, as: Component = "div", className }: SectionTypes) => {
   const { isTablet } = useResponsive();
   return (
-    <Component style ={{ paddingInline: isTablet ? "2rem" : "6rem" }} className={`px-24 ${className}`}>{children}</Component>
+    <Component style ={{ paddingInline: isTablet ? "2rem" : "6rem" }} className={className}>{children}</Component>
   );
 };
 
