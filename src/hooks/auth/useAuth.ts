@@ -6,7 +6,7 @@ export function useAuthLogin() {
     const mutation = useMutation({
         mutationFn: (body: AuthLoginBodyModel) => authLogin.login(body),
         onSuccess: (res) => {
-            console.log(res.data?.accessToken)
+            localStorage.setItem("token", res?.data?.accessToken as string)
             alert(res.message)
         },
         onError: (err) => alert(err.message)

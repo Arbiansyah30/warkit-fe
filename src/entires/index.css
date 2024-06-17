@@ -10,3 +10,7 @@ body {
 body::-webkit-scrollbar {
   display: none; /* Untuk browser berbasis Webkit seperti Chrome, Safari, dll. */
 }
+
+* {
+  box-sizing: border-box;
+}
