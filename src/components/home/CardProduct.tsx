@@ -1,5 +1,5 @@
 import { ProductModel } from "@model/product";
-import { formatRupiah } from "../libs/helper";
+import { formatRupiah } from "../../libs/helper";
 
 export interface ProductQty {
   id: string;
@@ -24,11 +24,7 @@ const CardProduct = ({ image, name, price, stock, id }: ProductModel) => {
   return (
     <div className="text-center px-3 py-4 bg-white shadow-xl h-full flex flex-col justify-between">
       <div className="w-full max-h-[180px] h-full rounded-md overflow-hidden">
-        <img
-          src={image}
-          alt="Product"
-          className="w-full h-[150px] object-cover"
-        />
+        <img src={image} draggable="false" alt="Product" className="w-full h-full object-cover" />
       </div>
       <div>
         <h1 className="text-xl font-semibold">{name}</h1>

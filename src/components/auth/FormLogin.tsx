@@ -44,7 +44,7 @@ const FormLogin = () => {
   return (
     <form
       onSubmit={handleSubmit}
-      className="flex flex-col items-center gap-6 w-full"
+      className="flex flex-col items-center gap-3 w-full"
     >
       <div className="w-full flex flex-col gap-1 items-start">
         <Input
