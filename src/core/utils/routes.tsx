@@ -1,5 +1,6 @@
 import Dashboard from "@pages/Dashboard";
-import Login from "@pages/Login";
+import LoginView from "@pages/Login";
+import RegisterView from "@pages/Register";
 import AdminView from "@pages/global/Admin";
 import AuthView from "@pages/global/Auth";
 import Home from "@pages/home";
@@ -23,7 +24,11 @@ export const router = createBrowserRouter([
     children: [
       {
         path: "/admin/login",
-        element: <Login />,
+        element: <LoginView />,
+      },
+      {
+        path: "/admin/register",
+        element: <RegisterView />,
       },
     ],
   },
