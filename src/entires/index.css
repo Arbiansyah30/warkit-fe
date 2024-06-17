@@ -3,10 +3,26 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  font-size: 18px;
+}
+
 body {
   @apply font-poppins bg-primary;
 }
 
 body::-webkit-scrollbar {
   display: none; /* Untuk browser berbasis Webkit seperti Chrome, Safari, dll. */
+}
+
+@media screen and (max-width: 768px) {
+  :root {
+    font-size: 16px;
+  }
+}
+
+@media screen and (max-width: 640px) {
+  :root {
+    font-size: 14px;
+  }
 }

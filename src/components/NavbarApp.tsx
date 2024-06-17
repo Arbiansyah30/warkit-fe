@@ -41,21 +41,21 @@ const NavbarApp = () => {
         className={`flex items-center z-[9999] duration-200 bg-blue ${
           isScroll
             ? "bg-[#eaeaea] py-3"
-            : "bg-[rgba(0,0,0,0.2)] py-5 text-white"
+            : "bg-[rgba(0,0,0,0.4)] py-5 text-white"
         }`}
       >
         <div className="w-full flex items-center justify-between">
           <div>
             <h1 className="text-3xl font-bold">POS</h1>
           </div>
-          <div
+          <button
             className={`flex ${
-              isScroll ? "text-black bg-white" : "text-white bg-black"
-            } px-3 rounded-md items-center text-xl gap-2`}
+              isScroll ? "text-black " : "text-white"
+            } px-3 rounded-md items-center text-xl gap-1`}
           >
-            <FaCartShopping />
-            <p className="text-lg ">Cart{cart}</p>
-          </div>
+            <FaCartShopping className="text-sm" />
+            <p className="text-xs ">Cart <span className="bg-red-500 text-white rounded-full px-1">{cart}</span></p>
+          </button>
         </div>
       </Section>
     </nav>

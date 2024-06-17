@@ -7,7 +7,7 @@ const ListProduct = () => {
   const { data: products } = useProduct();
 
   return (
-    <div className="min-h-[300px] bg-[#dddddd] rounded-t-[50px] py-10 -m-4 z-10 relative">
+    <div className="min-h-[100vh] bg-[#dddddd] rounded-t-[50px] py-10 -my-20 z-10 relative">
       <Section className="flex flex-col gap-5">
         <FilterProduct />
         <div className="grid py-3 max-sm:grid-cols-2 max-lg:grid-cols-3 max-2xl:grid-cols-4 grid-cols-5 max-sm:gap-3 gap-5 items-center justify-center">
