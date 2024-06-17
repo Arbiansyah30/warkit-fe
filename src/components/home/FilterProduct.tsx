@@ -2,7 +2,8 @@ import { useCategory } from "@hooks/home/useCategory";
 import { CategoryModel } from "@model/category";
 import { useState } from "react";
 import { useSearchParams } from "react-router-dom";
-import { searchParamsToObject } from "../libs/helper";
+import { searchParamsToObject } from "../../libs/helper";
+
 const FilterProduct = () => {
   const [isActive, setIsActive] = useState<string>("");
   const { data: category } = useCategory();
@@ -41,7 +42,7 @@ const FilterProduct = () => {
       <div className="flex gap-2 flex-wrap text-sm">
         <button
           className={`border border-primary px-3 py-1 rounded-full ${
-            isActive === "" && "bg-primary text-white"
+            isActive === "" && "bg-blue-900 text-white"
           }`}
           onClick={handleReset}
         >
@@ -51,7 +52,7 @@ const FilterProduct = () => {
           <button
             key={item.id}
             className={`border border-primary px-3 py-1 rounded-full ${
-              isActive === item.name && "bg-primary text-white"
+              isActive === item.name && "bg-blue-900 text-white"
             }`}
             onClick={() => handleSelect({ name: item.name, id: item.id })}
           >

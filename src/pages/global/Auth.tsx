@@ -4,7 +4,7 @@ import Section from "../../container/Section";
 const AuthView = () => {
   return (
     <div className="flex items-center w-full h-screen">
-      <Section className="max-w-xl w-full mx-auto">
+      <Section className="max-w-sm w-full mx-auto box-content">
         <Outlet />
       </Section>
     </div>

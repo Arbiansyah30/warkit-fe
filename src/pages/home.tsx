@@ -1,5 +1,5 @@
-import CarouselPromo from "../components/CarouselPromo";
-import ListProduct from "../components/ListProduct";
+import CarouselPromo from "../components/home/CarouselPromo";
+import ListProduct from "../components/home/ListProduct";
 
 const Home = () => {
   return (

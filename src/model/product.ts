@@ -11,3 +11,7 @@ export interface ProductModel {
     category?: CategoryModel,
     stock?: number
 }
+
+export interface ProductModelWithQty extends ProductModel {
+    qty?: number
+}

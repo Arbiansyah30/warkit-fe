@@ -23,22 +23,27 @@ const FormLogin = () => {
   return (
     <form
       onSubmit={handleSubmit}
-      className="flex flex-col items-center gap-6 w-full"
+      className="flex flex-col items-center gap-3 w-full"
     >
       <Input
+        name="email"
         type="email"
         placeholder="Email"
         onChange={(e) =>
           setAuthBody((prev) => ({ ...prev, email: e.target.value }))
         }
-      />
+      >Email</Input>
       <Input
+        autoComplete="off"
+        name="password"
         type="password"
-        placeholder="Password"
+        placeholder="****"
         onChange={(e) =>
           setAuthBody((prev) => ({ ...prev, password: e.target.value }))
         }
-      />
+      >
+        Password
+      </Input>
 
       <Button>Submit</Button>
     </form>
