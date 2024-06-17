@@ -20,6 +20,7 @@ const CardProduct = ({ image, name, price, stock, id }: ProductModel) => {
     localStorage.setItem("cart", JSON.stringify(cart));
     alert("Product added to cart");
   };
+
   return (
     <div className="text-center px-3 py-4 bg-white shadow-xl h-full flex flex-col justify-between">
       <div className="w-full max-h-[180px] h-full rounded-md overflow-hidden">

@@ -1,34 +1,36 @@
 import { InputHTMLAttributes } from "react";
 
-type Type = "email" | "text" | "password";
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   placeholder?: string;
   type?: Type;
   name?: string;
   children?: React.ReactNode;
+  error?: boolean;
 }
 
 const Input: React.FC<InputProps> = ({
   children,
   name,
   type = "text",
+  error,
   placeholder,
   ...rest
 }) => {
-  return (
-    <div className="flex flex-col w-full">
-      <label htmlFor={name} className="block text-sm font-medium text-gray-700">
-        {children}
-      </label>
+  if (error) {
+    return (
       <input
-        id={name}
-        name={name}
         placeholder={placeholder}
-        type={type}
-        className="mt-1 p-2 border border-gray-300 rounded-md w-full"
+        className="w-full p-2 outline-none outline outline-solid outline-[#DC2626] outline-offset-[0.5px] rounded-md box-border"
         {...rest}
       />
-    </div>
+    );
+  }
+  return (
+    <input
+      placeholder={placeholder}
+      className="w-full p-2 outline-none focus:outline-2 focus:outline-solid focus:outline-blue-400 focus:outline-offset-[0.5px] rounded-md"
+      {...rest}
+    />
   );
 };
 
