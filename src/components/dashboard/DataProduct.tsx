@@ -1,13 +1,13 @@
 const DataProduct = () => {
   return (
-    <div className="rounded-sm border border-stroke bg-primary shadow-default">
+    <div className="rounded-sm border bg-gray-900 text-white">
       <div className="px-4 py-6 md:px-6 xl:px-7">
         <h4 className="text-xl font-bold text-white">
-          Top Products
+          Data Products
         </h4>
       </div>
 
-      <div className="grid grid-cols-6 border-t border-stroke px-4 py-4 sm:grid-cols-8 md:px-6 2xl:px-7">
+      <div className="grid grid-cols-6 border-t px-4 py-4 sm:grid-cols-8 md:px-6 2xl:px-7">
         <div className="col-span-3 flex items-center">
           <p className="font-medium">Product Name</p>
         </div>
@@ -25,7 +25,7 @@ const DataProduct = () => {
         </div>
       </div>
 
-      <div className="grid grid-cols-6 border-t border-stroke px-4 py-4 sm:grid-cols-8 md:px-6 2xl:px-7">
+      <div className="grid grid-cols-6 border-t px-4 py-4 sm:grid-cols-8 md:px-6 2xl:px-7">
         <div className="col-span-3 flex items-center">
           <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
             <div className="h-12 w-15 rounded-md">
@@ -51,7 +51,7 @@ const DataProduct = () => {
           <p className="text-sm font-medium text-meta-3">$45</p>
         </div>
       </div>
-      <div className="grid grid-cols-6 border-t border-stroke px-4 py-4 sm:grid-cols-8 md:px-6 2xl:px-7">
+      <div className="grid grid-cols-6 border-t px-4 py-4 sm:grid-cols-8 md:px-6 2xl:px-7">
         <div className="col-span-3 flex items-center">
           <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
             <div className="h-12 w-15 rounded-md">
@@ -77,7 +77,7 @@ const DataProduct = () => {
           <p className="text-sm font-medium text-meta-3">$125</p>
         </div>
       </div>
-      <div className="grid grid-cols-6 border-t border-stroke px-4 py-4 sm:grid-cols-8 md:px-6 2xl:px-7">
+      <div className="grid grid-cols-6 border-t px-4 py-4 sm:grid-cols-8 md:px-6 2xl:px-7">
         <div className="col-span-3 flex items-center">
           <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
             <div className="h-12 w-15 rounded-md">
@@ -103,7 +103,7 @@ const DataProduct = () => {
           <p className="text-sm font-medium text-meta-3">$247</p>
         </div>
       </div>
-      <div className="grid grid-cols-6 border-t border-stroke px-4 py-4 sm:grid-cols-8 md:px-6 2xl:px-7">
+      <div className="grid grid-cols-6 border-t px-4 py-4 sm:grid-cols-8 md:px-6 2xl:px-7">
         <div className="col-span-3 flex items-center">
           <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
             <div className="h-12 w-15 rounded-md">

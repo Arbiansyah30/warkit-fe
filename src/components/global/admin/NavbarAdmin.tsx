@@ -4,9 +4,8 @@ import { RxHamburgerMenu } from "react-icons/rx";
 import { IoMdArrowDropdown } from "react-icons/io";
 
 const NavbarAdmin: React.FC<{
-  hamburger: boolean;
   handleHamburger: () => void;
-}> = ({ hamburger, handleHamburger }) => {
+}> = ({ handleHamburger }) => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [profileDropdownOpen, setProfileDropdownOpen] = useState(false);
 
@@ -36,7 +35,8 @@ const NavbarAdmin: React.FC<{
                   setDropdownOpen(!dropdownOpen);
                 }}
               >
-                <FaBell className="fill-current" /> <span className="text-xs">{"1"}</span>
+                <FaBell className="fill-current" />{" "}
+                <span className="text-xs">{"1"}</span>
               </a>
 
               {/* Dropdown Start */}
@@ -49,7 +49,9 @@ const NavbarAdmin: React.FC<{
                   </div>
                   <ul className="flex h-auto flex-col overflow-y-auto">
                     <li className="p-2">
-                      <p className="text-base">Pesanan Atas Nama {"Kocak Bange"}?</p>
+                      <p className="text-base">
+                        Pesanan Atas Nama {"Kocak Bange"}?
+                      </p>
                       <div className="flex justify-end gap-1 text-sm flex-wrap">
                         <button className="bg-green-600 hover:opacity-90 px-3 py-1 rounded-md text-white">
                           Confirm
