@@ -2,7 +2,6 @@ import { InputHTMLAttributes } from "react";
 
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   placeholder?: string;
-  type?: Type;
   name?: string;
   children?: React.ReactNode;
   error?: boolean;
@@ -11,7 +10,6 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
 const Input: React.FC<InputProps> = ({
   children,
   name,
-  type = "text",
   error,
   placeholder,
   ...rest
