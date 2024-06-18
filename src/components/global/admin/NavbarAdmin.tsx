@@ -10,12 +10,12 @@ const NavbarAdmin: React.FC<{
   const [profileDropdownOpen, setProfileDropdownOpen] = useState(false);
 
   return (
-    <header className="fixed bg-gray-900 top-0 z-[999] flex w-full drop-shadow-1">
+    <header className="sticky bg-gray-900 top-0 z-[999] flex shadow-lg">
       <div className="flex flex-grow items-center justify-between px-4 py-4 shadow-2 md:px-6 2xl:px-11">
         <div className="flex items-center gap-2 sm:gap-4 hover:text-secondary text-white">
           {/* Hamburger Toggle BTN */}
           <div
-            className="relative h-5 w-5 cursor-pointer block lg:hidden"
+            className="relative h-5 w-5 cursor-pointer lg:hidden flex justify-center items-center"
             onClick={() => handleHamburger()}
           >
             <RxHamburgerMenu className="fill-current" />

@@ -35,7 +35,7 @@ const Sidebar: React.FC<{hamburger: boolean, handleHamburger: () => void}> = ({ 
   };
 
   return (
-    <aside className={`fixed left-0 top-0 z-[9999] flex min-h-screen w-72 flex-col overflow-y-hidden bg-gray-900 text-gray-200 duration-300 ease-linear lg:static ${isLaptop ? hamburger ? 'translate-x-0' : 'translate-x-[-100%]' : 'translate-x-0'}`}>
+    <aside className={`fixed left-0 top-0 z-[9999] flex min-h-screen w-72 flex-col overflow-y-hidden shadow-lg bg-gray-900 text-gray-200 duration-300 ease-linear lg:static ${isLaptop ? hamburger ? 'translate-x-0' : 'translate-x-[-100%]' : 'translate-x-0'}`}>
       <div className="flex items-center justify-between gap-2 px-6 py-5 lg:py-6">
           <h1 className='text-3xl font-bold'>Logo</h1>
           <button type="button" onClick={() => handleHamburger()} className="lg:hidden"><FaArrowLeftLong /></button>
