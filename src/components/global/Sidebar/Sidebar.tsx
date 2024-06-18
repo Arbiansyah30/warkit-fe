@@ -3,20 +3,25 @@ import React, { useState } from "react";
 import { BsChevronDown } from "react-icons/bs";
 import { FaBox, FaChartBar, FaTags } from "react-icons/fa";
 import { FaArrowLeftLong } from "react-icons/fa6";
+import { Link } from "react-router-dom";
 
 const Sidebar: React.FC<{
   hamburger: boolean;
   handleHamburger: () => void;
 }> = ({ hamburger, handleHamburger }) => {
-  const [selected, setSelected] = useState<string | null>(null);
+  const [selected, setSelected] = useState<string>("Product");
   const { isLaptop } = useResponsive();
 
   const menuItems = [
     {
+      name: "Product",
+      icon: <FaBox />,
+      link: "/admin/products",
+    },
+    {
       name: "Category",
-
       icon: <FaTags />,
-      link: "#",
+      link: "/admin/category",
     },
     {
       name: "Products",
@@ -35,12 +40,12 @@ const Sidebar: React.FC<{
   ];
 
   const handleMenuClick = (name: string) => {
-    setSelected((prevSelected) => (prevSelected === name ? null : name));
+    setSelected(name);
   };
 
   return (
     <aside
-      className={`fixed left-0 top-0 z-[9999] flex min-h-screen w-72 flex-col overflow-y-hidden bg-gray-900 text-gray-200 duration-300 ease-linear lg:static ${
+      className={`fixed left-0 top-0 z-[9999] flex min-h-screen w-72 flex-col overflow-y-hidden shadow-lg bg-gray-900 text-gray-200 duration-300 ease-linear lg:static ${
         isLaptop
           ? hamburger
             ? "translate-x-0"
@@ -68,13 +73,12 @@ const Sidebar: React.FC<{
             <ul className="mb-6 flex flex-col gap-1">
               {menuItems.map((item) => (
                 <li key={item.name}>
-                  <a
+                  <Link
                     className={`group relative flex items-center gap-2 rounded-sm px-4 py-2 font-medium duration-300 ease-in-out hover:bg-gray-700 ${
                       selected === item.name ? "bg-gray-700" : ""
                     }`}
-                    href={item.link}
-                    onClick={(e) => {
-                      e.preventDefault();
+                    to={item.link}
+                    onClick={() => {
                       handleMenuClick(item.name);
                     }}
                   >
@@ -87,7 +91,7 @@ const Sidebar: React.FC<{
                         }`}
                       />
                     )}
-                  </a>
+                  </Link>
                   {item.dropdown && selected === item.name && (
                     <div className="translate transform overflow-hidden">
                       <ul className="mb-5 mt-4 flex flex-col gap-2 pl-6">

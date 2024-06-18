@@ -1,5 +1,4 @@
 import { useProduct } from "@hooks/home/useProduct";
-import { useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { convertQueryParamsToObject, formatRupiah } from "../../libs/helper";
 import Pagination from "../global/Pagination";
@@ -8,10 +7,10 @@ const DataProduct = () => {
   const { data: products, isLoading } = useProduct({ perPage: 2 });
   const [searchParams, setSearchParams] = useSearchParams();
   const queryParams = convertQueryParamsToObject(searchParams.toString());
-  const [numb, setNumb] = useState(1);
-  // const handleChangePage = (page: number) => {
-  //   setSearchParams({ ...queryParams, page: String(page) });
-  // };
+  // const [numb, setNumb] = useState(1);
+  const handleChangePage = (page: number) => {
+    setSearchParams({ ...queryParams, page: String(page) });
+  };
 
   return (
     <>
@@ -185,20 +184,20 @@ const DataProduct = () => {
         </div>
       </div> */}
       </div>
-      {/* {(products?.meta.totalData as number) > 3 && (
+      {(products?.meta.totalData as number) > 3 && (
         <Pagination
           currentPage={products?.meta.page as number}
           totalItems={products?.meta.totalData as number}
           totalPages={products?.meta.totalPages as number}
           onPageChange={handleChangePage}
         />
-      )} */}
-      <Pagination
+      )}
+      {/* <Pagination
         currentPage={numb}
         totalItems={1000}
         totalPages={100}
         onPageChange={(page) => setNumb(page)}
-      />
+      /> */}
     </>
   );
 };

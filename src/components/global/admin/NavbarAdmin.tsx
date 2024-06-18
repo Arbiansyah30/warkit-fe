@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { FaBell, FaUserCircle } from "react-icons/fa";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { IoMdArrowDropdown } from "react-icons/io";
+import { RiLogoutBoxLine } from "react-icons/ri";
 
 const NavbarAdmin: React.FC<{
   handleHamburger: () => void;
@@ -10,12 +11,12 @@ const NavbarAdmin: React.FC<{
   const [profileDropdownOpen, setProfileDropdownOpen] = useState(false);
 
   return (
-    <header className="fixed bg-gray-900 top-0 z-[999] flex w-full drop-shadow-1">
-      <div className="flex flex-grow items-center justify-between px-4 py-4 shadow-2 md:px-6 2xl:px-11">
+    <header className="sticky bg-gray-900 top-0 z-[999] flex shadow-lg">
+      <div className="flex flex-grow items-center justify-between px-4 py-6 shadow-2 md:px-6 2xl:px-11">
         <div className="flex items-center gap-2 sm:gap-4 hover:text-secondary text-white">
           {/* Hamburger Toggle BTN */}
           <div
-            className="relative h-5 w-5 cursor-pointer block lg:hidden"
+            className="relative h-5 w-5 cursor-pointer lg:hidden flex justify-center items-center"
             onClick={() => handleHamburger()}
           >
             <RxHamburgerMenu className="fill-current" />
@@ -28,7 +29,7 @@ const NavbarAdmin: React.FC<{
             {/* Notification Menu Area */}
             <li className="relative">
               <a
-                className="relative flex items-center gap-1 justify-center rounded-full border-stroke hover:text-secondary text-white"
+                className="relative flex items-center text-lg gap-1 justify-center rounded-full border-stroke hover:text-secondary text-white"
                 href="#"
                 onClick={(e) => {
                   e.preventDefault();
@@ -36,16 +37,14 @@ const NavbarAdmin: React.FC<{
                 }}
               >
                 <FaBell className="fill-current" />{" "}
-                <span className="text-xs">{"1"}</span>
+                <span className="text-sm">{"1"}</span>
               </a>
 
               {/* Dropdown Start */}
               {dropdownOpen && (
                 <div className="absolute right-0 mt-2 flex h-90 w-75 flex-col rounded-sm border border-stroke bg-white shadow-default w-60 sm:w-80">
                   <div className="px-4 py-3">
-                    <h5 className="text-sm font-medium text-bodydark2">
-                      Notification
-                    </h5>
+                    <h5 className="text-sm font-medium">Notification</h5>
                   </div>
                   <ul className="flex h-auto flex-col overflow-y-auto">
                     <li className="p-2">
@@ -72,7 +71,7 @@ const NavbarAdmin: React.FC<{
           {/* User Area */}
           <div className="relative">
             <a
-              className="flex text-white hover:text-secondary items-center gap-4"
+              className="flex text-white hover:text-secondary text-lg items-center gap-4"
               href="#"
               onClick={(e) => {
                 e.preventDefault();
@@ -99,9 +98,9 @@ const NavbarAdmin: React.FC<{
                   <li>
                     <a
                       href="profile.html"
-                      className="flex items-center gap-3 text-sm font-medium duration-300 ease-in-out hover:text-secondary"
+                      className="flex items-center gap-3 text-red-600 text-xs font-medium duration-300 ease-in-out hover:opacity-70"
                     >
-                      <FaUserCircle
+                      <RiLogoutBoxLine
                         className="fill-current"
                         width="22"
                         height="22"
