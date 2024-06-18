@@ -1,8 +1,17 @@
+export interface QueryParams {
+  page?: number,
+  perPage?: number,
+  name?: string,
+  search?: string,
+  categoryId?: string
+}
+
 export interface ApiOption {
   contentType?: "json" | "form-data" | "url-encoded";
   bearerToken?: string;
   headers?: HeadersInit;
   path?: string;
+  queryParams?: QueryParams
 }
 
 export interface MetaResponse {

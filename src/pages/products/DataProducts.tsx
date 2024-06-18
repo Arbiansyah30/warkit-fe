@@ -1,4 +1,3 @@
-import { Link } from "react-router-dom";
 import ProductData from "../../components/dashboard/product/ProductsData";
 import NavbarTableAdmin from "../../components/global/admin/NavbarTableAdmin";
 
