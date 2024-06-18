@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import DataProduct from "../components/dashboard/DataProduct";
+import DataProduct from "../components/dashboard/product/DataProduct";
 
 const Dashboard = () => {
   return (
