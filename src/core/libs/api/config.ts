@@ -1,4 +1,18 @@
+import { convertObjectToQueryParams } from "../../../libs/helper";
 import { ApiOption, MethodTypes, getContentType } from "./types";
+
+const createEndpoint = (endpoint: string, path?: string, queryParams?: Record<string, string | number | null | undefined>) => {
+  if (!endpoint) return ''
+  let result = endpoint;
+  if (path) {
+    result = `${endpoint}/${path}`;
+  }
+  if (queryParams) {
+    const query = convertObjectToQueryParams(queryParams)
+    result = `${result}${query ? `?${query}` : ''}`
+  }
+  return result
+};
 
 async function createRequest<Res = unknown, Req = unknown>(
   endpoint: string,
@@ -6,8 +20,10 @@ async function createRequest<Res = unknown, Req = unknown>(
   apiOption?: ApiOption,
   body?: Req
 ) {
+
+
   const res: Response = await fetch(
-    apiOption?.path ? `${endpoint}${apiOption.path}` : endpoint,
+    createEndpoint(endpoint as string, apiOption?.path || '', { ...apiOption?.queryParams }),
     {
       method,
 

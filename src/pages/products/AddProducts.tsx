@@ -1,14 +1,13 @@
-import React from 'react'
-import ProductAdd from '../../components/dashboard/product/ProductsAdd'
-import NavbarTableAdmin from '../../components/global/admin/NavbarTableAdmin'
+import ProductAdd from "../../components/dashboard/product/ProductsAdd";
+import NavbarTableAdmin from "../../components/global/admin/NavbarTableAdmin";
 
 const ProductAddPage = () => {
   return (
     <>
-    <NavbarTableAdmin detail="Tambah" />
+      <NavbarTableAdmin detail="Tambah" />
       <ProductAdd />
     </>
-  )
-}
+  );
+};
 
-export default ProductAddPage
+export default ProductAddPage;

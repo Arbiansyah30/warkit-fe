@@ -1,18 +1,19 @@
 import FormLogin from "../components/auth/FormLogin";
 
-const Login = () => {
+const LoginView = () => {
   return (
     <div className="flex flex-col w-full px-5 py-10 rounded-md bg-[#dddddd] gap-10">
       <div className="gap-3 flex flex-col text-center">
         <div className="text-5xl font-bold">Logo</div>
         <div>
           <h4 className="text-2xl font-semibold">LOGIN</h4>
+          <FormLogin />
           <p className="text-sm -mt-1">Masuk ke akun anda</p>
         </div>
       </div>
-      <FormLogin />
+      {/* </AuthLayout> */}
     </div>
   );
 };
 
-export default Login;
+export default LoginView;
