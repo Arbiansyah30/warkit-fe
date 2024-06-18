@@ -3,21 +3,22 @@ import { FaBox, FaTags, FaChartBar } from 'react-icons/fa';
 import { FaArrowLeftLong } from "react-icons/fa6";
 import { BsChevronDown } from 'react-icons/bs';
 import useResponsive from '@hooks/useResponsive';
+import { Link } from 'react-router-dom';
 
 const Sidebar: React.FC<{hamburger: boolean, handleHamburger: () => void}> = ({ hamburger, handleHamburger }) => {
-  const [selected, setSelected] = useState<string | null>(null);
+  const [selected, setSelected] = useState<string>("Product");
   const { isLaptop } = useResponsive();
 
   const menuItems = [
     {
       name: 'Product',
       icon: <FaBox />,
-      link: '#',
+      link: '/admin/products',
     },
     {
       name: 'Category',
       icon: <FaTags />,
-      link: '#',
+      link: '/admin/category',
     },
     {
       name: 'Reports',
@@ -31,7 +32,7 @@ const Sidebar: React.FC<{hamburger: boolean, handleHamburger: () => void}> = ({ 
   ];
 
   const handleMenuClick = (name: string) => {
-    setSelected((prevSelected) => (prevSelected === name ? null : name));
+    setSelected(name);
   };
 
   return (
@@ -48,13 +49,12 @@ const Sidebar: React.FC<{hamburger: boolean, handleHamburger: () => void}> = ({ 
             <ul className="mb-6 flex flex-col gap-1">
               {menuItems.map((item) => (
                 <li key={item.name}>
-                  <a
+                  <Link
                     className={`group relative flex items-center gap-2 rounded-sm px-4 py-2 font-medium duration-300 ease-in-out hover:bg-gray-700 ${
                       selected === item.name ? 'bg-gray-700' : ''
                     }`}
-                    href={item.link}
+                    to={item.link}
                     onClick={(e) => {
-                      e.preventDefault();
                       handleMenuClick(item.name);
                     }}
                   >
@@ -67,7 +67,7 @@ const Sidebar: React.FC<{hamburger: boolean, handleHamburger: () => void}> = ({ 
                         }`}
                       />
                     )}
-                  </a>
+                  </Link>
                   {item.dropdown && selected === item.name && (
                     <div className="translate transform overflow-hidden">
                       <ul className="mb-5 mt-4 flex flex-col gap-2 pl-6">
