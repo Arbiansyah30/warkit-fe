@@ -1,8 +1,8 @@
-import React from "react";
+import { useCategory } from "@hooks/home/useCategory";
 import { MdArrowDropDown } from "react-icons/md";
 
 const ProductAdd = () => {
-  const options = ["Makanan", "Minuman"];
+  const { data: category } = useCategory();
   return (
     <div className="flex flex-col gap-9">
       <div className="rounded-sm border border-stroke text-white bg-gray-900 shadow-default dark:border-strokedark dark:bg-boxdark">
@@ -33,9 +33,9 @@ const ProductAdd = () => {
                   className="relative z-20 w-full appearance-none rounded border border-stroke bg-transparent px-3 py-2 outline-none transition focus:border-primary active:border-primary dark:focus:border-primary"
                 >
                   <option className="text-black">Pilih Kategori</option>
-                  {options.map((option, index) => (
-                    <option key={index} value={option} className="text-black">
-                      {option}
+                  {category?.data?.map((option, index) => (
+                    <option key={index} value={option.id} className="text-black">
+                      {option.name}
                     </option>
                   ))}
                 </select>
@@ -87,6 +87,14 @@ const ProductAdd = () => {
                   className="w-full rounded border-[1px] border-stroke bg-transparent px-3 py-2 font-normal outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter"
                 />
               </div>
+            </div>
+            <div className="flex justify-center items-center gap-5">
+              <button className="flex w-full justify-center rounded bg-secondary p-3 font-medium text-black hover:bg-opacity-90">
+                Reset
+              </button>
+              <button className="flex w-full justify-center rounded bg-blue-600 p-3 font-medium text-white hover:bg-opacity-90">
+                Tambah
+              </button>
             </div>
           </div>
         </form>
