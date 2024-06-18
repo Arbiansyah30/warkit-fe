@@ -43,7 +43,7 @@ const NavbarAdmin: React.FC<{
               {dropdownOpen && (
                 <div className="absolute right-0 mt-2 flex h-90 w-75 flex-col rounded-sm border border-stroke bg-white shadow-default w-60 sm:w-80">
                   <div className="px-4 py-3">
-                    <h5 className="text-sm font-medium text-bodydark2">
+                    <h5 className="text-sm font-medium">
                       Notification
                     </h5>
                   </div>
