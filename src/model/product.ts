@@ -12,6 +12,14 @@ export interface ProductModel {
     stock?: number
 }
 
+export interface ProductBodyModel {
+    name: string
+    price: number
+    image: File | string
+    categoryId: number
+    stock: number
+}
+
 export interface ProductModelWithQty extends ProductModel {
     qty?: number
 }
