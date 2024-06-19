@@ -7,6 +7,7 @@ interface IButtonProps
   success?: boolean;
   danger?: boolean;
   disabled?: boolean;
+  sizes?: "sm" | "md";
 }
 
 const Button: React.FC<IButtonProps> = ({
@@ -15,12 +16,17 @@ const Button: React.FC<IButtonProps> = ({
   success,
   danger,
   disabled,
+  sizes = "md",
   ...rest
 }) => {
   if (success) {
     return (
       <button
-        className="bg-[#2EBF44] w-full p-2 rounded-md text-white font-semibold duration-300"
+        className={
+          sizes === "md"
+            ? "bg-[#2EBF44] w-full p-2 rounded-md text-white font-semibold duration-300"
+            : "bg-[#2EBF44] w-full p-2 rounded-md text-white font-medium duration-300 text-xs"
+        }
         {...rest}
       >
         {children}
@@ -29,7 +35,11 @@ const Button: React.FC<IButtonProps> = ({
   } else if (danger) {
     return (
       <button
-        className="bg-[#DC2626] w-full p-2 rounded-md text-white font-semibold duration-300"
+        className={
+          sizes === "md"
+            ? "bg-[#DC2626] w-full p-2 rounded-md text-white font-semibold duration-300"
+            : "bg-[#DC2626] w-full p-2 rounded-md text-white font-medium duration-300 text-xs"
+        }
         {...rest}
       >
         {children}
@@ -38,7 +48,11 @@ const Button: React.FC<IButtonProps> = ({
   } else if (primary) {
     return (
       <button
-        className="bg-[#1D4ED8] w-full p-2 rounded-md text-white font-semibold duration-300"
+        className={
+          sizes === "md"
+            ? "bg-[#1D4ED8] w-full p-2 rounded-md text-white font-semibold duration-300"
+            : "bg-[#1D4ED8] w-full p-2 rounded-md text-white font-medium duration-300 text-xs"
+        }
         {...rest}
       >
         {children}
@@ -48,7 +62,11 @@ const Button: React.FC<IButtonProps> = ({
     return (
       <button
         disabled={disabled}
-        className="bg-[#aeaeae] w-full p-2 rounded-md text-white font-semibold duration-300"
+        className={
+          sizes === "md"
+            ? "bg-[#aeaeae] w-full p-2 rounded-md text-white font-semibold duration-300"
+            : "bg-[#aeaeae] w-full p-2 rounded-md text-white font-medium duration-300 text-xs"
+        }
         {...rest}
       >
         {children}

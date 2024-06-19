@@ -2,6 +2,7 @@ import { ProductModelWithQty } from "@model/product";
 import React, { useState } from "react";
 import { FaCartShopping } from "react-icons/fa6";
 import { formatRupiah } from "../../libs/helper";
+import Button from "../global/Button";
 import Input from "../global/Input";
 import DrawerMethodPayment from "./DrawerPaymentMethod";
 
@@ -135,19 +136,25 @@ const NotificationCart: React.FC<NotificationCartProps> = ({
                 onChange={handleChangeInput}
               />
             </div>
-            <div className="mb-2 flex text-sm justify-between items-center">
-              <button
+            <div className="mb-2 flex text-sm justify-between items-center gap-5">
+              {/* <button
                 className="bg-blue-600 text-white px-3 py-1 rounded-md"
                 onClick={handleSelectAll}
               >
                 {selectAll ? "Deselect All" : "Select All"}
-              </button>
-              <button
+              </button> */}
+              {/* <button
                 className="bg-red-600 text-white px-3 py-1 rounded-md"
                 onClick={handleDeleteSelected}
               >
                 Delete Selected
-              </button>
+              </button> */}
+              <Button primary sizes="sm" onClick={handleSelectAll}>
+                {selectAll ? "Deselect All" : "Select All"}
+              </Button>
+              <Button danger sizes="sm" onClick={handleDeleteSelected}>
+                Delete Selected
+              </Button>
             </div>
             <ul className="max-h-60 overflow-y-auto">
               {cart.map((item) => (

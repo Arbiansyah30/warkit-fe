@@ -7,7 +7,7 @@ const ProductData = () => {
       <div className="py-6  flex flex-wrap items-center justify-between">
         <h4 className="text-xl font-bold text-white">Data Products</h4>
         <Link
-          to="/admin/products/add-product"
+          to="/admin/products/add"
           className="text-sm font-medium text-white bg-blue-600 py-2 px-4 rounded-full hover:opacity-90"
         >
           Tambah Data
