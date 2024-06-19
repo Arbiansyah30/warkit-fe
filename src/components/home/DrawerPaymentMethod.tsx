@@ -30,7 +30,7 @@ const DrawerMethodPayment: React.FC<IDrawer> = ({ onHide, show = false }) => {
       className={
         show
           ? "fixed top-0 left-0 right-0 bottom-0 bg-[rgba(0,0,0,.5)] flex items-center justify-center z-[999]"
-          : "fixed top-0 left-0 right-0 bottom-0 opacity-0 flex items-center justify-center z-[-999]"
+          : "fixed top-0 left-0 right-0 bottom-0 opacity-0 hidden items-center justify-center"
       }
     >
       <div
@@ -39,7 +39,7 @@ const DrawerMethodPayment: React.FC<IDrawer> = ({ onHide, show = false }) => {
         className={
           show
             ? "fixed left-0 right-0 bottom-0 h-[50%] bg-white rounded-t-xl flex flex-col justify-center items-center gap-16 duration-300 px-10"
-            : "fixed left-0 right-0 bottom-[-100%] h-[50%] bg-white rounded-t-xl flex-col justify-center items-center gap-16 duration-300 px-10"
+            : "fixed left-0 right-0 bottom-0 h-[50%] translate-y-[-100%] bg-white rounded-t-xl flex-col justify-center items-center gap-16 duration-300 px-10"
         }
       >
         <div className="flex items-center justify-center">

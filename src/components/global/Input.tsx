@@ -18,7 +18,7 @@ const Input: React.FC<InputProps> = ({
     return (
       <input
         placeholder={placeholder}
-        className="w-full p-2 outline-none outline outline-solid outline-[#DC2626] outline-offset-[0.5px] rounded-md box-border"
+        className="w-full p-2 border border-solid border-[#DC2626] rounded-md box-border"
         {...rest}
       />
     );
@@ -26,7 +26,7 @@ const Input: React.FC<InputProps> = ({
   return (
     <input
       placeholder={placeholder}
-      className="w-full p-2 outline-none focus:outline-2 focus:outline-solid focus:outline-blue-400 focus:outline-offset-[0.5px] rounded-md"
+      className="w-full p-2 border border-solid border-gray-400 focus:border focus:border-solid focus:border-blue-400 rounded-md"
       {...rest}
     />
   );

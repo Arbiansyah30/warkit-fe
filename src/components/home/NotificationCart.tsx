@@ -2,6 +2,7 @@ import { ProductModelWithQty } from "@model/product";
 import React, { useState } from "react";
 import { FaCartShopping } from "react-icons/fa6";
 import { formatRupiah } from "../../libs/helper";
+import Input from "../global/Input";
 import DrawerMethodPayment from "./DrawerPaymentMethod";
 
 type NotificationCartProps = {
@@ -18,11 +19,12 @@ const NotificationCart: React.FC<NotificationCartProps> = ({
   updateCart,
 }) => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
-  const [name, setName] = useState("");
+  const [, setName] = useState("");
   const [selectedItems, setSelectedItems] = useState<string[]>([]);
   const [selectAll, setSelectAll] = useState(false);
   const [show, setShow] = useState(false);
 
+  const [isError, setIsError] = useState<boolean>(false);
   const handleClick = () => setDropdownOpen(!dropdownOpen);
 
   const handleSelectAll = () => {
@@ -82,6 +84,19 @@ const NotificationCart: React.FC<NotificationCartProps> = ({
     0
   );
 
+  const handlePayment = () => {
+    setShow((prev) => !prev);
+    setIsError((prev) => !prev);
+  };
+
+  const handleChangeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.value.length > 0) {
+      setIsError(false);
+      return;
+    }
+    setName(e.target.value);
+  };
+
   return (
     <>
       <div className="relative">
@@ -106,12 +121,18 @@ const NotificationCart: React.FC<NotificationCartProps> = ({
               <label className="block text-sm font-medium text-gray-700">
                 Name
               </label>
-              <input
+              {/* <input
                 placeholder="Masukan Nama Anda"
                 type="text"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 className="mt-1 p-2 border border-gray-300 rounded-md w-full text-black"
+              /> */}
+              <Input
+                placeholder="Input your name"
+                type="text"
+                error={isError}
+                onChange={handleChangeInput}
               />
             </div>
             <div className="mb-2 flex text-sm justify-between items-center">
@@ -177,7 +198,7 @@ const NotificationCart: React.FC<NotificationCartProps> = ({
                 Total: {formatRupiah(total || 0)}
               </p>
               <button
-                onClick={() => setShow((prev) => !prev)}
+                onClick={handlePayment}
                 className="mt-2 w-full bg-blue-600 text-white py-2 rounded-md"
               >
                 Pay Now
