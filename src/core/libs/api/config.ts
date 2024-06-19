@@ -21,7 +21,8 @@ async function createRequest<Res = unknown, Req = unknown>(
   body?: Req
 ) {
 
-
+  console.log(apiOption?.contentType);
+  
   const res: Response = await fetch(
     createEndpoint(endpoint as string, apiOption?.path || '', { ...apiOption?.queryParams }),
     {

@@ -3,6 +3,7 @@ import { useProductAdd } from "@hooks/home/useProduct";
 import { ProductBodyModel } from "@model/product";
 import { useState } from "react";
 import { MdArrowDropDown } from "react-icons/md";
+import DefaultImage from "../../../assets/default-image.png";
 
 const InitialValue: ProductBodyModel = {
   name: "",
@@ -12,10 +13,15 @@ const InitialValue: ProductBodyModel = {
   stock: 0,
 };
 
+interface ImageFile extends File {
+  preview: string;
+}
+
 const ProductAdd = () => {
   const [productBody, setProductBody] = useState<ProductBodyModel>({
     ...InitialValue,
   });
+  const [imageFile, setImageFile] = useState<ImageFile | null>(null);
   const [errors, setErrors] = useState<
     Partial<Record<keyof ProductBodyModel, string>>
   >({});
@@ -65,15 +71,50 @@ const ProductAdd = () => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    console.log("Form Submitted 1:", productBody);
     if (!validate()) return;
-    console.log("Form Submitted:", productBody);
     const formData = new FormData();
     Object.entries(productBody).forEach(([key, value]) => {
       formData.append(key, value as any);
     });
-    // await mutation.mutateAsync(formData);
+    if (imageFile) {
+      formData.append("image", imageFile);
+    }
+    await mutation.mutateAsync(formData);
   };
 
+  const handleChangeImage = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file && file.type.startsWith("image/")) {
+      const validExtensions = ["image/jpeg", "image/jpg", "image/png"];
+      if (!validExtensions.includes(file.type)) {
+        setErrors((prevErrors) => ({
+          ...prevErrors,
+          image: "Invalid image format. Please upload jpg, jpeg, or png files.",
+        }));
+        return;
+      }
+
+      const newImageFile: ImageFile = Object.assign(file, {
+        preview: URL.createObjectURL(file),
+      });
+
+      setImageFile(newImageFile);
+      setProductBody({ ...productBody, image: file });
+      setErrors((prevErrors) => ({ ...prevErrors, image: "" }));
+    } else {
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        image: "Please upload a valid image file.",
+      }));
+    }
+  };
+
+  const handleReset: () => void = () => {
+    setProductBody(InitialValue);
+    setImageFile(null);
+    setErrors({});
+  }
   const { data: category } = useCategory();
   return (
     <div className="flex flex-col gap-9">
@@ -105,9 +146,7 @@ const ProductAdd = () => {
             </div>
 
             <div className="mb-4">
-              <label className="mb-3 block text-sm font-medium">
-                Kategori
-              </label>
+              <label className="mb-3 block text-sm font-medium">Kategori</label>
               <div className="relative z-20 bg-transparent dark:bg-form-input">
                 <select
                   name="categoryId"
@@ -155,7 +194,10 @@ const ProductAdd = () => {
                 name="stock"
                 value={productBody.stock}
                 onChange={(e) => {
-                  setProductBody({ ...productBody, stock: parseInt(e.target.value) || 0 });
+                  setProductBody({
+                    ...productBody,
+                    stock: parseInt(e.target.value) || 0,
+                  });
                 }}
               />
               {errors.stock && (
@@ -176,7 +218,10 @@ const ProductAdd = () => {
                 name="price"
                 value={productBody.price}
                 onChange={(e) => {
-                  setProductBody({ ...productBody, price: parseInt(e.target.value) || 0 });
+                  setProductBody({
+                    ...productBody,
+                    price: parseInt(e.target.value) || 0,
+                  });
                 }}
               />
               {errors.price && (
@@ -187,7 +232,7 @@ const ProductAdd = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-4">
               <div className="mx-auto">
                 <img
-                  src={""}
+                  src={imageFile?.preview || DefaultImage}
                   alt="Buku Yang Mau di Upload"
                   className="max-w-[200px] h-[200px] max-h-[200px] mx-auto"
                 />
@@ -201,9 +246,7 @@ const ProductAdd = () => {
                   className={`w-full rounded border-[1px] bg-transparent px-3 py-2 font-normal outline-none transition focus:border-primary active:border-primary ${
                     errors.image ? "border-red-500" : "border-stroke"
                   }`}
-                  onChange={(e) => {
-                    setProductBody({ ...productBody, image: e.target.files?.[0] || "" });
-                  }}
+                  onChange={handleChangeImage}
                 />
                 {errors.image && (
                   <p className="text-[#DC2626] text-xs">{errors.image}</p>
@@ -212,6 +255,7 @@ const ProductAdd = () => {
             </div>
             <div className="flex justify-center items-center gap-5">
               <button
+                onClick={() => handleReset()}
                 type="reset"
                 className="flex w-full justify-center rounded bg-secondary p-3 font-medium text-black hover:bg-opacity-90"
               >
