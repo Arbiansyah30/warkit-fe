@@ -5,6 +5,7 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   name?: string;
   children?: React.ReactNode;
   error?: boolean;
+  sizes?: "sm" | "md";
 }
 
 const Input: React.FC<InputProps> = ({
@@ -12,13 +13,18 @@ const Input: React.FC<InputProps> = ({
   name,
   error,
   placeholder,
+  sizes = "md",
   ...rest
 }) => {
   if (error) {
     return (
       <input
         placeholder={placeholder}
-        className="w-full p-2 border border-solid border-[#DC2626] rounded-md box-border"
+        className={
+          sizes === "md"
+            ? "w-full p-2 border border-solid border-[#DC2626] rounded-md box-border"
+            : "w-full p-2 border border-solid border-[#DC2626] rounded-md box-border h-[40px]"
+        }
         {...rest}
       />
     );
@@ -26,7 +32,11 @@ const Input: React.FC<InputProps> = ({
   return (
     <input
       placeholder={placeholder}
-      className="w-full p-2 border border-solid border-gray-400 focus:border focus:border-solid focus:border-blue-400 rounded-md"
+      className={
+        sizes === "md"
+          ? "w-full p-2 border border-solid border-gray-400 focus:border focus:border-solid focus:border-blue-400 rounded-md"
+          : "w-full p-2 border border-solid border-gray-400 focus:border focus:border-solid focus:border-blue-400 rounded-md h-[40px]"
+      }
       {...rest}
     />
   );

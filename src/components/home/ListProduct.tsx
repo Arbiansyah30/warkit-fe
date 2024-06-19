@@ -31,6 +31,7 @@ const ListProduct = () => {
           <FilterProduct />
           <div className={isTablet ? "w-full" : "w-1/3"}>
             <Input
+              sizes="sm"
               placeholder="Search Product..."
               onChange={handleChangeSearch}
             />

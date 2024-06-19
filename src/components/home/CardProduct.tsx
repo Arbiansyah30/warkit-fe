@@ -1,5 +1,6 @@
 import { ProductModel } from "@model/product";
 import { formatRupiah } from "../../libs/helper";
+import Button from "../global/Button";
 
 export interface ProductQty {
   id: string;
@@ -22,14 +23,19 @@ const CardProduct = ({ image, name, price, stock, id }: ProductModel) => {
   };
 
   return (
-    <div className="text-center px-3 py-4 bg-white shadow-xl h-full flex flex-col justify-between">
+    <div className="text-center px-3 py-4 bg-white shadow-xl h-full flex flex-col justify-between rounded-md">
       <div className="w-full max-h-[180px] h-full rounded-md overflow-hidden">
-        <img src={image} draggable="false" alt="Product" className="w-full h-full object-cover" />
+        <img
+          src={image}
+          draggable="false"
+          alt="Product"
+          className="w-full h-full object-cover"
+        />
       </div>
       <div>
         <h1 className="text-xl font-semibold">{name}</h1>
         <p>{formatRupiah(price as number)}</p>
-        <div className="flex gap-1 flex-wrap justify-between text-[13px] mb-1">
+        <div className="flex gap-1 flex-wrap justify-between text-[13px] mb-3">
           <p className="text-start">stock :{stock}</p>
           <div className="flex-1 flex justify-end">
             {(stock as number) > 0 ? (
@@ -41,12 +47,20 @@ const CardProduct = ({ image, name, price, stock, id }: ProductModel) => {
             )}
           </div>
         </div>
-        <button
+        {/* <button
           className="bg-blue-900 w-full py-1 text-white hover:opacity-90"
           onClick={handleButton}
         >
           Add to Cart
-        </button>
+        </button> */}
+        <Button
+          sizes="sm"
+          primary={!!stock}
+          disabled={!stock}
+          onClick={handleButton}
+        >
+          Add to Cart
+        </Button>
       </div>
     </div>
   );
