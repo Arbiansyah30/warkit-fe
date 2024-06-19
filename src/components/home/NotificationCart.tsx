@@ -2,7 +2,7 @@ import { ProductModelWithQty } from "@model/product";
 import React, { useState } from "react";
 import { FaCartShopping } from "react-icons/fa6";
 import { formatRupiah } from "../../libs/helper";
-import DrawerMethodPayment from "./ModalPaymentMethod";
+import DrawerMethodPayment from "./DrawerPaymentMethod";
 
 type NotificationCartProps = {
   cart: ProductModelWithQty[];
