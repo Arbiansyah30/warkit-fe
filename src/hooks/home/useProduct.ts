@@ -39,8 +39,8 @@ export function useProduct(options?: Options) {
 export function useProductAdd() {
   return useMutation({
     mutationFn: (formData: FormData) => {
-      console.log(formData)
-      return productService.post(formData, { contentType: "form-data" })
+      console.log(formData);
+      return productService.post(formData, { contentType: "form-data" });
     },
     onSuccess: (res) => {
       alert(res.message);
@@ -48,5 +48,38 @@ export function useProductAdd() {
     onError: (err: ApiErrorResponse<ApiResponse>) => {
       alert(err.response?.data.message);
     },
+  });
+}
+
+export function useProductUpdate(id: string) {
+  return useMutation({
+    mutationFn: (formData: FormData) =>
+      productService.put(id)(formData, { contentType: "form-data" }),
+    onSuccess: (res) => {
+      alert(res.message);
+    },
+    onError: (err: ApiErrorResponse<ApiResponse>) => {
+      alert(err.response?.data.message);
+    },
+  });
+}
+
+export function useProductDelete() {
+  return useMutation({
+    mutationFn: (id: string) => productService.delete(id)(),
+    onSuccess: () => {
+      alert("Product deleted successfully.");
+    },
+    onError: (err: ApiErrorResponse<ApiResponse>) => {
+      alert(err.response?.data.message);
+    },
+  });
+}
+
+export function useProductById(id: string) {
+  return useQuery({
+    queryKey: ["product", id],
+    queryFn: () => productService.getById(id)(),
+    enabled: !!id,
   });
 }

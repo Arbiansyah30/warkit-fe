@@ -13,11 +13,11 @@ export interface ProductModel {
 }
 
 export interface ProductBodyModel {
-    name: string
-    price: number
-    image: File | string
+    name: string | undefined
+    price: number | undefined
+    image: File | string | undefined
     categoryId: string
-    stock: number
+    stock: number | undefined
 }
 
 export interface ProductModelWithQty extends ProductModel {

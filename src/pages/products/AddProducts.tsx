@@ -1,13 +1,13 @@
 import ProductAdd from "../../components/dashboard/product/ProductsAdd";
 import NavbarTableAdmin from "../../components/global/admin/NavbarTableAdmin";
 
-const ProductAddPage = () => {
+const AddProductPage = () => {
   return (
     <>
-      <NavbarTableAdmin detail="Tambah" />
+      <NavbarTableAdmin detail="Add" />
       <ProductAdd />
     </>
   );
 };
 
-export default ProductAddPage;
+export default AddProductPage;
