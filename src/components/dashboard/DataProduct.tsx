@@ -187,7 +187,6 @@ const DataProduct = () => {
       {(products?.meta.totalData as number) > 3 && (
         <Pagination
           currentPage={products?.meta.page as number}
-          totalItems={products?.meta.totalData as number}
           totalPages={products?.meta.totalPages as number}
           onPageChange={handleChangePage}
         />
