@@ -20,7 +20,7 @@ const NotificationCart: React.FC<NotificationCartProps> = ({
   updateCart,
 }) => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
-  const [, setName] = useState("");
+  const [name, setName] = useState("");
   const [selectedItems, setSelectedItems] = useState<string[]>([]);
   const [selectAll, setSelectAll] = useState(false);
   const [show, setShow] = useState(false);
@@ -86,8 +86,11 @@ const NotificationCart: React.FC<NotificationCartProps> = ({
   );
 
   const handlePayment = () => {
+    if (!name) {
+      setIsError(true);
+      return;
+    }
     setShow((prev) => !prev);
-    setIsError((prev) => !prev);
   };
 
   const handleChangeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -118,7 +121,7 @@ const NotificationCart: React.FC<NotificationCartProps> = ({
 
         {dropdownOpen && (
           <div className="absolute right-0 mt-2 w-80 p-4 bg-white border border-gray-200 shadow-lg rounded-lg">
-            <div className="mb-4">
+            <div className="mb-4 text-gray-800">
               <label className="block text-sm font-medium text-gray-700">
                 Name
               </label>
@@ -135,6 +138,9 @@ const NotificationCart: React.FC<NotificationCartProps> = ({
                 error={isError}
                 onChange={handleChangeInput}
               />
+              {isError && (
+                <p className="text-red-500 text-xs">Name is required</p>
+              )}
             </div>
             <div className="mb-2 flex text-sm justify-between items-center gap-5">
               {/* <button
