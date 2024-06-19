@@ -20,7 +20,7 @@ const Button: React.FC<IButtonProps> = ({
   if (success) {
     return (
       <button
-        className="bg-[#2EBF44] w-full p-2 rounded-md text-white font-semibold"
+        className="bg-[#2EBF44] w-full p-2 rounded-md text-white font-semibold duration-300"
         {...rest}
       >
         {children}
@@ -29,7 +29,7 @@ const Button: React.FC<IButtonProps> = ({
   } else if (danger) {
     return (
       <button
-        className="bg-[#DC2626] w-full p-2 rounded-md text-white font-semibold"
+        className="bg-[#DC2626] w-full p-2 rounded-md text-white font-semibold duration-300"
         {...rest}
       >
         {children}
@@ -38,7 +38,7 @@ const Button: React.FC<IButtonProps> = ({
   } else if (primary) {
     return (
       <button
-        className="bg-[#1D4ED8] w-full p-2 rounded-md text-white font-semibold"
+        className="bg-[#1D4ED8] w-full p-2 rounded-md text-white font-semibold duration-300"
         {...rest}
       >
         {children}
@@ -48,7 +48,7 @@ const Button: React.FC<IButtonProps> = ({
     return (
       <button
         disabled={disabled}
-        className="bg-[#aeaeae] w-full p-2 rounded-md text-white font-semibold"
+        className="bg-[#aeaeae] w-full p-2 rounded-md text-white font-semibold duration-300"
         {...rest}
       >
         {children}

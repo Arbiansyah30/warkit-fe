@@ -2,7 +2,7 @@ import { ProductModelWithQty } from "@model/product";
 import React, { useState } from "react";
 import { FaCartShopping } from "react-icons/fa6";
 import { formatRupiah } from "../../libs/helper";
-import ModalPaymentMethod from "./ModalPaymentMethod";
+import DrawerMethodPayment from "./ModalPaymentMethod";
 
 type NotificationCartProps = {
   cart: ProductModelWithQty[];
@@ -21,10 +21,9 @@ const NotificationCart: React.FC<NotificationCartProps> = ({
   const [name, setName] = useState("");
   const [selectedItems, setSelectedItems] = useState<string[]>([]);
   const [selectAll, setSelectAll] = useState(false);
+  const [show, setShow] = useState(false);
 
-  const handleClick = () => {
-    setDropdownOpen(!dropdownOpen);
-  };
+  const handleClick = () => setDropdownOpen(!dropdownOpen);
 
   const handleSelectAll = () => {
     if (selectAll) {
@@ -177,14 +176,20 @@ const NotificationCart: React.FC<NotificationCartProps> = ({
               <p className="text-sm font-medium text-gray-900">
                 Total: {formatRupiah(total || 0)}
               </p>
-              <button className="mt-2 w-full bg-blue-600 text-white py-2 rounded-md">
+              <button
+                onClick={() => setShow((prev) => !prev)}
+                className="mt-2 w-full bg-blue-600 text-white py-2 rounded-md"
+              >
                 Pay Now
               </button>
             </div>
           </div>
         )}
       </div>
-      <ModalPaymentMethod />
+      <DrawerMethodPayment
+        onHide={() => setShow((prev) => !prev)}
+        show={show}
+      />
     </>
   );
 };

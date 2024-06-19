@@ -1,3 +1,4 @@
+import { ApiErrorResponse, ApiResponse } from "@core/libs/api/types";
 import { AuthLoginBodyModel, AuthRegisterBodyModel } from "@model/auth";
 import { useMutation } from "@tanstack/react-query";
 import { authService } from "../../services/auth";
@@ -18,7 +19,7 @@ export function useAuthRegister() {
     const mutation = useMutation({
         mutationFn: (body: AuthRegisterBodyModel) => authService.register(body),
         onSuccess: (res) => alert(res.message),
-        onError: (err) => alert(err.message)
+        onError: (err: ApiErrorResponse<ApiResponse>) => alert(err.response?.data.message)
     })
     return mutation
 }
