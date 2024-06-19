@@ -58,8 +58,8 @@ const CategoryTable = () => {
         </div>
       </div>
       <Pagination
-        currentPage={categories?.meta.page as number}
-        totalPages={categories?.meta.totalPages as number}
+        currentPage={categories?.meta?.page as number}
+        totalPages={categories?.meta?.totalPages as number}
         onPageChange={handleChangePage}
       />
     </>
