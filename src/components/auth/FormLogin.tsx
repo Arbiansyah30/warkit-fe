@@ -28,10 +28,8 @@ const FormLogin = () => {
         newErrors.password = "Password is required";
       }
       setErrors(newErrors);
-      console.log("err", authBody);
       return false;
     }
-    console.log("not err");
     return true;
   };
 

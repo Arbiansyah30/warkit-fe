@@ -1,3 +1,4 @@
+import axios, { AxiosResponse } from "axios";
 import { convertObjectToQueryParams } from "../../../libs/helper";
 import { ApiOption, MethodTypes, getContentType } from "./types";
 
@@ -22,27 +23,27 @@ async function createRequest<Res = unknown, Req = unknown>(
 ) {
 
 
-  const res: Response = await fetch(
+  const res: AxiosResponse & { response: unknown } = await axios(
     createEndpoint(endpoint as string, apiOption?.path || '', { ...apiOption?.queryParams }),
     {
       method,
 
       headers: {
-        "Content-Type": getContentType(apiOption?.contentType || "json"),
+        "Content-Type": `${getContentType(apiOption?.contentType || "json")}`,
         ...(apiOption?.bearerToken &&
           typeof apiOption.bearerToken !== "undefined" && {
           Authorization: `Bearer ${apiOption.bearerToken}`,
         }),
         ...apiOption?.headers,
       },
-      body: JSON.stringify(body),
+      data: body,
     }
   );
-  const data: Res = await res.json();
-  if (!res.ok) {
-    throw data;
+  // const data: Res = await res.json();
+  if (res.response) {
+    throw res.data;
   }
-  return data as Res;
+  return res.data as Res;
 }
 
 

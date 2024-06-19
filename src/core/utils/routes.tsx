@@ -4,7 +4,7 @@ import CategoryView from "@pages/category/Category";
 import AdminView from "@pages/global/Admin";
 import AuthView from "@pages/global/Auth";
 import Home from "@pages/home";
-import ProductAddPage from "@pages/products/AddProducts";
+import AddProductPage from "@pages/products/AddProducts";
 import ProductsPage from "@pages/products/DataProducts";
 import { createBrowserRouter } from "react-router-dom";
 import Users from "../../container/users";
@@ -43,11 +43,11 @@ export const router = createBrowserRouter([
         element: <ProductsPage />,
       },
       {
-        path: "/admin/add-product",
-        element: <ProductAddPage />,
+        path: "/admin/products/add-product",
+        element: <AddProductPage />,
       },
       {
-        path: "/admin/category",
+        path: "/admin/categories",
         element: <CategoryView />,
       },
     ],

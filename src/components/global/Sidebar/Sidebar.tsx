@@ -5,28 +5,30 @@ import { FaBox, FaChartBar, FaTags } from "react-icons/fa";
 import { FaArrowLeftLong } from "react-icons/fa6";
 import { Link } from "react-router-dom";
 
+interface DropdownProps {
+  name: string;
+  icon: JSX.Element;
+  link: string;
+  dropdown?: { name: string; link: string }[];
+}
+
 const Sidebar: React.FC<{
   hamburger: boolean;
   handleHamburger: () => void;
 }> = ({ hamburger, handleHamburger }) => {
-  const [selected, setSelected] = useState<string>("Product");
+  const [selected, setSelected] = useState<string | null>("Products");
   const { isLaptop } = useResponsive();
 
   const menuItems = [
     {
-      name: "Product",
+      name: "Products",
       icon: <FaBox />,
       link: "/admin/products",
     },
     {
-      name: "Category",
+      name: "Categories",
       icon: <FaTags />,
-      link: "/admin/category",
-    },
-    {
-      name: "Products",
-      icon: <FaBox />,
-      link: "#",
+      link: "/admin/categories",
     },
     {
       name: "Reports",
@@ -39,8 +41,11 @@ const Sidebar: React.FC<{
     },
   ];
 
-  const handleMenuClick = (name: string) => {
-    setSelected(name);
+  const handleMenuClick = (item: DropdownProps) => {
+    if (item.dropdown && item.name === selected) {
+      return setSelected(null);
+    }
+    setSelected(item.name);
   };
 
   return (
@@ -79,7 +84,7 @@ const Sidebar: React.FC<{
                     }`}
                     to={item.link}
                     onClick={() => {
-                      handleMenuClick(item.name);
+                      handleMenuClick(item);
                     }}
                   >
                     {item.icon}
@@ -97,12 +102,12 @@ const Sidebar: React.FC<{
                       <ul className="mb-5 mt-4 flex flex-col gap-2 pl-6">
                         {item.dropdown.map((subItem) => (
                           <li key={subItem.name}>
-                            <a
+                            <Link
                               className="group relative flex items-center gap-2 rounded-md px-4 font-medium text-gray-400 duration-300 ease-in-out hover:text-white"
-                              href={subItem.link}
+                              to={subItem.link}
                             >
                               {subItem.name}
-                            </a>
+                            </Link>
                           </li>
                         ))}
                       </ul>

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { FaBell, FaUserCircle } from "react-icons/fa";
+import { FaBell } from "react-icons/fa";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { IoMdArrowDropdown } from "react-icons/io";
 import { RiLogoutBoxLine } from "react-icons/ri";
