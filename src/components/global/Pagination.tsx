@@ -1,7 +1,6 @@
 import React from "react";
 
 interface IPaginationProps {
-  totalItems: number;
   totalPages: number;
   currentPage: number;
   onPageChange: (page: number) => void;
@@ -18,37 +17,15 @@ const Pagination: React.FC<IPaginationProps> = ({
     }
   };
 
-  //   const renderPageNumbers = () => {
-  //     const pageNumbers = [];
-  //     for (let i = 1; i <= totalPages; i++) {
-  //       pageNumbers.push(
-  //         <button
-  //           key={i}
-  //           onClick={() => handlePageChange(i)}
-  //           className={
-  //             i === currentPage
-  //               ? "border border-solid bg-blue-400 border-blue-400 w-8 h-8 rounded-md"
-  //               : "border border-solid border-blue-400 w-8 h-8 rounded-md"
-  //           }
-  //         >
-  //           {i}
-  //         </button>
-  //       );
-  //     }
-  //     return pageNumbers;
-  //   };
-
   const renderPageNumbers = () => {
     const pageNumbers = [];
-    const delta = 9; // Number of pages to show around the current page
+    const delta = 2;
 
-    // Determine the range of page numbers to show
     const range = {
       start: Math.max(2, currentPage - delta),
       end: Math.min(totalPages - 1, currentPage + delta),
     };
 
-    // Push the first page
     pageNumbers.push(
       <button
         key={1}
@@ -63,12 +40,10 @@ const Pagination: React.FC<IPaginationProps> = ({
       </button>
     );
 
-    // Show ellipsis if needed
     if (range.start > 2) {
       pageNumbers.push(<span key="start-ellipsis">...</span>);
     }
 
-    // Push pages within the range
     for (let i = range.start; i <= range.end; i++) {
       pageNumbers.push(
         <button
@@ -85,23 +60,25 @@ const Pagination: React.FC<IPaginationProps> = ({
       );
     }
 
-    // Show ellipsis if needed
     if (range.end < totalPages - 1) {
       pageNumbers.push(<span key="end-ellipsis">...</span>);
     }
-    pageNumbers.push(
-      <button
-        key={totalPages}
-        onClick={() => handlePageChange(totalPages)}
-        className={
-          currentPage === totalPages
-            ? "border border-solid bg-blue-400 border-blue-400 w-8 h-8 rounded-md"
-            : "border border-solid border-blue-400 w-8 h-8 rounded-md"
-        }
-      >
-        {totalPages}
-      </button>
-    );
+
+    if (totalPages > 1) {
+      pageNumbers.push(
+        <button
+          key={totalPages}
+          onClick={() => handlePageChange(totalPages)}
+          className={
+            currentPage === totalPages
+              ? "border border-solid bg-blue-400 border-blue-400 w-8 h-8 rounded-md"
+              : "border border-solid border-blue-400 w-8 h-8 rounded-md"
+          }
+        >
+          {totalPages}
+        </button>
+      );
+    }
 
     return pageNumbers;
   };

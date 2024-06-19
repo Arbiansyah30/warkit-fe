@@ -16,7 +16,7 @@ export interface ProductBodyModel {
     name: string
     price: number
     image: File | string
-    categoryId: number
+    categoryId: string
     stock: number
 }
 

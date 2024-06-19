@@ -16,7 +16,7 @@ const FilterProduct = () => {
   };
 
   const handleReset = () => {
-    setIsActive(""), setSearchParams({});
+    setIsActive(""), setSearchParams({ ...queryParams, categoryId: "" });
   };
 
   return (

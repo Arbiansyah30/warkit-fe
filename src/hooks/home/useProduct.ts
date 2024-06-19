@@ -1,3 +1,4 @@
+import { ApiErrorResponse, ApiResponse } from "@core/libs/api/types";
 import useDebounce from "@hooks/global/useDebounce";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useSearchParams } from "react-router-dom";
@@ -37,13 +38,15 @@ export function useProduct(options?: Options) {
 
 export function useProductAdd() {
   return useMutation({
-    mutationFn: (formData: FormData) =>
-      productService.post(formData, { contentType: "form-data" }),
+    mutationFn: (formData: FormData) => {
+      console.log(formData)
+      return productService.post(formData, { contentType: "form-data" })
+    },
     onSuccess: (res) => {
       alert(res.message);
     },
-    onError: (err) => {
-      alert(err.message);
+    onError: (err: ApiErrorResponse<ApiResponse>) => {
+      alert(err.response?.data.message);
     },
   });
 }

@@ -1,3 +1,5 @@
+import { AxiosHeaders } from "axios";
+
 export interface QueryParams {
   page?: number,
   perPage?: number,
@@ -9,7 +11,7 @@ export interface QueryParams {
 export interface ApiOption {
   contentType?: "json" | "form-data" | "url-encoded";
   bearerToken?: string;
-  headers?: HeadersInit;
+  headers?: AxiosHeaders;
   path?: string;
   queryParams?: QueryParams
 }
@@ -22,10 +24,20 @@ export interface MetaResponse {
 }
 
 export interface ApiResponse<Res = unknown> {
-  status?: string,
+  status?: number,
+  code?: string
   message?: string,
   data?: Res,
-  meta: MetaResponse
+  meta?: MetaResponse
+}
+
+export interface ApiErrorResponse<Res = unknown> {
+  code?: string,
+  status?: number,
+  statusText?: string,
+  response?: {
+    data: Res
+  }
 }
 
 export const getContentType = (type?: ApiOption["contentType"]) => {
@@ -40,3 +52,4 @@ export const getContentType = (type?: ApiOption["contentType"]) => {
 };
 
 export type MethodTypes = "GET" | "POST" | "PATCH" | "PUT" | "DELETE";
+

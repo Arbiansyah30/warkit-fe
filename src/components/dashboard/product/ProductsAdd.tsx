@@ -7,7 +7,7 @@ import DefaultImage from "../../../assets/default-image.png";
 
 const InitialValue: ProductBodyModel = {
   name: "",
-  categoryId: 0,
+  categoryId: "",
   price: 0,
   image: "",
   stock: 0,
@@ -75,11 +75,10 @@ const ProductAdd = () => {
     if (!validate()) return;
     const formData = new FormData();
     Object.entries(productBody).forEach(([key, value]) => {
-      formData.append(key, value as any);
+      formData.append(key, value);
     });
-    if (imageFile) {
-      formData.append("image", imageFile);
-    }
+    console.log({ imageFile, file: productBody.image });
+
     await mutation.mutateAsync(formData);
   };
 
@@ -114,7 +113,7 @@ const ProductAdd = () => {
     setProductBody(InitialValue);
     setImageFile(null);
     setErrors({});
-  }
+  };
   const { data: category } = useCategory();
   return (
     <div className="flex flex-col gap-9">
@@ -153,11 +152,10 @@ const ProductAdd = () => {
                   className={`relative z-20 w-full bg-transparent appearance-none rounded border px-3 py-2 outline-none transition focus:border-primary active:border-primary dark:focus:border-primary ${
                     errors.categoryId ? "border-red-500" : "border-stroke"
                   }`}
-                  value={productBody.categoryId}
                   onChange={(e) => {
                     setProductBody({
                       ...productBody,
-                      categoryId: parseInt(e.target.value),
+                      categoryId: e.target.value,
                     });
                   }}
                 >
