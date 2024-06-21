@@ -3,7 +3,7 @@ import { FaEdit, FaTrash } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { formatRupiah } from "../../../libs/helper";
 
-const ProductData = () => {
+const ProductsTable = () => {
   const { data: products, isLoading } = useProduct();
   const mutation = useProductDelete();
 
@@ -88,4 +88,4 @@ const ProductData = () => {
   );
 };
 
-export default ProductData;
+export default ProductsTable;

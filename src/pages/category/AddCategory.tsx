@@ -1,7 +1,7 @@
 import FormAddProduct from "../../components/dashboard/product/FormAddProduct";
 import NavbarTableAdmin from "../../components/global/admin/NavbarTableAdmin";
 
-const AddProductPage = () => {
+const AddCategoryPage = () => {
   return (
     <>
       <NavbarTableAdmin detail="Add" />
@@ -10,4 +10,4 @@ const AddProductPage = () => {
   );
 };
 
-export default AddProductPage;
+export default AddCategoryPage;

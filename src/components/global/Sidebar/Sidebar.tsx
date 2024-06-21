@@ -26,9 +26,9 @@ const Sidebar: React.FC<{
       link: "/admin/products",
     },
     {
-      name: "Categories",
+      name: "Category",
       icon: <FaTags />,
-      link: "/admin/categories",
+      link: "/admin/category",
     },
     {
       name: "Reports",

@@ -1,6 +1,5 @@
 import LoginView from "@pages/Login";
 import RegisterView from "@pages/Register";
-import CategoryView from "@pages/category/Category";
 import AdminView from "@pages/global/Admin";
 import AuthView from "@pages/global/Auth";
 import Home from "@pages/home";
@@ -9,6 +8,8 @@ import ProductsPage from "@pages/products/DataProducts";
 import { createBrowserRouter } from "react-router-dom";
 import Users from "../../container/users";
 import UpdateProductsPage from "@pages/products/UpdateProducts";
+import DataCategoryPage from "@pages/category/DataCategory";
+import AddCategoryPage from "@pages/category/AddCategory";
 
 export const router = createBrowserRouter([
   {
@@ -52,8 +53,12 @@ export const router = createBrowserRouter([
         element: <UpdateProductsPage />,
       },
       {
-        path: "/admin/categories",
-        element: <CategoryView />,
+        path: "/admin/category",
+        element: <DataCategoryPage />,
+      },
+      {
+        path: "/admin/category/add",
+        element: <AddCategoryPage />,
       },
     ],
   },

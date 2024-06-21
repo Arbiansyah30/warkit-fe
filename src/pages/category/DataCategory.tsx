@@ -1,7 +1,7 @@
 import CategoryTable from "../../components/dashboard/category/CategoryTable";
 import NavbarTableAdmin from "../../components/global/admin/NavbarTableAdmin";
 
-const CategoryView = () => {
+const DataCategoryPage = () => {
   return (
     <>
       <NavbarTableAdmin detail="Data" />
@@ -10,4 +10,4 @@ const CategoryView = () => {
   );
 };
 
-export default CategoryView;
+export default DataCategoryPage;

@@ -4,3 +4,7 @@ export interface CategoryModel {
     createdAt?: string,
     updatedAt?: string
 }
+
+export interface CategoryBodyModel {
+    name?: string
+}

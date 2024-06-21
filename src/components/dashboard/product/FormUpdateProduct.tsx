@@ -1,8 +1,10 @@
 import { useCategory } from "@hooks/home/useCategory";
-import { useProductAdd } from "@hooks/home/useProduct";
+import { useProductById, useProductUpdate } from "@hooks/home/useProduct";
 import { ProductBodyModel } from "@model/product";
-import { useState } from "react";
+import { useQueryClient } from "@tanstack/react-query";
+import { useEffect, useState } from "react";
 import { MdArrowDropDown } from "react-icons/md";
+import { useParams } from "react-router-dom";
 import DefaultImage from "../../../assets/default-image.png";
 import Input from "../../global/Input";
 
@@ -21,7 +23,26 @@ interface ImageFile extends File {
   preview: string;
 }
 
-const ProductAdd = () => {
+const FormUpdateProduct = () => {
+  const { id } = useParams<{ id: string }>();
+  const { data: category } = useCategory();
+  const { data: product, isLoading } = useProductById();
+  const mutation = useProductUpdate();
+
+  useEffect(() => {
+    if (product && product.data) {
+      const { name, price, image, stock, category } = product.data;
+      // const categoryId = category ? category.id : "";
+      setProductBody({
+        name,
+        price,
+        image: image as string,
+        category: category,
+        stock,
+      });
+    }
+  }, [product]);
+
   const [productBody, setProductBody] = useState<ProductBodyModel>({
     ...InitialValue,
   });
@@ -29,8 +50,6 @@ const ProductAdd = () => {
   const [errors, setErrors] = useState<
     Partial<Record<keyof ProductBodyModel, string>>
   >({});
-
-  const mutation = useProductAdd();
 
   const validate = () => {
     const newErrors: Partial<Record<keyof ProductBodyModel, string>> = {};
@@ -79,8 +98,15 @@ const ProductAdd = () => {
     if (!validate()) return;
     const formData = new FormData();
     Object.entries(productBody).forEach(([key, value]) => {
-      formData.append(key, value);
+      if (key === "image") {
+        if (imageFile) {
+          formData.append("image", imageFile);
+        }
+      } else {
+        formData.append(key, value);
+      }
     });
+
     console.log({ imageFile, file: productBody.image });
 
     await mutation.mutateAsync(formData);
@@ -118,12 +144,21 @@ const ProductAdd = () => {
     setImageFile(null);
     setErrors({});
   };
-  const { data: category } = useCategory();
+
+  const queryClient = useQueryClient();
+  useEffect(() => {
+    return queryClient.removeQueries({ queryKey: ["products"] });
+  }, [id]);
+
+  if (isLoading) {
+    return <div className="text-white">Loading...</div>;
+  }
+
   return (
     <div className="flex flex-col gap-9">
       <div className="rounded-sm border border-stroke text-white bg-gray-900 shadow-default dark:border-strokedark dark:bg-boxdark">
         <div className="border-b border-stroke px-6 py-4 dark:border-strokedark">
-          <h3 className="font-medium">Add Products</h3>
+          <h3 className="font-medium">Update Products</h3>
         </div>
         <form onSubmit={handleSubmit}>
           <div className="p-6">
@@ -143,10 +178,10 @@ const ProductAdd = () => {
             </div>
 
             <div className="mb-4">
-              <label className="mb-1 block text-sm font-medium">Category</label>
+              <label className="mb-3 block text-sm font-medium">Kategori</label>
               <div className="relative z-20 bg-transparent dark:bg-form-input">
                 <select
-                  name="categoryId"
+                  name="category"
                   className={`relative z-20 w-full bg-transparent appearance-none rounded border px-3 py-2 outline-none transition focus:border-primary active:border-primary dark:focus:border-primary ${
                     errors.category ? "border-red-500" : "border-stroke"
                   }`}
@@ -163,10 +198,6 @@ const ProductAdd = () => {
                     });
                   }}
                 >
-                  <option className="text-black" value="" hidden>
-                    Select Category
-                  </option>
-
                   {category?.data?.map((option, index) => (
                     <option
                       key={index}
@@ -226,9 +257,13 @@ const ProductAdd = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-4">
               <div className="mx-auto">
                 <img
-                  src={imageFile?.preview || DefaultImage}
+                  src={
+                    imageFile?.preview ||
+                    (productBody.image as string) ||
+                    DefaultImage
+                  }
                   alt="Buku Yang Mau di Upload"
-                  className="max-w-[200px] h-[200px] max-h-[200px] mx-auto"
+                  className="max-w-[200px] h-[200px] max-h-[200px] mx-auto object-cover"
                 />
               </div>
               <div>
@@ -238,7 +273,9 @@ const ProductAdd = () => {
                   placeholder="Upload Image Product"
                   error={errors.image}
                   onChange={handleChangeImage}
-                >Upload Image</Input>
+                >
+                  Upload Image
+                </Input>
               </div>
             </div>
             <div className="flex justify-center items-center gap-5">
@@ -253,7 +290,7 @@ const ProductAdd = () => {
                 type="submit"
                 className="flex w-full justify-center rounded bg-blue-600 p-3 font-medium text-white hover:bg-opacity-90"
               >
-                Add
+                Update
               </button>
             </div>
           </div>
@@ -263,4 +300,4 @@ const ProductAdd = () => {
   );
 };
 
-export default ProductAdd;
+export default FormUpdateProduct;

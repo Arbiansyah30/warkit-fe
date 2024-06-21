@@ -1,7 +1,7 @@
 import FormUpdateProduct from "../../components/dashboard/product/FormUpdateProduct";
 import NavbarTableAdmin from "../../components/global/admin/NavbarTableAdmin";
 
-const UpdateProductsPage = () => {
+const UpdateCategoryPage = () => {
   return (
     <>
       <NavbarTableAdmin detail="Update" />
@@ -10,4 +10,4 @@ const UpdateProductsPage = () => {
   );
 };
 
-export default UpdateProductsPage;
+export default UpdateCategoryPage;

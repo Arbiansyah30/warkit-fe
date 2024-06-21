@@ -1,11 +1,11 @@
-import ProductData from "../../components/dashboard/product/ProductsData";
+import ProductsTable from "../../components/dashboard/product/ProductsTable";
 import NavbarTableAdmin from "../../components/global/admin/NavbarTableAdmin";
 
 const ProductsPage = () => {
   return (
     <>
       <NavbarTableAdmin detail="Data" />
-      <ProductData />
+      <ProductsTable />
     </>
   );
 };
