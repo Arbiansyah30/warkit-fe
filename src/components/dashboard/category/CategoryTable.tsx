@@ -24,7 +24,7 @@ const CategoryTable = () => {
     <>
       <div className="rounded-sm border border-stroke w-full bg-gray-900 px-5 shadow-default dark:bg-boxdark sm:px-7">
         <div className="py-6  flex flex-wrap items-center justify-between">
-          <h4 className="text-xl font-bold text-white">Data Products</h4>
+          <h4 className="text-xl font-bold text-white">Data Category</h4>
           <Link
             to="/admin/category/add"
             className="text-sm font-medium text-white bg-blue-600 py-2 px-4 rounded-full hover:opacity-90"
@@ -43,8 +43,8 @@ const CategoryTable = () => {
               </tr>
             </thead>
             <tbody>
-              {categories?.data?.map((item) => (
-                <tr>
+              {categories?.data?.map((item, index) => (
+                <tr key={index}>
                   <td className="px-4 py-2">
                     <p className="text-white">{item.name}</p>
                   </td>

@@ -10,6 +10,7 @@ import Users from "../../container/users";
 import UpdateProductsPage from "@pages/products/UpdateProducts";
 import DataCategoryPage from "@pages/category/DataCategory";
 import AddCategoryPage from "@pages/category/AddCategory";
+import UpdateCategoryPage from "@pages/category/UpdateCategory";
 
 export const router = createBrowserRouter([
   {
@@ -62,7 +63,7 @@ export const router = createBrowserRouter([
       },
       {
         path: "/admin/category/edit/:id",
-        element: <AddCategoryPage />,
+        element: <UpdateCategoryPage />,
       },
     ],
   },

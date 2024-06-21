@@ -22,6 +22,9 @@ interface ImageFile extends File {
 }
 
 const FormAddProduct = () => {
+  const mutation = useProductAdd();
+  const { data: category } = useCategory();
+
   const [productBody, setProductBody] = useState<ProductBodyModel>({
     ...InitialValue,
   });
@@ -29,8 +32,6 @@ const FormAddProduct = () => {
   const [errors, setErrors] = useState<
     Partial<Record<keyof ProductBodyModel, string>>
   >({});
-
-  const mutation = useProductAdd();
 
   const validate = () => {
     const newErrors: Partial<Record<keyof ProductBodyModel, string>> = {};
@@ -79,8 +80,17 @@ const FormAddProduct = () => {
     if (!validate()) return;
     const formData = new FormData();
     Object.entries(productBody).forEach(([key, value]) => {
-      formData.append(key, value);
+      if (key === "category") {
+        formData.append("categoryId", value.id);
+      } else {
+        formData.append(key, value);
+      }
     });
+
+    // for (let [key, value] of formData.entries()) {
+    //   console.log(`${key}: ${value}`);
+    // }
+
     console.log({ imageFile, file: productBody.image });
 
     await mutation.mutateAsync(formData);
@@ -118,7 +128,6 @@ const FormAddProduct = () => {
     setImageFile(null);
     setErrors({});
   };
-  const { data: category } = useCategory();
   return (
     <div className="flex flex-col gap-9">
       <div className="rounded-sm border border-stroke text-white bg-gray-900 shadow-default dark:border-strokedark dark:bg-boxdark">
@@ -238,7 +247,9 @@ const FormAddProduct = () => {
                   placeholder="Upload Image Product"
                   error={errors.image}
                   onChange={handleChangeImage}
-                >Upload Image</Input>
+                >
+                  Upload Image
+                </Input>
               </div>
             </div>
             <div className="flex justify-center items-center gap-5">

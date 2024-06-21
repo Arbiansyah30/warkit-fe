@@ -14,7 +14,7 @@ export function useCategory(options?: Options) {
     const page = options?.page || searchParams.get("page") || 1;
     const perPage = options?.perPage || searchParams.get("perPage") || 10;
     const query = useQuery({
-        queryKey: ['category', { page, perPage }],
+        queryKey: ['categories', { page, perPage }],
         queryFn: () => categoryService.get({
             queryParams: {
                 perPage: perPage ? Number(perPage) : undefined,
@@ -35,7 +35,7 @@ export function useCategoryAdd() {
       onSuccess: (res) => {
         alert(res.message);
         navigate("/admin/category")
-        return queryClient.removeQueries({ queryKey: ["category"] });
+        return queryClient.removeQueries({ queryKey: ["categories"] });
       },
       onError: (err: ApiErrorResponse<ApiResponse>) => {
         alert(err.response?.data.message);
@@ -45,8 +45,10 @@ export function useCategoryAdd() {
 
 
   export function useCategoryUpdate() {
+    const queryClient = useQueryClient();
     const navigate = useNavigate()
     const { id } = useParams()
+    const { refetch } = useCategoryById()
   
     return useMutation({
       mutationFn: (body: CategoryBodyModel) =>
@@ -54,6 +56,8 @@ export function useCategoryAdd() {
       onSuccess: (res) => {
         navigate("/admin/category")
         alert(res.message);
+        refetch()
+        return queryClient.removeQueries({ queryKey: ["categories"] });
       },
       onError: (err: ApiErrorResponse<ApiResponse>) => {
         alert(err.response?.data.message);
@@ -62,6 +66,7 @@ export function useCategoryAdd() {
   }
 
   export function useCategoryDelete() {
+    const queryClient = useQueryClient();
     const { refetch } = useCategory()
   
     return useMutation({
@@ -69,6 +74,7 @@ export function useCategoryAdd() {
       onSuccess: () => {
         refetch()
         alert("Category deleted successfully.");
+        return queryClient.removeQueries({ queryKey: ["categories"] });
       },
       onError: (err: ApiErrorResponse<ApiResponse>) => {
         alert(err.response?.data.message);

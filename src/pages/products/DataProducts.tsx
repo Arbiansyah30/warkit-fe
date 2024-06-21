@@ -4,7 +4,7 @@ import NavbarTableAdmin from "../../components/global/admin/NavbarTableAdmin";
 const ProductsPage = () => {
   return (
     <>
-      <NavbarTableAdmin detail="Data" />
+      <NavbarTableAdmin detail="Data" data="product" link="/admin/products" />
       <ProductsTable />
     </>
   );

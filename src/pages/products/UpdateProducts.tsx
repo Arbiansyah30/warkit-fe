@@ -4,7 +4,7 @@ import NavbarTableAdmin from "../../components/global/admin/NavbarTableAdmin";
 const UpdateProductsPage = () => {
   return (
     <>
-      <NavbarTableAdmin detail="Update" />
+      <NavbarTableAdmin detail="Update" data="product" link="/admin/products" />
       <FormUpdateProduct />
     </>
   );
