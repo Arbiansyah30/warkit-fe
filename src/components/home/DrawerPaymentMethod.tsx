@@ -51,9 +51,9 @@ const DrawerMethodPayment: React.FC<IDrawer> = ({ onHide, show = false }) => {
             onMouseOut={(e) => {
               (e.currentTarget as HTMLElement).style.backgroundColor = "";
             }}
-            onClick={() => setSelected("qris")}
+            onClick={() => setSelected("QRIS")}
             className={
-              selected === "qris"
+              selected === "QRIS"
                 ? "flex flex-col gap-5  justify-center items-center p-5 rounded-xl h-32 w-40 bg-[#9fd9ff]"
                 : "flex flex-col gap-5  justify-center items-center p-5 rounded-xl h-32 w-40"
             }
@@ -69,9 +69,9 @@ const DrawerMethodPayment: React.FC<IDrawer> = ({ onHide, show = false }) => {
             onMouseOut={(e) => {
               (e.currentTarget as HTMLElement).style.backgroundColor = "";
             }}
-            onClick={() => setSelected("cash")}
+            onClick={() => setSelected("CASH")}
             className={
-              selected === "cash"
+              selected === "CASH"
                 ? "flex flex-col gap-5  justify-center items-center p-5 rounded-xl h-32 w-40 bg-[#9fd9ff]"
                 : "flex flex-col gap-5  justify-center items-center p-5 rounded-xl h-32 w-40"
             }

@@ -1,7 +1,7 @@
 import { ApiErrorResponse, ApiResponse } from "@core/libs/api/types";
 import useDebounce from "@hooks/global/useDebounce";
-import { useMutation, useQuery } from "@tanstack/react-query";
-import { useSearchParams } from "react-router-dom";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { productService } from "../../services/products";
 
 interface Options {
@@ -37,6 +37,8 @@ export function useProduct(options?: Options) {
 }
 
 export function useProductAdd() {
+  const queryClient = useQueryClient();
+  const navigate = useNavigate()
   return useMutation({
     mutationFn: (formData: FormData) => {
       console.log(formData);
@@ -44,6 +46,8 @@ export function useProductAdd() {
     },
     onSuccess: (res) => {
       alert(res.message);
+      navigate("/admin/products")
+      return queryClient.removeQueries({ queryKey: ["products"] });
     },
     onError: (err: ApiErrorResponse<ApiResponse>) => {
       alert(err.response?.data.message);
@@ -51,11 +55,15 @@ export function useProductAdd() {
   });
 }
 
-export function useProductUpdate(id: string) {
+export function useProductUpdate() {
+  const navigate = useNavigate()
+  const { id } = useParams()
+
   return useMutation({
     mutationFn: (formData: FormData) =>
-      productService.put(id)(formData, { contentType: "form-data" }),
+      productService.put(formData, { contentType: "form-data", path: id }),
     onSuccess: (res) => {
+      navigate("/admin/products")
       alert(res.message);
     },
     onError: (err: ApiErrorResponse<ApiResponse>) => {
@@ -65,9 +73,12 @@ export function useProductUpdate(id: string) {
 }
 
 export function useProductDelete() {
+  const { refetch } = useProduct()
+
   return useMutation({
-    mutationFn: (id: string) => productService.delete(id)(),
+    mutationFn: (id: string) => productService.delete({ path: id }),
     onSuccess: () => {
+      refetch()
       alert("Product deleted successfully.");
     },
     onError: (err: ApiErrorResponse<ApiResponse>) => {
@@ -76,10 +87,11 @@ export function useProductDelete() {
   });
 }
 
-export function useProductById(id: string) {
+export function useProductById() {
+  const { id } = useParams()
   return useQuery({
     queryKey: ["product", id],
-    queryFn: () => productService.getById(id)(),
+    queryFn: () => productService.getById({ path: id }),
     enabled: !!id,
   });
 }

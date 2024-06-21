@@ -1,10 +1,11 @@
 import { useCategory } from "@hooks/home/useCategory";
-import { useProductAdd, useProductById, useProductUpdate } from "@hooks/home/useProduct";
+import { useProductById, useProductUpdate } from "@hooks/home/useProduct";
 import { ProductBodyModel } from "@model/product";
+import { useQueryClient } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import { MdArrowDropDown } from "react-icons/md";
-import DefaultImage from "../../../assets/default-image.png";
 import { useParams } from "react-router-dom";
+import DefaultImage from "../../../assets/default-image.png";
 
 const InitialValue: ProductBodyModel = {
   name: "",
@@ -21,11 +22,10 @@ interface ImageFile extends File {
 const ProductEdit = () => {
   const { id } = useParams<{ id: string }>();
   const { data: category } = useCategory();
-  const { data: product, isLoading } = useProductById(id as string);
-  const mutation = useProductUpdate(id as string);
+  const { data: product, isLoading } = useProductById();
+  const mutation = useProductUpdate();
 
   useEffect(() => {
-    console.log("ProductEdit", product);
     if (product && product.data) {
       const { name, price, image, stock, category } = product.data;
       const categoryId = category ? category.id : "";
@@ -133,6 +133,11 @@ const ProductEdit = () => {
     setImageFile(null);
     setErrors({});
   };
+
+  const queryClient = useQueryClient();
+  useEffect(() => {
+    return queryClient.removeQueries({ queryKey: ["products"] });
+  }, [id]);
 
   if (isLoading) {
     return <div>Loading...</div>;
@@ -253,7 +258,9 @@ const ProductEdit = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-4">
               <div className="mx-auto">
                 <img
-                  src={imageFile?.preview || product?.data?.image || DefaultImage}
+                  src={
+                    imageFile?.preview || product?.data?.image || DefaultImage
+                  }
                   alt="Buku Yang Mau di Upload"
                   className="max-w-[200px] h-[200px] max-h-[200px] mx-auto"
                 />

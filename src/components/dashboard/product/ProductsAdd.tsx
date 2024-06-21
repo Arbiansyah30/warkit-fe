@@ -115,6 +115,7 @@ const ProductAdd = () => {
     setErrors({});
   };
   const { data: category } = useCategory();
+
   return (
     <div className="flex flex-col gap-9">
       <div className="rounded-sm border border-stroke text-white bg-gray-900 shadow-default dark:border-strokedark dark:bg-boxdark">

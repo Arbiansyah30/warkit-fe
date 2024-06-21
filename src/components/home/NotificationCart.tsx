@@ -96,7 +96,6 @@ const NotificationCart: React.FC<NotificationCartProps> = ({
   const handleChangeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.value.length > 0) {
       setIsError(false);
-      return;
     }
     setName(e.target.value);
   };
@@ -210,12 +209,15 @@ const NotificationCart: React.FC<NotificationCartProps> = ({
               <p className="text-sm font-medium text-gray-900">
                 Total: {formatRupiah(total || 0)}
               </p>
-              <button
+              {/* <button
                 onClick={handlePayment}
                 className="mt-2 w-full bg-blue-600 text-white py-2 rounded-md"
               >
                 Pay Now
-              </button>
+              </button> */}
+              <Button disabled={!name} primary={!!name} onClick={handlePayment}>
+                Pay Now
+              </Button>
             </div>
           </div>
         )}
