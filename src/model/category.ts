@@ -8,3 +8,8 @@ export interface CategoryModel {
 export interface CategoryBodyModel {
     name?: string
 }
+
+export interface CategoryDTO {
+    id?: string,
+    name?: string
+}

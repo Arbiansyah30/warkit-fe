@@ -21,9 +21,9 @@ const Sidebar: React.FC<{
 
   const menuItems = [
     {
-      name: "Products",
+      name: "Product",
       icon: <FaBox />,
-      link: "/admin/products",
+      link: "/admin/product",
     },
     {
       name: "Category",

@@ -1,6 +1,11 @@
+import { useTransactionCreation } from "@hooks/home/useTransactionCreation";
+import { PaymentMethod } from "@model/transaction";
+import { useAtomValue } from "jotai";
 import { useRef, useState } from "react";
 import QRIS from "../../assets/images/qris.png";
 import CASH from "../../assets/images/🦆 icon _wallet_.svg";
+import { CartMapper } from "../../mapper/CartMapper";
+import { transactionAtom } from "../../store/transaction";
 import Button from "../global/Button";
 
 interface IDrawer {
@@ -8,8 +13,16 @@ interface IDrawer {
   show: boolean;
 }
 
+interface Cart {
+  productId: string;
+  quantity: number;
+}
+
 const DrawerMethodPayment: React.FC<IDrawer> = ({ onHide, show = false }) => {
   const drawerRef = useRef(null);
+
+  const [selected, setSelected] = useState<PaymentMethod>("QRIS");
+  const transaction = useAtomValue(transactionAtom);
 
   const handleClickOutside = (e: React.MouseEvent<HTMLElement>) => {
     if (
@@ -18,11 +31,26 @@ const DrawerMethodPayment: React.FC<IDrawer> = ({ onHide, show = false }) => {
       show
     ) {
       onHide();
-      setSelected("");
+      setSelected("QRIS");
     }
   };
+  const filteredTransactionIds = CartMapper()
+    ?.filter((item: Cart) => transaction.selected.includes(item.productId))
+    .map((item: string) => item);
 
-  const [selected, setSelected] = useState<string>("");
+  const mutation = useTransactionCreation();
+
+  const handleTransaction = async () => {
+    await mutation.mutateAsync({
+      type: "create",
+      data: {
+        name: transaction.name,
+        email: transaction.email,
+        paymentMethod: selected as PaymentMethod,
+        details: filteredTransactionIds,
+      },
+    });
+  };
 
   return (
     <div
@@ -80,7 +108,11 @@ const DrawerMethodPayment: React.FC<IDrawer> = ({ onHide, show = false }) => {
             <p className="text-black">CASH</p>
           </div>
         </div>
-        <Button primary={!!selected} disabled={!selected}>
+        <Button
+          onClick={handleTransaction}
+          primary={!!selected}
+          disabled={!selected}
+        >
           NEXT
         </Button>
       </div>

@@ -51,7 +51,8 @@ const FormRegister = () => {
       <div className="w-full flex flex-col gap-1 items-start">
         <Input
           type="email"
-          error={!!errors.email}
+          name="email"
+          error={errors.email}
           placeholder="Email"
           onChange={(e) =>
             setAuthBody((prev) => ({ ...prev, email: e.target.value }))
@@ -63,8 +64,9 @@ const FormRegister = () => {
       </div>
       <div className="w-full flex flex-col gap-1 items-start">
         <Input
+          name="password"
           type="password"
-          error={!!errors.password}
+          error={errors.password}
           placeholder="Password"
           onChange={(e) =>
             setAuthBody((prev) => ({ ...prev, password: e.target.value }))

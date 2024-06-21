@@ -1,15 +1,16 @@
 import LoginView from "@pages/Login";
 import RegisterView from "@pages/Register";
+import AddCategoryPage from "@pages/category/AddCategory";
+import DataCategoryPage from "@pages/category/DataCategory";
+import UpdateCategoryPage from "@pages/category/UpdateCategory";
 import AdminView from "@pages/global/Admin";
 import AuthView from "@pages/global/Auth";
 import Home from "@pages/home";
 import AddProductPage from "@pages/products/AddProducts";
 import ProductsPage from "@pages/products/DataProducts";
+import UpdateProductsPage from "@pages/products/UpdateProducts";
 import { createBrowserRouter } from "react-router-dom";
 import Users from "../../container/users";
-import UpdateProductsPage from "@pages/products/UpdateProducts";
-import DataCategoryPage from "@pages/category/DataCategory";
-import AddCategoryPage from "@pages/category/AddCategory";
 
 export const router = createBrowserRouter([
   {
@@ -41,15 +42,15 @@ export const router = createBrowserRouter([
     element: <AdminView />,
     children: [
       {
-        path: "/admin/products",
+        path: "/admin/product",
         element: <ProductsPage />,
       },
       {
-        path: "/admin/products/add",
+        path: "/admin/product/add",
         element: <AddProductPage />,
       },
       {
-        path: "/admin/products/edit/:id",
+        path: "/admin/product/edit/:id",
         element: <UpdateProductsPage />,
       },
       {
@@ -62,7 +63,7 @@ export const router = createBrowserRouter([
       },
       {
         path: "/admin/category/edit/:id",
-        element: <AddCategoryPage />,
+        element: <UpdateCategoryPage />,
       },
     ],
   },

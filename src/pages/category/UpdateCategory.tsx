@@ -4,7 +4,7 @@ import NavbarTableAdmin from "../../components/global/admin/NavbarTableAdmin";
 const UpdateCategoryPage = () => {
   return (
     <>
-      <NavbarTableAdmin detail="Update" />
+      <NavbarTableAdmin action="Update" title="Category" />
       <FormUpdateCategory />
     </>
   );

@@ -1,9 +1,9 @@
-import { useEffect, useState } from "react";
-import Input from "../../global/Input";
+import { useCategoryById, useCategoryCreation } from "@hooks/home/useCategory";
 import { CategoryBodyModel } from "@model/category";
-import { useCategoryById, useCategoryUpdate } from "@hooks/home/useCategory";
-import { useParams } from "react-router-dom";
 import { useQueryClient } from "@tanstack/react-query";
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import Input from "../../global/Input";
 
 const InitialValue: CategoryBodyModel = {
   name: "",
@@ -11,21 +11,21 @@ const InitialValue: CategoryBodyModel = {
 
 const FormUpdateCategory = () => {
   const { id } = useParams<{ id: string }>();
-  const { data: category, isLoading } = useCategoryById();
-  const mutation = useCategoryUpdate();
+  const { data: categoryById, isLoading } = useCategoryById();
+  const mutation = useCategoryCreation();
 
   useEffect(() => {
-    if (category && category.data) {
-      const { name } = category.data;
+    if (categoryById && categoryById.data) {
+      const { name } = categoryById.data;
       // const categoryId = category ? category.id : "";
       setCategoryBody({
         name,
       });
     }
-  }, [category]);
+  }, [categoryById]);
 
   const [categoryBody, setCategoryBody] = useState<CategoryBodyModel>({
-    ...InitialValue,
+    name: categoryById?.data?.name,
   });
   const [errors, setErrors] = useState<
     Partial<Record<keyof CategoryBodyModel, string>>
@@ -50,17 +50,24 @@ const FormUpdateCategory = () => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!validate()) return;
-    await mutation.mutateAsync(categoryBody);
+    await mutation.mutateAsync({
+      type: "update",
+      data: {
+        id,
+        name: categoryBody.name,
+      },
+    });
   };
 
   const handleReset: () => void = () => {
     setCategoryBody(InitialValue);
     setErrors({});
   };
+  console.log(categoryById);
 
   const queryClient = useQueryClient();
   useEffect(() => {
-    return queryClient.removeQueries({ queryKey: ["products"] });
+    return queryClient.removeQueries({ queryKey: ["category"] });
   }, [id]);
 
   if (isLoading) {

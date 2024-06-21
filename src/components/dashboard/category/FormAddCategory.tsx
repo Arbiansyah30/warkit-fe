@@ -1,19 +1,21 @@
+import { useCategoryCreation } from "@hooks/home/useCategory";
+import { CategoryBodyModel } from "@model/category";
 import { useState } from "react";
 import Input from "../../global/Input";
-import { CategoryBodyModel } from "@model/category";
-import { useCategoryAdd } from "@hooks/home/useCategory";
 
 const InitialValue: CategoryBodyModel = {
   name: "",
 };
 
 const FormAddCategory = () => {
-  const mutation = useCategoryAdd();
+  const mutation = useCategoryCreation();
 
   const [categoryBody, setCategoryBody] = useState<CategoryBodyModel>({
     ...InitialValue,
   });
-  const [errors, setErrors] = useState<Partial<Record<keyof CategoryBodyModel, string>>>({});
+  const [errors, setErrors] = useState<
+    Partial<Record<keyof CategoryBodyModel, string>>
+  >({});
 
   const validate = () => {
     const newErrors: Partial<Record<keyof CategoryBodyModel, string>> = {};
@@ -26,7 +28,6 @@ const FormAddCategory = () => {
     }
 
     setErrors(newErrors);
-    console.log("Validation Errors:", newErrors);
 
     return isValid;
   };
@@ -34,7 +35,12 @@ const FormAddCategory = () => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!validate()) return;
-    await mutation.mutateAsync(categoryBody);
+    await mutation.mutateAsync({
+      type: "create",
+      data: {
+        name: categoryBody.name,
+      },
+    });
   };
 
   const handleReset: () => void = () => {

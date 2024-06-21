@@ -4,7 +4,7 @@ import NavbarTableAdmin from "../../components/global/admin/NavbarTableAdmin";
 const AddCategoryPage = () => {
   return (
     <>
-      <NavbarTableAdmin detail="Add" />
+      <NavbarTableAdmin action="Add" title="Category" />
       <FormAddCategory />
     </>
   );

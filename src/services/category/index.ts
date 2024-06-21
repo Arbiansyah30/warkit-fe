@@ -5,8 +5,8 @@ import { CategoryModel } from "@model/category";
 
 export const categoryService = {
   get: HTTP_REQUEST.get<ApiResponse<CategoryModel[]>>(API_ENDPOINT.category),
-  getById: HTTP_REQUEST.get<ApiResponse<CategoryModel>>(API_ENDPOINT.products),
-  post: HTTP_REQUEST.post<ApiResponse<CategoryModel>>(API_ENDPOINT.products),
-  put: HTTP_REQUEST.put<ApiResponse<CategoryModel>>(API_ENDPOINT.products),
-  delete: HTTP_REQUEST.delete<ApiResponse<void>>(API_ENDPOINT.products),
+  getById: HTTP_REQUEST.get<ApiResponse<CategoryModel>>(API_ENDPOINT.category),
+  post: HTTP_REQUEST.post<ApiResponse<CategoryModel>>(API_ENDPOINT.category),
+  put: HTTP_REQUEST.put<ApiResponse<CategoryModel>>(API_ENDPOINT.category),
+  delete: HTTP_REQUEST.delete<ApiResponse<void>>(API_ENDPOINT.category),
 };

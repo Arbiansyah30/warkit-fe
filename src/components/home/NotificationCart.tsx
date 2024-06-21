@@ -1,7 +1,9 @@
 import { ProductModelWithQty } from "@model/product";
+import { useAtom } from "jotai";
 import React, { useState } from "react";
 import { FaCartShopping } from "react-icons/fa6";
 import { formatRupiah } from "../../libs/helper";
+import { transactionAtom } from "../../store/transaction";
 import Button from "../global/Button";
 import Input from "../global/Input";
 import DrawerMethodPayment from "./DrawerPaymentMethod";
@@ -13,6 +15,11 @@ type NotificationCartProps = {
   updateCart: () => void;
 };
 
+interface Identity {
+  name?: string;
+  email?: string;
+}
+
 const NotificationCart: React.FC<NotificationCartProps> = ({
   cart,
   cartCount,
@@ -20,12 +27,16 @@ const NotificationCart: React.FC<NotificationCartProps> = ({
   updateCart,
 }) => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
-  const [name, setName] = useState("");
+  const [identity, setIdentity] = useState<Identity>();
   const [selectedItems, setSelectedItems] = useState<string[]>([]);
   const [selectAll, setSelectAll] = useState(false);
   const [show, setShow] = useState(false);
 
-  const [isError, setIsError] = useState<boolean>(false);
+  const [errors, setErrors] = useState<Identity>();
+
+  // global
+  const [, setTransaction] = useAtom(transactionAtom);
+
   const handleClick = () => setDropdownOpen(!dropdownOpen);
 
   const handleSelectAll = () => {
@@ -86,18 +97,29 @@ const NotificationCart: React.FC<NotificationCartProps> = ({
   );
 
   const handlePayment = () => {
-    if (!name) {
-      setIsError(true);
+    if (!identity?.email || !identity?.name) {
+      if (!identity?.email) {
+        setErrors((prev) => ({ ...prev, email: "Email is required" }));
+      }
+      if (!identity?.name) {
+        setErrors((prev) => ({ ...prev, name: "Name is required" }));
+      }
       return;
     }
+    setTransaction((prev) => ({
+      ...prev,
+      email: identity.email as string,
+      name: identity.name as string,
+      selected: selectedItems,
+    }));
     setShow((prev) => !prev);
   };
 
   const handleChangeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.value.length > 0) {
-      setIsError(false);
+      setErrors((prev) => ({ ...prev, [e.target.name]: "" }));
     }
-    setName(e.target.value);
+    setIdentity((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
   return (
@@ -132,14 +154,19 @@ const NotificationCart: React.FC<NotificationCartProps> = ({
                 className="mt-1 p-2 border border-gray-300 rounded-md w-full text-black"
               /> */}
               <Input
+                name="name"
                 placeholder="Input your name"
                 type="text"
-                error={isError}
+                error={errors?.name}
                 onChange={handleChangeInput}
               />
-              {isError && (
-                <p className="text-red-500 text-xs">Name is required</p>
-              )}
+              <Input
+                name="email"
+                placeholder="Input your email"
+                type="text"
+                error={errors?.email}
+                onChange={handleChangeInput}
+              />
             </div>
             <div className="mb-2 flex text-sm justify-between items-center gap-5">
               {/* <button
@@ -215,7 +242,16 @@ const NotificationCart: React.FC<NotificationCartProps> = ({
               >
                 Pay Now
               </button> */}
-              <Button disabled={!name} primary={!!name} onClick={handlePayment}>
+              <Button
+                disabled={
+                  (!identity?.name || !identity?.email) && !selectedItems.length
+                }
+                primary={
+                  (!!identity?.email || !!identity?.name) &&
+                  !!selectedItems.length
+                }
+                onClick={handlePayment}
+              >
                 Pay Now
               </Button>
             </div>
