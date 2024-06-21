@@ -1,12 +1,15 @@
 import { useState } from "react";
 import Input from "../../global/Input";
 import { CategoryBodyModel } from "@model/category";
+import { useCategoryAdd } from "@hooks/home/useCategory";
 
 const InitialValue: CategoryBodyModel = {
   name: "",
 };
 
 const FormAddCategory = () => {
+  const mutation = useCategoryAdd();
+
   const [categoryBody, setCategoryBody] = useState<CategoryBodyModel>({
     ...InitialValue,
   });
