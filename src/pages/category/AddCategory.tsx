@@ -1,11 +1,11 @@
-import FormAddProduct from "../../components/dashboard/product/FormAddProduct";
+import FormAddCategory from "../../components/dashboard/category/FormAddCategory";
 import NavbarTableAdmin from "../../components/global/admin/NavbarTableAdmin";
 
 const AddCategoryPage = () => {
   return (
     <>
       <NavbarTableAdmin detail="Add" />
-      <FormAddProduct />
+      <FormAddCategory />
     </>
   );
 };

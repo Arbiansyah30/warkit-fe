@@ -1,11 +1,11 @@
-import FormUpdateProduct from "../../components/dashboard/product/FormUpdateProduct";
+import FormUpdateCategory from "../../components/dashboard/category/FormUpdateCategory";
 import NavbarTableAdmin from "../../components/global/admin/NavbarTableAdmin";
 
 const UpdateCategoryPage = () => {
   return (
     <>
       <NavbarTableAdmin detail="Update" />
-      <FormUpdateProduct />
+      <FormUpdateCategory />
     </>
   );
 };
