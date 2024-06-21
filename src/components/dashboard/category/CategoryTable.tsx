@@ -1,4 +1,4 @@
-import { useCategory } from "@hooks/home/useCategory";
+import { useCategory, useCategoryDelete } from "@hooks/home/useCategory";
 import { FaEdit, FaTrash } from "react-icons/fa";
 import { Link, useSearchParams } from "react-router-dom";
 import { convertQueryParamsToObject } from "../../../libs/helper";
@@ -6,11 +6,18 @@ import Pagination from "../../global/Pagination";
 
 const CategoryTable = () => {
   const { data: categories } = useCategory({ perPage: 2 });
+  const mutation = useCategoryDelete();
 
   const [searchParams, setSearchParams] = useSearchParams();
   const queryParams = convertQueryParamsToObject(searchParams.toString());
   const handleChangePage = (page: number) => {
     setSearchParams({ ...queryParams, page: String(page) });
+  };
+
+  const handleDelete: (id: string) => void = (id) => {
+    if (confirm("Are you sure you want to delete this product?")) {
+      mutation.mutate(id);
+    }
   };
 
   return (
@@ -43,10 +50,10 @@ const CategoryTable = () => {
                   </td>
                   <td className="px-4 py-2">
                     <div className="flex items-center space-x-3">
-                      <button className="hover:opacity-70 text-sm text-white rounded-full px-1 bg-yellow-500 flex justify-center items-center gap-1">
+                      <Link  to={`/admin/category/edit/${item.id}`} className="hover:opacity-70 text-sm text-white rounded-full px-1 bg-yellow-500 flex justify-center items-center gap-1">
                         <FaEdit /> Edit
-                      </button>
-                      <button className="hover:opacity-70 text-sm text-white rounded-full px-1 bg-red-500 flex justify-center items-center gap-1">
+                      </Link>
+                      <button onClick={() => handleDelete(item.id as string)} className="hover:opacity-70 text-sm text-white rounded-full px-1 bg-red-500 flex justify-center items-center gap-1">
                         <FaTrash /> Hapus
                       </button>
                     </div>

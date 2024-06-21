@@ -49,7 +49,7 @@ export const router = createBrowserRouter([
         element: <AddProductPage />,
       },
       {
-        path: "/admin/products/edit-product/:id",
+        path: "/admin/products/edit/:id",
         element: <UpdateProductsPage />,
       },
       {
@@ -58,6 +58,10 @@ export const router = createBrowserRouter([
       },
       {
         path: "/admin/category/add",
+        element: <AddCategoryPage />,
+      },
+      {
+        path: "/admin/category/edit/:id",
         element: <AddCategoryPage />,
       },
     ],

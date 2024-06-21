@@ -48,33 +48,33 @@ const ProductsTable = () => {
             </tr>
           </thead>
           <tbody>
-            {products?.data?.map((product) => (
-              <tr key={product.id}>
+            {products?.data?.map((item) => (
+              <tr key={item.id}>
                 <td className="px-4 py-2 flex items-center space-x-3">
                   <img
-                    src={product.image}
-                    alt={product.name}
+                    src={item.image}
+                    alt={item.name}
                     className="max-w-[100px] max-h-[100px] object-cover"
                   />
                   <div>
-                    <h5 className="font-medium text-white">{product.name}</h5>
+                    <h5 className="font-medium text-white">{item.name}</h5>
                   </div>
                 </td>
                 <td className="px-4 py-2">
-                  <p className="text-white">{formatRupiah(product.price || 0)}</p>
+                  <p className="text-white">{formatRupiah(item.price || 0)}</p>
                 </td>
                 <td className="px-4 py-2">
-                  <p className="text-white">{product.stock}</p>
+                  <p className="text-white">{item.stock}</p>
                 </td>
                 <td className="px-4 py-2">
-                  <p className="text-white">{product.category?.name}</p>
+                  <p className="text-white">{item.category?.name}</p>
                 </td>
                 <td className="px-4 py-2">
                   <div className="flex items-center flex-col gap-1">
-                    <Link to={`/admin/products/edit-product/${product.id}`} className="hover:opacity-70 text-sm text-white rounded-full px-2 bg-yellow-500 flex justify-center items-center gap-1">
+                    <Link to={`/admin/products/edit/${item.id}`} className="hover:opacity-70 text-sm text-white rounded-full px-2 bg-yellow-500 flex justify-center items-center gap-1">
                       <FaEdit /> Edit
                     </Link>
-                    <button onClick={() => handleDelete(product.id || "")} className="hover:opacity-70 text-sm text-white rounded-full px-2 bg-red-500 flex justify-center items-center gap-1">
+                    <button onClick={() => handleDelete(item.id as string)} className="hover:opacity-70 text-sm text-white rounded-full px-2 bg-red-500 flex justify-center items-center gap-1">
                       <FaTrash /> Hapus
                     </button>
                   </div>
