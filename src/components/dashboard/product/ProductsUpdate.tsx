@@ -98,11 +98,15 @@ const ProductsUpdate = () => {
     if (!validate()) return;
     const formData = new FormData();
     Object.entries(productBody).forEach(([key, value]) => {
-      formData.append(key, value);
+      if (key === "image") {
+        if (imageFile) {
+          formData.append("image", imageFile);
+        }
+      } else {
+        formData.append(key, value);
+      }
     });
-    if (!imageFile) {
-      formData.append("image", "");
-    }
+
     console.log({ imageFile, file: productBody.image });
 
     await mutation.mutateAsync(formData);
@@ -147,7 +151,7 @@ const ProductsUpdate = () => {
   }, [id]);
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <div className="text-white">Loading...</div>;
   }
 
   return (
@@ -215,7 +219,7 @@ const ProductsUpdate = () => {
             </div>
 
             <div className="mb-4">
-            <Input
+              <Input
                 type="text"
                 placeholder="Enter Product Stock"
                 error={errors.stock}
@@ -233,7 +237,7 @@ const ProductsUpdate = () => {
             </div>
 
             <div className="mb-4">
-            <Input
+              <Input
                 type="text"
                 placeholder="Enter Product Price"
                 error={errors.price}
@@ -254,20 +258,24 @@ const ProductsUpdate = () => {
               <div className="mx-auto">
                 <img
                   src={
-                    imageFile?.preview || productBody.image as string || DefaultImage
+                    imageFile?.preview ||
+                    (productBody.image as string) ||
+                    DefaultImage
                   }
                   alt="Buku Yang Mau di Upload"
                   className="max-w-[200px] h-[200px] max-h-[200px] mx-auto object-cover"
                 />
               </div>
               <div>
-              <Input
+                <Input
                   type="file"
                   name="image"
                   placeholder="Upload Image Product"
                   error={errors.image}
                   onChange={handleChangeImage}
-                >Upload Image</Input>
+                >
+                  Upload Image
+                </Input>
               </div>
             </div>
             <div className="flex justify-center items-center gap-5">
