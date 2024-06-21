@@ -7,7 +7,10 @@ import DefaultImage from "../../../assets/default-image.png";
 
 const InitialValue: ProductBodyModel = {
   name: "",
-  categoryId: "",
+  category: {
+    id: "",
+    name: "",
+  },
   price: 0,
   image: "",
   stock: 0,
@@ -37,8 +40,8 @@ const ProductAdd = () => {
       newErrors.name = "Name is required";
       isValid = false;
     }
-    if (!productBody.categoryId) {
-      newErrors.categoryId = "Category is required";
+    if (!productBody.category?.id) {
+      newErrors.category = "Category is required";
       isValid = false;
     }
     if (!productBody.price) {
@@ -115,7 +118,6 @@ const ProductAdd = () => {
     setErrors({});
   };
   const { data: category } = useCategory();
-
   return (
     <div className="flex flex-col gap-9">
       <div className="rounded-sm border border-stroke text-white bg-gray-900 shadow-default dark:border-strokedark dark:bg-boxdark">
@@ -151,20 +153,30 @@ const ProductAdd = () => {
                 <select
                   name="categoryId"
                   className={`relative z-20 w-full bg-transparent appearance-none rounded border px-3 py-2 outline-none transition focus:border-primary active:border-primary dark:focus:border-primary ${
-                    errors.categoryId ? "border-red-500" : "border-stroke"
+                    errors.category ? "border-red-500" : "border-stroke"
                   }`}
                   onChange={(e) => {
                     setProductBody({
                       ...productBody,
-                      categoryId: e.target.value,
+                      category: {
+                        id: e.target.value,
+                        name: e.target.selectedOptions[0].getAttribute(
+                          "data-name"
+                        ) as string,
+                      },
                     });
+                    console.log(e.target.ariaLabel);
                   }}
                 >
-                  <option className="text-black">Pilih Kategori</option>
+                  <option className="text-black" hidden>
+                    Pilih Kategori
+                  </option>
+
                   {category?.data?.map((option, index) => (
                     <option
                       key={index}
                       value={option.id}
+                      data-name={option.name}
                       className="text-black"
                     >
                       {option.name}
@@ -175,8 +187,8 @@ const ProductAdd = () => {
                   <MdArrowDropDown className="fill-current" size={24} />
                 </span>
               </div>
-              {errors.categoryId && (
-                <p className="text-[#DC2626] text-xs">{errors.categoryId}</p>
+              {errors.category && (
+                <p className="text-[#DC2626] text-xs">{errors.category}</p>
               )}
             </div>
 
@@ -191,7 +203,6 @@ const ProductAdd = () => {
                   errors.stock ? "border-red-500" : "border-stroke"
                 }`}
                 name="stock"
-                value={productBody.stock}
                 onChange={(e) => {
                   setProductBody({
                     ...productBody,
@@ -215,7 +226,6 @@ const ProductAdd = () => {
                   errors.price ? "border-red-500" : "border-stroke"
                 }`}
                 name="price"
-                value={productBody.price}
                 onChange={(e) => {
                   setProductBody({
                     ...productBody,

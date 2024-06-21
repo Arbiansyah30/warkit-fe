@@ -9,7 +9,10 @@ import DefaultImage from "../../../assets/default-image.png";
 
 const InitialValue: ProductBodyModel = {
   name: "",
-  categoryId: "",
+  category: {
+    id: "",
+    name: "",
+  },
   price: 0,
   image: "",
   stock: 0,
@@ -25,22 +28,22 @@ const ProductEdit = () => {
   const { data: product, isLoading } = useProductById();
   const mutation = useProductUpdate();
 
-  useEffect(() => {
-    if (product && product.data) {
-      const { name, price, image, stock, category } = product.data;
-      const categoryId = category ? category.id : "";
-      setProductBody({
-        name,
-        price,
-        image,
-        categoryId,
-        stock,
-      });
-    }
-  }, [product]);
+  // useEffect(() => {
+  //   if (product && product.data) {
+  //     const { name, price, image, stock, category } = product.data;
+  //     // const categoryId = category ? category.id : "";
+  //     setProductBody({
+  //       name,
+  //       price,
+  //       image: image as string,
+  //       category: category,
+  //       stock,
+  //     });
+  //   }
+  // }, [product]);
 
   const [productBody, setProductBody] = useState<ProductBodyModel>({
-    ...InitialValue,
+    ...(product?.data as ProductBodyModel),
   });
   const [imageFile, setImageFile] = useState<ImageFile | null>(null);
   const [errors, setErrors] = useState<
@@ -56,8 +59,8 @@ const ProductEdit = () => {
       newErrors.name = "Name is required";
       isValid = false;
     }
-    if (!productBody.categoryId) {
-      newErrors.categoryId = "Category is required";
+    if (!productBody.category?.id) {
+      newErrors.category = "Category is required";
       isValid = false;
     }
     if (!productBody.price) {
@@ -143,6 +146,7 @@ const ProductEdit = () => {
     return <div>Loading...</div>;
   }
 
+  console.log(productBody);
   return (
     <div className="flex flex-col gap-9">
       <div className="rounded-sm border border-stroke text-white bg-gray-900 shadow-default dark:border-strokedark dark:bg-boxdark">
@@ -162,7 +166,7 @@ const ProductEdit = () => {
                   errors.name ? "border-red-500" : "border-stroke"
                 }`}
                 name="name"
-                value={productBody.name}
+                value={product?.data?.name}
                 onChange={(e) => {
                   setProductBody({ ...productBody, name: e.target.value });
                 }}
@@ -176,22 +180,28 @@ const ProductEdit = () => {
               <label className="mb-3 block text-sm font-medium">Kategori</label>
               <div className="relative z-20 bg-transparent dark:bg-form-input">
                 <select
-                  name="categoryId"
+                  name="category"
                   className={`relative z-20 w-full bg-transparent appearance-none rounded border px-3 py-2 outline-none transition focus:border-primary active:border-primary dark:focus:border-primary ${
-                    errors.categoryId ? "border-red-500" : "border-stroke"
+                    errors.category ? "border-red-500" : "border-stroke"
                   }`}
                   onChange={(e) => {
                     setProductBody({
                       ...productBody,
-                      categoryId: e.target.value,
+                      category: {
+                        id: e.target.value,
+                        name: e.target.selectedOptions[0].getAttribute(
+                          "data-name"
+                        ) as string,
+                      },
                     });
                   }}
                 >
-                  <option className="text-black">Pilih Kategori</option>
                   {category?.data?.map((option, index) => (
                     <option
                       key={index}
+                      selected={option.id === product?.data?.category?.id}
                       value={option.id}
+                      data-name={option.name}
                       className="text-black"
                     >
                       {option.name}
@@ -202,8 +212,8 @@ const ProductEdit = () => {
                   <MdArrowDropDown className="fill-current" size={24} />
                 </span>
               </div>
-              {errors.categoryId && (
-                <p className="text-[#DC2626] text-xs">{errors.categoryId}</p>
+              {errors.category && (
+                <p className="text-[#DC2626] text-xs">{errors.category}</p>
               )}
             </div>
 
@@ -218,7 +228,7 @@ const ProductEdit = () => {
                   errors.stock ? "border-red-500" : "border-stroke"
                 }`}
                 name="stock"
-                value={productBody.stock}
+                defaultValue={product?.data?.stock}
                 onChange={(e) => {
                   setProductBody({
                     ...productBody,
@@ -242,7 +252,7 @@ const ProductEdit = () => {
                   errors.price ? "border-red-500" : "border-stroke"
                 }`}
                 name="price"
-                value={productBody.price}
+                value={product?.data?.price}
                 onChange={(e) => {
                   setProductBody({
                     ...productBody,
@@ -262,7 +272,7 @@ const ProductEdit = () => {
                     imageFile?.preview || product?.data?.image || DefaultImage
                   }
                   alt="Buku Yang Mau di Upload"
-                  className="max-w-[200px] h-[200px] max-h-[200px] mx-auto"
+                  className="max-w-[200px] h-[200px] max-h-[200px] mx-auto object-cover"
                 />
               </div>
               <div>
