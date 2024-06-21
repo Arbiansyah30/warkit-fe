@@ -56,8 +56,10 @@ export function useProductAdd() {
 }
 
 export function useProductUpdate() {
+  const queryClient = useQueryClient()
   const navigate = useNavigate()
   const { id } = useParams()
+  const { refetch } = useProductById()
 
   return useMutation({
     mutationFn: (formData: FormData) =>
@@ -65,6 +67,8 @@ export function useProductUpdate() {
     onSuccess: (res) => {
       navigate("/admin/products")
       alert(res.message);
+      refetch()
+      return queryClient.removeQueries({ queryKey: ["products"] });
     },
     onError: (err: ApiErrorResponse<ApiResponse>) => {
       alert(err.response?.data.message);
@@ -73,6 +77,7 @@ export function useProductUpdate() {
 }
 
 export function useProductDelete() {
+  // const queryClient = useQueryClient();
   const { refetch } = useProduct()
 
   return useMutation({
@@ -80,6 +85,7 @@ export function useProductDelete() {
     onSuccess: () => {
       refetch()
       alert("Product deleted successfully.");
+      // return queryClient.removeQueries({ queryKey: ["products"] });
     },
     onError: (err: ApiErrorResponse<ApiResponse>) => {
       alert(err.response?.data.message);

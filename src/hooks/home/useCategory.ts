@@ -21,7 +21,7 @@ export function useCategory(options?: Options) {
   const page = options?.page || searchParams.get("page") || 1;
   const perPage = options?.perPage || searchParams.get("perPage") || 10;
   const query = useQuery({
-    queryKey: ['category', { page, perPage }],
+    queryKey: ['categories', { page, perPage }],
     queryFn: () => categoryService.get({
       queryParams: {
         perPage: perPage ? Number(perPage) : undefined,
@@ -52,7 +52,7 @@ export function useCategoryCreation() {
     onSuccess: (res) => {
       alert(res.message)
       navigate('/admin/category')
-      return queryClient.removeQueries({ queryKey: ['category'] })
+      return queryClient.removeQueries({ queryKey: ['categories'] })
     },
     onError: (err: ApiErrorResponse<ApiResponse>) => {
       alert(err.response?.data.message)

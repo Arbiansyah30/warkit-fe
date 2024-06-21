@@ -27,6 +27,7 @@ const FormUpdateCategory = () => {
   const [categoryBody, setCategoryBody] = useState<CategoryBodyModel>({
     name: categoryById?.data?.name,
   });
+
   const [errors, setErrors] = useState<
     Partial<Record<keyof CategoryBodyModel, string>>
   >({});
@@ -67,7 +68,7 @@ const FormUpdateCategory = () => {
 
   const queryClient = useQueryClient();
   useEffect(() => {
-    return queryClient.removeQueries({ queryKey: ["category"] });
+    return queryClient.removeQueries({ queryKey: ["products"] });
   }, [id]);
 
   if (isLoading) {

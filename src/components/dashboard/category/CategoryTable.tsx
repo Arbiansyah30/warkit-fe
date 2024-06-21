@@ -48,8 +48,8 @@ const CategoryTable = () => {
               </tr>
             </thead>
             <tbody>
-              {categories?.data?.map((item) => (
-                <tr>
+              {categories?.data?.map((item, index) => (
+                <tr key={index}>
                   <td className="px-4 py-2">
                     <p className="text-white">{item.name}</p>
                   </td>
