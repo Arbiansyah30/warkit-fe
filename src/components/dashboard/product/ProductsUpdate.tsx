@@ -23,7 +23,7 @@ interface ImageFile extends File {
   preview: string;
 }
 
-const ProductEdit = () => {
+const ProductsUpdate = () => {
   const { id } = useParams<{ id: string }>();
   const { data: category } = useCategory();
   const { data: product, isLoading } = useProductById();
@@ -44,7 +44,7 @@ const ProductEdit = () => {
   }, [product]);
 
   const [productBody, setProductBody] = useState<ProductBodyModel>({
-    ...(product?.data as ProductBodyModel),
+    ...InitialValue,
   });
   const [imageFile, setImageFile] = useState<ImageFile | null>(null);
   const [errors, setErrors] = useState<
@@ -154,7 +154,7 @@ const ProductEdit = () => {
     <div className="flex flex-col gap-9">
       <div className="rounded-sm border border-stroke text-white bg-gray-900 shadow-default dark:border-strokedark dark:bg-boxdark">
         <div className="border-b border-stroke px-6 py-4 dark:border-strokedark">
-          <h3 className="font-medium">Tambah Products</h3>
+          <h3 className="font-medium">Update Products</h3>
         </div>
         <form onSubmit={handleSubmit}>
           <div className="p-6">
@@ -181,6 +181,7 @@ const ProductEdit = () => {
                   className={`relative z-20 w-full bg-transparent appearance-none rounded border px-3 py-2 outline-none transition focus:border-primary active:border-primary dark:focus:border-primary ${
                     errors.category ? "border-red-500" : "border-stroke"
                   }`}
+                  value={productBody.category?.id}
                   onChange={(e) => {
                     setProductBody({
                       ...productBody,
@@ -196,7 +197,6 @@ const ProductEdit = () => {
                   {category?.data?.map((option, index) => (
                     <option
                       key={index}
-                      selected={option.id === productBody.category?.id}
                       value={option.id}
                       data-name={option.name}
                       className="text-black"
@@ -292,4 +292,4 @@ const ProductEdit = () => {
   );
 };
 
-export default ProductEdit;
+export default ProductsUpdate;

@@ -8,7 +8,7 @@ import AddProductPage from "@pages/products/AddProducts";
 import ProductsPage from "@pages/products/DataProducts";
 import { createBrowserRouter } from "react-router-dom";
 import Users from "../../container/users";
-import EditProductPage from "@pages/products/EditProducts";
+import UpdateProductsPage from "@pages/products/UpdateProducts";
 
 export const router = createBrowserRouter([
   {
@@ -49,7 +49,7 @@ export const router = createBrowserRouter([
       },
       {
         path: "/admin/products/edit-product/:id",
-        element: <EditProductPage />,
+        element: <UpdateProductsPage />,
       },
       {
         path: "/admin/categories",

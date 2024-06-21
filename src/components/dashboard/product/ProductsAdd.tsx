@@ -133,6 +133,7 @@ const ProductAdd = () => {
                 placeholder="Enter Product Name"
                 error={errors.name}
                 name="name"
+                value={productBody.name}
                 onChange={(e) => {
                   setProductBody({ ...productBody, name: e.target.value });
                 }}
@@ -149,6 +150,7 @@ const ProductAdd = () => {
                   className={`relative z-20 w-full bg-transparent appearance-none rounded border px-3 py-2 outline-none transition focus:border-primary active:border-primary dark:focus:border-primary ${
                     errors.category ? "border-red-500" : "border-stroke"
                   }`}
+                  value={productBody.category?.id}
                   onChange={(e) => {
                     setProductBody({
                       ...productBody,
@@ -161,7 +163,7 @@ const ProductAdd = () => {
                     });
                   }}
                 >
-                  <option className="text-black" hidden>
+                  <option className="text-black" value="" hidden>
                     Select Category
                   </option>
 
@@ -191,6 +193,7 @@ const ProductAdd = () => {
                 placeholder="Enter Product Stock"
                 error={errors.stock}
                 name="stock"
+                value={productBody.stock}
                 onChange={(e) => {
                   setProductBody({
                     ...productBody,
@@ -208,6 +211,7 @@ const ProductAdd = () => {
                 placeholder="Enter Product Price"
                 error={errors.price}
                 name="price"
+                value={productBody.price}
                 onChange={(e) => {
                   setProductBody({
                     ...productBody,
