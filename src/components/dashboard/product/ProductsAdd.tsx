@@ -4,6 +4,7 @@ import { ProductBodyModel } from "@model/product";
 import { useState } from "react";
 import { MdArrowDropDown } from "react-icons/md";
 import DefaultImage from "../../../assets/default-image.png";
+import Input from "../../global/Input";
 
 const InitialValue: ProductBodyModel = {
   name: "",
@@ -122,33 +123,26 @@ const ProductAdd = () => {
     <div className="flex flex-col gap-9">
       <div className="rounded-sm border border-stroke text-white bg-gray-900 shadow-default dark:border-strokedark dark:bg-boxdark">
         <div className="border-b border-stroke px-6 py-4 dark:border-strokedark">
-          <h3 className="font-medium">Tambah Products</h3>
+          <h3 className="font-medium">Add Products</h3>
         </div>
         <form onSubmit={handleSubmit}>
           <div className="p-6">
             <div className="mb-4">
-              <label className="mb-3 block text-sm font-medium">
-                Nama Produk
-              </label>
-              <input
+              <Input
                 type="text"
-                placeholder="Masukan Nama Product"
-                className={`w-full rounded border-[1px] bg-transparent px-3 py-2 font-normal outline-none transition focus:border-primary active:border-primary ${
-                  errors.name ? "border-red-500" : "border-stroke"
-                }`}
+                placeholder="Enter Product Name"
+                error={errors.name}
                 name="name"
-                value={productBody.name}
                 onChange={(e) => {
                   setProductBody({ ...productBody, name: e.target.value });
                 }}
-              />
-              {errors.name && (
-                <p className="text-[#DC2626] text-xs">{errors.name}</p>
-              )}
+              >
+                Product Name
+              </Input>
             </div>
 
             <div className="mb-4">
-              <label className="mb-3 block text-sm font-medium">Kategori</label>
+              <label className="mb-1 block text-sm font-medium">Category</label>
               <div className="relative z-20 bg-transparent dark:bg-form-input">
                 <select
                   name="categoryId"
@@ -165,11 +159,10 @@ const ProductAdd = () => {
                         ) as string,
                       },
                     });
-                    console.log(e.target.ariaLabel);
                   }}
                 >
                   <option className="text-black" hidden>
-                    Pilih Kategori
+                    Select Category
                   </option>
 
                   {category?.data?.map((option, index) => (
@@ -193,15 +186,10 @@ const ProductAdd = () => {
             </div>
 
             <div className="mb-4">
-              <label className="mb-3 block text-sm font-medium">
-                Stok Produk
-              </label>
-              <input
+              <Input
                 type="text"
-                placeholder="Masukan Berapa Stok Produk"
-                className={`w-full rounded border-[1px] bg-transparent px-3 py-2 font-normal outline-none transition focus:border-primary active:border-primary ${
-                  errors.stock ? "border-red-500" : "border-stroke"
-                }`}
+                placeholder="Enter Product Stock"
+                error={errors.stock}
                 name="stock"
                 onChange={(e) => {
                   setProductBody({
@@ -209,22 +197,16 @@ const ProductAdd = () => {
                     stock: parseInt(e.target.value) || 0,
                   });
                 }}
-              />
-              {errors.stock && (
-                <p className="text-[#DC2626] text-xs">{errors.stock}</p>
-              )}
+              >
+                Product Stock
+              </Input>
             </div>
 
             <div className="mb-4">
-              <label className="mb-3 block text-sm font-medium">
-                Harga Produk
-              </label>
-              <input
+              <Input
                 type="text"
-                placeholder="Masukan Harga Produk"
-                className={`w-full rounded border-[1px] bg-transparent px-3 py-2 font-normal outline-none transition focus:border-primary active:border-primary ${
-                  errors.price ? "border-red-500" : "border-stroke"
-                }`}
+                placeholder="Enter Product Price"
+                error={errors.price}
                 name="price"
                 onChange={(e) => {
                   setProductBody({
@@ -232,10 +214,9 @@ const ProductAdd = () => {
                     price: parseInt(e.target.value) || 0,
                   });
                 }}
-              />
-              {errors.price && (
-                <p className="text-[#DC2626] text-xs">{errors.price}</p>
-              )}
+              >
+                Product Price
+              </Input>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-4">
@@ -247,19 +228,13 @@ const ProductAdd = () => {
                 />
               </div>
               <div>
-                <label className="mb-3 block text-sm font-medium">Image</label>
-                <input
+                <Input
                   type="file"
                   name="image"
-                  placeholder="Masukkan URL Gambar Buku"
-                  className={`w-full rounded border-[1px] bg-transparent px-3 py-2 font-normal outline-none transition focus:border-primary active:border-primary ${
-                    errors.image ? "border-red-500" : "border-stroke"
-                  }`}
+                  placeholder="Upload Image Product"
+                  error={errors.image}
                   onChange={handleChangeImage}
-                />
-                {errors.image && (
-                  <p className="text-[#DC2626] text-xs">{errors.image}</p>
-                )}
+                >Upload Image</Input>
               </div>
             </div>
             <div className="flex justify-center items-center gap-5">

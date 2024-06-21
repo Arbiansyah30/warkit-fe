@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { MdArrowDropDown } from "react-icons/md";
 import { useParams } from "react-router-dom";
 import DefaultImage from "../../../assets/default-image.png";
+import Input from "../../global/Input";
 
 const InitialValue: ProductBodyModel = {
   name: "",
@@ -28,19 +29,19 @@ const ProductEdit = () => {
   const { data: product, isLoading } = useProductById();
   const mutation = useProductUpdate();
 
-  // useEffect(() => {
-  //   if (product && product.data) {
-  //     const { name, price, image, stock, category } = product.data;
-  //     // const categoryId = category ? category.id : "";
-  //     setProductBody({
-  //       name,
-  //       price,
-  //       image: image as string,
-  //       category: category,
-  //       stock,
-  //     });
-  //   }
-  // }, [product]);
+  useEffect(() => {
+    if (product && product.data) {
+      const { name, price, image, stock, category } = product.data;
+      // const categoryId = category ? category.id : "";
+      setProductBody({
+        name,
+        price,
+        image: image as string,
+        category: category,
+        stock,
+      });
+    }
+  }, [product]);
 
   const [productBody, setProductBody] = useState<ProductBodyModel>({
     ...(product?.data as ProductBodyModel),
@@ -99,6 +100,9 @@ const ProductEdit = () => {
     Object.entries(productBody).forEach(([key, value]) => {
       formData.append(key, value);
     });
+    if (!imageFile) {
+      formData.append("image", "");
+    }
     console.log({ imageFile, file: productBody.image });
 
     await mutation.mutateAsync(formData);
@@ -146,7 +150,6 @@ const ProductEdit = () => {
     return <div>Loading...</div>;
   }
 
-  console.log(productBody);
   return (
     <div className="flex flex-col gap-9">
       <div className="rounded-sm border border-stroke text-white bg-gray-900 shadow-default dark:border-strokedark dark:bg-boxdark">
@@ -156,24 +159,18 @@ const ProductEdit = () => {
         <form onSubmit={handleSubmit}>
           <div className="p-6">
             <div className="mb-4">
-              <label className="mb-3 block text-sm font-medium">
-                Nama Produk
-              </label>
-              <input
+              <Input
                 type="text"
-                placeholder="Masukan Nama Product"
-                className={`w-full rounded border-[1px] bg-transparent px-3 py-2 font-normal outline-none transition focus:border-primary active:border-primary ${
-                  errors.name ? "border-red-500" : "border-stroke"
-                }`}
+                placeholder="Enter Product Name"
+                error={errors.name}
                 name="name"
-                value={product?.data?.name}
+                value={productBody.name}
                 onChange={(e) => {
                   setProductBody({ ...productBody, name: e.target.value });
                 }}
-              />
-              {errors.name && (
-                <p className="text-[#DC2626] text-xs">{errors.name}</p>
-              )}
+              >
+                Product Name
+              </Input>
             </div>
 
             <div className="mb-4">
@@ -199,7 +196,7 @@ const ProductEdit = () => {
                   {category?.data?.map((option, index) => (
                     <option
                       key={index}
-                      selected={option.id === product?.data?.category?.id}
+                      selected={option.id === productBody.category?.id}
                       value={option.id}
                       data-name={option.name}
                       className="text-black"
@@ -218,77 +215,59 @@ const ProductEdit = () => {
             </div>
 
             <div className="mb-4">
-              <label className="mb-3 block text-sm font-medium">
-                Stok Produk
-              </label>
-              <input
+            <Input
                 type="text"
-                placeholder="Masukan Berapa Stok Produk"
-                className={`w-full rounded border-[1px] bg-transparent px-3 py-2 font-normal outline-none transition focus:border-primary active:border-primary ${
-                  errors.stock ? "border-red-500" : "border-stroke"
-                }`}
+                placeholder="Enter Product Stock"
+                error={errors.stock}
                 name="stock"
-                defaultValue={product?.data?.stock}
+                value={productBody.stock}
                 onChange={(e) => {
                   setProductBody({
                     ...productBody,
                     stock: parseInt(e.target.value) || 0,
                   });
                 }}
-              />
-              {errors.stock && (
-                <p className="text-[#DC2626] text-xs">{errors.stock}</p>
-              )}
+              >
+                Product Stock
+              </Input>
             </div>
 
             <div className="mb-4">
-              <label className="mb-3 block text-sm font-medium">
-                Harga Produk
-              </label>
-              <input
+            <Input
                 type="text"
-                placeholder="Masukan Harga Produk"
-                className={`w-full rounded border-[1px] bg-transparent px-3 py-2 font-normal outline-none transition focus:border-primary active:border-primary ${
-                  errors.price ? "border-red-500" : "border-stroke"
-                }`}
+                placeholder="Enter Product Price"
+                error={errors.price}
                 name="price"
-                value={product?.data?.price}
+                value={productBody.price}
                 onChange={(e) => {
                   setProductBody({
                     ...productBody,
                     price: parseInt(e.target.value) || 0,
                   });
                 }}
-              />
-              {errors.price && (
-                <p className="text-[#DC2626] text-xs">{errors.price}</p>
-              )}
+              >
+                Product Price
+              </Input>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-4">
               <div className="mx-auto">
                 <img
                   src={
-                    imageFile?.preview || product?.data?.image || DefaultImage
+                    imageFile?.preview || productBody.image as string || DefaultImage
                   }
                   alt="Buku Yang Mau di Upload"
                   className="max-w-[200px] h-[200px] max-h-[200px] mx-auto object-cover"
                 />
               </div>
               <div>
-                <label className="mb-3 block text-sm font-medium">Image</label>
-                <input
+              <Input
                   type="file"
                   name="image"
-                  placeholder="Masukkan URL Gambar Buku"
-                  className={`w-full rounded border-[1px] bg-transparent px-3 py-2 font-normal outline-none transition focus:border-primary active:border-primary ${
-                    errors.image ? "border-red-500" : "border-stroke"
-                  }`}
+                  placeholder="Upload Image Product"
+                  error={errors.image}
                   onChange={handleChangeImage}
-                />
-                {errors.image && (
-                  <p className="text-[#DC2626] text-xs">{errors.image}</p>
-                )}
+                >Upload Image</Input>
               </div>
             </div>
             <div className="flex justify-center items-center gap-5">
@@ -303,7 +282,7 @@ const ProductEdit = () => {
                 type="submit"
                 className="flex w-full justify-center rounded bg-blue-600 p-3 font-medium text-white hover:bg-opacity-90"
               >
-                Add
+                Update
               </button>
             </div>
           </div>

@@ -46,29 +46,29 @@ const FormLogin = () => {
     >
       <div className="w-full flex flex-col gap-1 items-start">
         <Input
+          name="email"
           type="email"
-          error={!!errors.email}
-          placeholder="Email"
+          error={errors.email}
+          placeholder="Enter your email"
+          value={authBody.email}
+          autoComplete="off"
           onChange={(e) =>
             setAuthBody((prev) => ({ ...prev, email: e.target.value }))
           }
-        />
-        {errors.email && (
-          <p className="text-[#DC2626] text-xs">{errors.email}</p>
-        )}
+        >Email :</Input>
       </div>
       <div className="w-full flex flex-col gap-1 items-start">
         <Input
+          name="password"
           type="password"
-          error={!!errors.password}
-          placeholder="Password"
+          error={errors.password}
+          placeholder="*****"
+          value={authBody.password}
+          autoComplete="off"
           onChange={(e) =>
             setAuthBody((prev) => ({ ...prev, password: e.target.value }))
           }
-        />
-        {errors.password && (
-          <p className="text-[#DC2626] text-xs">{errors.password}</p>
-        )}
+        >Password :</Input>
       </div>
 
       <Button primary>Submit</Button>

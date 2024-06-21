@@ -1,44 +1,31 @@
 import { InputHTMLAttributes } from "react";
 
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
-  placeholder?: string;
-  name?: string;
+  name: string;
   children?: React.ReactNode;
-  error?: boolean;
-  sizes?: "sm" | "md";
+  error?: string;
+  isLoading?: boolean;
 }
 
 const Input: React.FC<InputProps> = ({
-  children,
   name,
+  children,
   error,
-  placeholder,
-  sizes = "md",
+  isLoading,
   ...rest
 }) => {
-  if (error) {
-    return (
+  return (
+    <div className="w-full flex flex-col items-start">
+      <label htmlFor={name} className="mb-1 block text-sm font-medium">{children}</label>
       <input
-        placeholder={placeholder}
-        className={
-          sizes === "md"
-            ? "w-full p-2 border border-solid border-[#DC2626] rounded-md box-border"
-            : "w-full p-2 border border-solid border-[#DC2626] rounded-md box-border h-[40px]"
-        }
+        name={name}
+        className={`w-full rounded border bg-transparent px-3 py-2 font-normal outline-none transition focus:border-[#1D4ED8] active:border-[#1D4ED8] ${
+          error ? "border-red-500" : "border-stroke"
+        } ${isLoading ? "cursor-not-allowed" : ""}`}
         {...rest}
       />
-    );
-  }
-  return (
-    <input
-      placeholder={placeholder}
-      className={
-        sizes === "md"
-          ? "w-full p-2 border border-solid border-gray-400 focus:border focus:border-solid focus:border-blue-400 rounded-md"
-          : "w-full p-2 border border-solid border-gray-400 focus:border focus:border-solid focus:border-blue-400 rounded-md h-[40px]"
-      }
-      {...rest}
-    />
+      {error && <p className="text-[#DC2626] text-xs">{error}</p>}
+    </div>
   );
 };
 
