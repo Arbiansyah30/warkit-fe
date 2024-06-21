@@ -29,7 +29,7 @@ const CategoryTable = () => {
             to="/admin/category/add"
             className="text-sm font-medium text-white bg-blue-600 py-2 px-4 rounded-full hover:opacity-90"
           >
-            Tambah Data
+            Add Category
           </Link>
         </div>
         <div className="w-full overflow-x-auto">

@@ -25,7 +25,7 @@ const ProductsTable = () => {
           to="/admin/products/add"
           className="text-sm font-medium text-white bg-blue-600 py-2 px-4 rounded-full hover:opacity-90"
         >
-          Tambah Data
+          Add Product
         </Link>
       </div>
       <div className="w-full overflow-x-auto">
