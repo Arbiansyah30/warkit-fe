@@ -1,17 +1,9 @@
 import useResponsive from "@hooks/useResponsive";
 import React, { useEffect, useState } from "react";
-import { BsChevronDown } from "react-icons/bs";
 import { FaBox, FaChartBar, FaTags } from "react-icons/fa";
 import { FaArrowLeftLong } from "react-icons/fa6";
-import { Link, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import ItemSidebar from "./Item";
-
-interface DropdownProps {
-  name: string;
-  icon: JSX.Element;
-  link: string;
-  dropdown?: { name: string; link: string }[];
-}
 
 const Sidebar: React.FC<{
   hamburger: boolean;
