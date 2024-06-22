@@ -72,7 +72,7 @@ const ProductsTable = () => {
                     <p className="text-white">{item.category?.name}</p>
                   </td>
                   <td className="px-4 py-2">
-                    <div className="flex items-center flex-col gap-1">
+                    <div className="flex items-center gap-2">
                       <Link
                         to={`/admin/product/edit/${item.id}`}
                         className="hover:opacity-70 text-sm text-white rounded-full px-2 bg-yellow-500 flex justify-center items-center gap-1"

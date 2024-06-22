@@ -1,9 +1,8 @@
-import { FaEdit, FaTrash } from "react-icons/fa";
+import { FaEdit } from "react-icons/fa";
 import { Link, useSearchParams } from "react-router-dom";
 import { convertQueryParamsToObject } from "../../../libs/helper";
 import Pagination from "../../global/Pagination";
 import { useTransaction } from "@hooks/home/useTransactionCreation";
-import { useEffect } from "react";
 
 const OrderTable = () => {
   const { data: transaction } = useTransaction({ perPage: 10 });
@@ -69,7 +68,7 @@ const OrderTable = () => {
                     <p className="text-white">{item.totalAmount}</p>
                   </td>
                   <td className="px-4 py-2">
-                    <div className="flex items-center space-x-3">
+                    <div className="flex items-center gap-2">
                       <Link
                         to={`/admin/transaction/detail/${item.id}`}
                         className="hover:opacity-70 text-sm text-white rounded-full px-2 bg-blue-900 flex justify-center items-center gap-1"
