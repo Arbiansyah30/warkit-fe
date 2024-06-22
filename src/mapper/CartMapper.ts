@@ -4,6 +4,6 @@ export interface ICart {
 }
 
 export const CartMapper = () => {
-    const cart = localStorage.getItem("cart")
+    const cart = localStorage.getItem("cart") || "[]"
     return JSON.parse(cart as string).map((item: ICart) => ({ productId: item.id, quantity: item.qty }))
 }
