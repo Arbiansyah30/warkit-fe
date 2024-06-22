@@ -50,7 +50,7 @@ const Sidebar: React.FC<{
 
   return (
     <aside
-      className={`fixed left-0 top-0 z-[9999] flex min-h-screen w-72 flex-col overflow-y-hidden shadow-lg bg-gray-900 text-gray-200 duration-300 ease-linear lg:static ${
+      className={`max-lg:fixed left-0 top-0 z-[9999] flex min-h-screen w-72 flex-col overflow-y-hidden shadow-lg bg-gray-900 text-gray-200 duration-300 ease-linear static ${
         isLaptop
           ? hamburger
             ? "translate-x-0"
@@ -63,7 +63,7 @@ const Sidebar: React.FC<{
         <button
           type="button"
           onClick={() => handleHamburger(true)}
-          className="lg:hidden"
+          className="hidden max-lg:flex"
         >
           <FaArrowLeftLong />
         </button>

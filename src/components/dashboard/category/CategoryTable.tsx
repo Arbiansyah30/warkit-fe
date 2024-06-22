@@ -57,13 +57,13 @@ const CategoryTable = () => {
                     <div className="flex items-center space-x-3">
                       <Link
                         to={`/admin/category/edit/${item.id}`}
-                        className="hover:opacity-70 text-sm text-white rounded-full px-1 bg-yellow-500 flex justify-center items-center gap-1"
+                        className="hover:opacity-70 text-sm text-white rounded-full px-2 bg-yellow-500 flex justify-center items-center gap-1"
                       >
                         <FaEdit /> Edit
                       </Link>
                       <button
                         onClick={() => handleDelete(item.id as string)}
-                        className="hover:opacity-70 text-sm text-white rounded-full px-1 bg-red-500 flex justify-center items-center gap-1"
+                        className="hover:opacity-70 text-sm text-white rounded-full px-2 bg-red-500 flex justify-center items-center gap-1"
                       >
                         <FaTrash /> Hapus
                       </button>

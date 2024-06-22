@@ -72,7 +72,7 @@ const OrderTable = () => {
                     <div className="flex items-center space-x-3">
                       <Link
                         to={`/admin/transaction/detail/${item.id}`}
-                        className="hover:opacity-70 text-sm text-white rounded-full px-1 bg-blue-900 flex justify-center items-center gap-1"
+                        className="hover:opacity-70 text-sm text-white rounded-full px-2 bg-blue-900 flex justify-center items-center gap-1"
                       >
                         <FaEdit /> Detail
                       </Link>
