@@ -28,8 +28,8 @@ const Sidebar: React.FC<{
       name: "Reports",
       icon: <FaChartBar />,
       dropdown: [
+        { name: "Order Report", link: "/admin/order" },
         { name: "Sales Report", link: "#" },
-        { name: "Order Report", link: "#" },
       ],
     },
   ];

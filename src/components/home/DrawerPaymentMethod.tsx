@@ -3,7 +3,7 @@ import { PaymentMethod } from "@model/transaction";
 import { useAtomValue } from "jotai";
 import { useRef, useState } from "react";
 import QRIS from "../../assets/images/qris.png";
-import CASH from "../../assets/images/🦆 icon _wallet_.svg";
+import CASH from "../../assets/images/icon _wallet.svg";
 import { CartMapper } from "../../mapper/CartMapper";
 import { transactionAtom } from "../../store/transaction";
 import Button from "../global/Button";

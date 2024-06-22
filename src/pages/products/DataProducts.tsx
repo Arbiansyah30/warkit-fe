@@ -1,7 +1,7 @@
 import ProductsTable from "../../components/dashboard/product/ProductsTable";
 import NavbarTableAdmin from "../../components/global/admin/NavbarTableAdmin";
 
-const ProductsPage = () => {
+const DataProductPage = () => {
   return (
     <>
       <NavbarTableAdmin title="Product" action="Data" />
@@ -10,4 +10,4 @@ const ProductsPage = () => {
   );
 };
 
-export default ProductsPage;
+export default DataProductPage;

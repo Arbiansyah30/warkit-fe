@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 interface NavbarTable {
-  action: "Add" | "Update" | "Data";
+  action: "Add" | "Update" | "Data" | "Detail";
   title: string;
 }
 

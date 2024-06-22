@@ -41,7 +41,7 @@ const CategoryTable = () => {
           <table className="w-full table-auto">
             <thead>
               <tr className="bg-gray-2 text-left dark:bg-meta-4 border-y border-[#eee]">
-                <th className="min-w-[220px] px-4 py-4 font-medium text-white">
+                <th className="px-4 py-4 font-medium text-white">
                   Name
                 </th>
                 <th className="px-4 py-4 font-medium text-white">Actions</th>
