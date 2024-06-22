@@ -30,7 +30,7 @@ const ProductsTable = () => {
         <div className="py-6 flex flex-wrap items-center justify-between">
           <h4 className="text-xl font-bold text-white">Data Products</h4>
           <Link
-            to="/admin/products/add"
+            to="/admin/product/add"
             className="text-sm font-medium text-white bg-blue-600 py-2 px-4 rounded-full hover:opacity-90"
           >
             Add Product
@@ -74,7 +74,7 @@ const ProductsTable = () => {
                   <td className="px-4 py-2">
                     <div className="flex items-center flex-col gap-1">
                       <Link
-                        to={`/admin/products/edit/${item.id}`}
+                        to={`/admin/product/edit/${item.id}`}
                         className="hover:opacity-70 text-sm text-white rounded-full px-2 bg-yellow-500 flex justify-center items-center gap-1"
                       >
                         <FaEdit /> Edit

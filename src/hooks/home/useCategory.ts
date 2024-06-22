@@ -52,7 +52,9 @@ export function useCategoryCreation() {
     onSuccess: (res) => {
       alert(res.message)
       navigate('/admin/category')
-      return queryClient.removeQueries({ queryKey: ['categories'] })
+      queryClient.removeQueries({ queryKey: ['categories'] })
+      queryClient.removeQueries({ queryKey: ['categoryById'] })
+      return
     },
     onError: (err: ApiErrorResponse<ApiResponse>) => {
       alert(err.response?.data.message)

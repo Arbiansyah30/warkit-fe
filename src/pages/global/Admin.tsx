@@ -6,8 +6,12 @@ import { Outlet } from "react-router-dom";
 const AdminView = () => {
   const [hamburger, setHamburger] = useState<boolean>(false);
 
-  const handleHamburger = () => {
-    setHamburger(!hamburger);
+  const handleHamburger = (value: boolean = true) => {    
+    if (value) {
+      setHamburger(!hamburger);
+    } else {
+      setHamburger(value);
+    }
   };
 
   return (

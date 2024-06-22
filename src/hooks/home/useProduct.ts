@@ -46,7 +46,7 @@ export function useProductAdd() {
     },
     onSuccess: (res) => {
       alert(res.message);
-      navigate("/admin/products")
+      navigate("/admin/product")
       return queryClient.removeQueries({ queryKey: ["products"] });
     },
     onError: (err: ApiErrorResponse<ApiResponse>) => {
@@ -65,7 +65,7 @@ export function useProductUpdate() {
     mutationFn: (formData: FormData) =>
       productService.put(formData, { contentType: "form-data", path: id }),
     onSuccess: (res) => {
-      navigate("/admin/products")
+      navigate("/admin/product")
       alert(res.message);
       refetch()
       return queryClient.removeQueries({ queryKey: ["products"] });
