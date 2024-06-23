@@ -55,7 +55,9 @@ const FormLogin = () => {
           onChange={(e) =>
             setAuthBody((prev) => ({ ...prev, email: e.target.value }))
           }
-        >Email :</Input>
+        >
+          Email
+        </Input>
       </div>
       <div className="w-full flex flex-col gap-1 items-start">
         <Input
@@ -68,7 +70,9 @@ const FormLogin = () => {
           onChange={(e) =>
             setAuthBody((prev) => ({ ...prev, password: e.target.value }))
           }
-        >Password :</Input>
+        >
+          Password
+        </Input>
       </div>
 
       <Button primary>Submit</Button>
