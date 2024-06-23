@@ -2,7 +2,8 @@ import { useProduct, useProductCreation } from "@hooks/home/useProduct";
 import { Link, useSearchParams } from "react-router-dom";
 import { convertQueryParamsToObject } from "../../../libs/helper";
 import Pagination from "../../global/Pagination";
-import { Table, TableBody, TableHead, TableItem } from "./Table";
+import { Table, TableBody, TableHead } from "../../global/Table";
+import { TableItem } from "./Table";
 
 const ProductsTable = () => {
   const { data: products, isLoading } = useProduct();

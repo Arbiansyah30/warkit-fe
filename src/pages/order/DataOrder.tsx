@@ -4,7 +4,7 @@ import TableAdminLayout from "../../components/global/admin/TableAdminLayout";
 const DataOrderPage = () => {
   return (
     <>
-      <TableAdminLayout title="Order" action="Data">
+      <TableAdminLayout title="Transaction" action="Data">
         <OrderTable />
       </TableAdminLayout>
     </>

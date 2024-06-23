@@ -6,13 +6,14 @@ import UpdateCategoryPage from "@pages/category/UpdateCategory";
 import AdminView from "@pages/global/Admin";
 import AuthView from "@pages/global/Auth";
 import Home from "@pages/home";
+import IncomeView from "@pages/income/IncomeView";
+import DataOrderPage from "@pages/order/DataOrder";
+import DetailOrderPage from "@pages/order/DetailOrder";
 import AddProductPage from "@pages/products/AddProducts";
 import DataProductsPage from "@pages/products/DataProducts";
 import UpdateProductsPage from "@pages/products/UpdateProducts";
 import { createBrowserRouter } from "react-router-dom";
 import Users from "../../container/users";
-import DataOrderPage from "@pages/order/DataOrder";
-import DetailOrderPage from "@pages/order/DetailOrder";
 
 export const router = createBrowserRouter([
   {
@@ -68,12 +69,16 @@ export const router = createBrowserRouter([
         element: <UpdateCategoryPage />,
       },
       {
-        path: "/admin/order",
+        path: "/admin/transaction",
         element: <DataOrderPage />,
       },
       {
-        path: "/admin/transaction/detail/:id",
+        path: "/admin/transaction/:id",
         element: <DetailOrderPage />,
+      },
+      {
+        path: "/admin/income",
+        element: <IncomeView />,
       },
     ],
   },

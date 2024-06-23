@@ -2,6 +2,7 @@ import { TransactionModel } from "@model/transaction";
 import React from "react";
 import { FaInfoCircle } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import { formatRupiah } from "../../../../libs/helper";
 
 interface ITableItem extends TransactionModel {
   onPrint: (id: string) => void;
@@ -28,7 +29,7 @@ export const TableItem: React.FC<ITableItem> = ({
       <td className="px-4 py-2">
         <p className="text-white">{paymentMethod}</p>
       </td>
-      <td className="px-4 text-center text-white py-2">
+      <td className="px-4 text-xs text-center text-white py-2">
         {status === "PAID" ? (
           <p className="bg-green-500 px-3 py-1 rounded">{status}</p>
         ) : (
@@ -39,12 +40,12 @@ export const TableItem: React.FC<ITableItem> = ({
         <p className="text-white">{totalQuantity}</p>
       </td>
       <td className="px-4 py-2">
-        <p className="text-white">{totalAmount}</p>
+        <p className="text-white">{formatRupiah(totalAmount || 0)}</p>
       </td>
       <td className="px-4 py-2">
         <div className="flex items-center gap-2">
           <Link
-            to={`/admin/transaction/detail/${id}`}
+            to={`/admin/transaction/${id}`}
             className="hover:opacity-70 text-xs text-white rounded-full px-2 py-1 bg-blue-900 flex justify-center items-center gap-1"
           >
             <FaInfoCircle size={12} /> Detail

@@ -1,18 +1,20 @@
-import { useTransaction } from "@hooks/home/useTransactionCreation";
+import { useIncome } from "@hooks/admin/useIncome";
 import { useSearchParams } from "react-router-dom";
 import { convertQueryParamsToObject } from "../../../libs/helper";
 import Pagination from "../../global/Pagination";
 import { Table, TableBody, TableHead } from "../../global/Table";
 import { TableItem } from "./Table";
 
-const OrderTable = () => {
-  const { data: transaction } = useTransaction();
+export const IncomeContent = () => {
+  const { data: income } = useIncome();
 
   const [searchParams, setSearchParams] = useSearchParams();
   const queryParams = convertQueryParamsToObject(searchParams.toString());
   const handleChangePage = (page: number) => {
     setSearchParams({ ...queryParams, page: String(page) });
   };
+
+  console.log(income?.data?.incomes);
 
   return (
     <>
@@ -22,30 +24,15 @@ const OrderTable = () => {
         </div>
         <div className="w-full overflow-x-auto">
           <Table>
-            <TableHead
-              HeadList={[
-                "Name",
-                "Email",
-                "Payment Method",
-                "Status",
-                "Total Quantity",
-                "Total Amount",
-                "Actions",
-              ]}
-            />
+            <TableHead HeadList={["Name", "Total Amount", "Created At", ""]} />
             <TableBody>
               <>
-                {transaction?.data?.map((item, index) => (
+                {income?.data?.incomes?.map((item, index) => (
                   <TableItem
                     key={index}
-                    onPrint={(id) => alert(`print ${id}`)}
-                    name={item.name}
-                    email={item.email}
-                    paymentMethod={item.paymentMethod}
-                    id={item.id}
-                    status={item.status}
-                    totalAmount={item.totalAmount}
-                    totalQuantity={item.totalQuantity}
+                    name={item.transaction?.name as string}
+                    nominal={item.nominal}
+                    createdAt={item.createdAt}
                   />
                 ))}
               </>
@@ -54,12 +41,10 @@ const OrderTable = () => {
         </div>
       </div>
       <Pagination
-        currentPage={transaction?.meta?.page as number}
-        totalPages={transaction?.meta?.totalPages as number}
+        currentPage={income?.meta?.page as number}
+        totalPages={income?.meta?.totalPages as number}
         onPageChange={handleChangePage}
       />
     </>
   );
 };
-
-export default OrderTable;

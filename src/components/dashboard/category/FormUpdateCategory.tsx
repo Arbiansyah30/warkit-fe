@@ -89,7 +89,8 @@ const FormUpdateCategory = () => {
                 placeholder="Enter Category Name"
                 error={errors.name}
                 name="name"
-                value={categoryBody.name}
+                // value={categoryBody.name}
+                defaultValue={categoryById?.data?.name}
                 onChange={(e) => {
                   setCategoryBody({ ...categoryBody, name: e.target.value });
                 }}

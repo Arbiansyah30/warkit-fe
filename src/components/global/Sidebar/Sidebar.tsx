@@ -28,15 +28,15 @@ const Sidebar: React.FC<{
       name: "Reports",
       icon: <FaChartBar />,
       dropdown: [
-        { name: "Order Report", link: "/admin/order" },
-        { name: "Sales Report", link: "#" },
+        { name: "Transaction Report", link: "/admin/transaction" },
+        { name: "Income Report", link: "/admin/income" },
       ],
     },
   ];
 
   useEffect(() => {
     menuItems.forEach((item) => {
-      if ( location.pathname.includes(item.link as string) ) {
+      if (location.pathname.includes(item.link as string)) {
         setIsActive(item.name);
       }
     });
@@ -44,7 +44,7 @@ const Sidebar: React.FC<{
   }, [location]);
 
   const handleDropdown = (value: string) => {
-    if( value === isActive ) return setIsActive(null);
+    if (value === isActive) return setIsActive(null);
     setIsActive(value);
   };
 
@@ -84,7 +84,9 @@ const Sidebar: React.FC<{
                   dropdown={item.dropdown}
                   isActive={isActive || ""}
                   handleDropdown={handleDropdown}
-                >{item.icon} {item.name}</ItemSidebar>
+                >
+                  {item.icon} {item.name}
+                </ItemSidebar>
               ))}
             </ul>
           </div>
