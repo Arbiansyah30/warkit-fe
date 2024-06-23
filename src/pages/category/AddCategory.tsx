@@ -1,11 +1,12 @@
 import FormAddCategory from "../../components/dashboard/category/FormAddCategory";
-import NavbarTableAdmin from "../../components/global/admin/NavbarTableAdmin";
+import TableAdminLayout from "../../components/global/admin/TableAdminLayout";
 
 const AddCategoryPage = () => {
   return (
     <>
-      <NavbarTableAdmin action="Add" title="Category" />
-      <FormAddCategory />
+      <TableAdminLayout action="Add" title="Category">
+        <FormAddCategory />
+      </TableAdminLayout>
     </>
   );
 };

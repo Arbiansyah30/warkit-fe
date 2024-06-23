@@ -1,11 +1,12 @@
 import FormUpdateProduct from "../../components/dashboard/product/FormUpdateProduct";
-import NavbarTableAdmin from "../../components/global/admin/NavbarTableAdmin";
+import TableAdminLayout from "../../components/global/admin/TableAdminLayout";
 
 const UpdateProductsPage = () => {
   return (
     <>
-      <NavbarTableAdmin action="Update" title="Product" />
-      <FormUpdateProduct />
+      <TableAdminLayout action="Update" title="Product">
+        <FormUpdateProduct />
+      </TableAdminLayout>
     </>
   );
 };

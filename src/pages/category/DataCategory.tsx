@@ -1,11 +1,12 @@
 import CategoryTable from "../../components/dashboard/category/CategoryTable";
-import NavbarTableAdmin from "../../components/global/admin/NavbarTableAdmin";
+import TableAdminLayout from "../../components/global/admin/TableAdminLayout";
 
 const DataCategoryPage = () => {
   return (
     <>
-      <NavbarTableAdmin action="Data" title="Category" />
-      <CategoryTable />
+      <TableAdminLayout action="Data" title="Category">
+        <CategoryTable />
+      </TableAdminLayout>
     </>
   );
 };

@@ -1,12 +1,11 @@
 import FormUpdateCategory from "../../components/dashboard/category/FormUpdateCategory";
-import NavbarTableAdmin from "../../components/global/admin/NavbarTableAdmin";
+import TableAdminLayout from "../../components/global/admin/TableAdminLayout";
 
 const UpdateCategoryPage = () => {
   return (
-    <>
-      <NavbarTableAdmin action="Update" title="Category" />
+    <TableAdminLayout action="Update" title="Category">
       <FormUpdateCategory />
-    </>
+    </TableAdminLayout>
   );
 };
 

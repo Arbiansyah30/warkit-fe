@@ -1,13 +1,14 @@
 import ProductsTable from "../../components/dashboard/product/ProductsTable";
-import NavbarTableAdmin from "../../components/global/admin/NavbarTableAdmin";
+import TableAdminLayout from "../../components/global/admin/TableAdminLayout";
 
-const ProductsPage = () => {
+const DataProductPage = () => {
   return (
     <>
-      <NavbarTableAdmin title="Product" action="Data" />
-      <ProductsTable />
+      <TableAdminLayout title="Product" action="Data">
+        <ProductsTable />
+      </TableAdminLayout>
     </>
   );
 };
 
-export default ProductsPage;
+export default DataProductPage;

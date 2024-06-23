@@ -1,11 +1,12 @@
 import FormAddProduct from "../../components/dashboard/product/FormAddProduct";
-import NavbarTableAdmin from "../../components/global/admin/NavbarTableAdmin";
+import TableAdminLayout from "../../components/global/admin/TableAdminLayout";
 
 const AddProductPage = () => {
   return (
     <>
-      <NavbarTableAdmin action="Add" title="Product" />
-      <FormAddProduct />
+      <TableAdminLayout action="Add" title="Product">
+        <FormAddProduct />
+      </TableAdminLayout>
     </>
   );
 };

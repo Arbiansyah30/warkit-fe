@@ -1,22 +1,16 @@
 import useResponsive from "@hooks/useResponsive";
-import React, { useState } from "react";
-import { BsChevronDown } from "react-icons/bs";
+import React, { useEffect, useState } from "react";
 import { FaBox, FaChartBar, FaTags } from "react-icons/fa";
 import { FaArrowLeftLong } from "react-icons/fa6";
-import { Link } from "react-router-dom";
-
-interface DropdownProps {
-  name: string;
-  icon: JSX.Element;
-  link: string;
-  dropdown?: { name: string; link: string }[];
-}
+import { useLocation } from "react-router-dom";
+import ItemSidebar from "./Item";
 
 const Sidebar: React.FC<{
   hamburger: boolean;
-  handleHamburger: () => void;
+  handleHamburger: (value: boolean) => void;
 }> = ({ hamburger, handleHamburger }) => {
-  const [selected, setSelected] = useState<string | null>("Products");
+  const location = useLocation();
+  const [isActive, setIsActive] = useState<string | null>("Products");
   const { isLaptop } = useResponsive();
 
   const menuItems = [
@@ -33,24 +27,30 @@ const Sidebar: React.FC<{
     {
       name: "Reports",
       icon: <FaChartBar />,
-      link: "#",
       dropdown: [
+        { name: "Order Report", link: "/admin/order" },
         { name: "Sales Report", link: "#" },
-        { name: "Order Report", link: "#" },
       ],
     },
   ];
 
-  const handleMenuClick = (item: DropdownProps) => {
-    if (item.dropdown && item.name === selected) {
-      return setSelected(null);
-    }
-    setSelected(item.name);
+  useEffect(() => {
+    menuItems.forEach((item) => {
+      if ( location.pathname.includes(item.link as string) ) {
+        setIsActive(item.name);
+      }
+    });
+    return handleHamburger(false);
+  }, [location]);
+
+  const handleDropdown = (value: string) => {
+    if( value === isActive ) return setIsActive(null);
+    setIsActive(value);
   };
 
   return (
     <aside
-      className={`fixed left-0 top-0 z-[9999] flex min-h-screen w-72 flex-col overflow-y-hidden shadow-lg bg-gray-900 text-gray-200 duration-300 ease-linear lg:static ${
+      className={`max-lg:fixed left-0 top-0 z-[9999] flex min-h-screen w-72 flex-col overflow-y-hidden shadow-lg bg-gray-900 text-gray-200 duration-300 ease-linear static ${
         isLaptop
           ? hamburger
             ? "translate-x-0"
@@ -62,8 +62,8 @@ const Sidebar: React.FC<{
         <h1 className="text-3xl font-bold">Logo</h1>
         <button
           type="button"
-          onClick={() => handleHamburger()}
-          className="lg:hidden"
+          onClick={() => handleHamburger(true)}
+          className="hidden max-lg:flex"
         >
           <FaArrowLeftLong />
         </button>
@@ -77,43 +77,14 @@ const Sidebar: React.FC<{
             </h3>
             <ul className="mb-6 flex flex-col gap-1">
               {menuItems.map((item) => (
-                <li key={item.name}>
-                  <Link
-                    className={`group relative flex items-center gap-2 rounded-sm px-4 py-2 font-medium duration-300 ease-in-out hover:bg-gray-700 ${
-                      selected === item.name ? "bg-gray-700" : ""
-                    }`}
-                    to={item.link}
-                    onClick={() => {
-                      handleMenuClick(item);
-                    }}
-                  >
-                    {item.icon}
-                    {item.name}
-                    {item.dropdown && (
-                      <BsChevronDown
-                        className={`absolute right-4 top-1/2 transform -translate-y-1/2 transition-transform ${
-                          selected === item.name ? "rotate-180" : ""
-                        }`}
-                      />
-                    )}
-                  </Link>
-                  {item.dropdown && selected === item.name && (
-                    <div className="translate transform overflow-hidden">
-                      <ul className="mb-5 mt-4 flex flex-col gap-2 pl-6">
-                        {item.dropdown.map((subItem) => (
-                          <li key={subItem.name}>
-                            <Link
-                              className="group relative flex items-center gap-2 rounded-md px-4 font-medium text-gray-400 duration-300 ease-in-out hover:text-white"
-                              to={subItem.link}
-                            >
-                              {subItem.name}
-                            </Link>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  )}
-                </li>
+                <ItemSidebar
+                  key={item.name}
+                  name={item.name}
+                  link={item.link || ""}
+                  dropdown={item.dropdown}
+                  isActive={isActive || ""}
+                  handleDropdown={handleDropdown}
+                >{item.icon} {item.name}</ItemSidebar>
               ))}
             </ul>
           </div>
