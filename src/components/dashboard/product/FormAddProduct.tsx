@@ -1,5 +1,5 @@
 import { useCategory } from "@hooks/home/useCategory";
-import { useProductAdd } from "@hooks/home/useProduct";
+import { useProductCreation } from "@hooks/home/useProduct";
 import { ProductBodyModel } from "@model/product";
 import { useState } from "react";
 import { MdArrowDropDown } from "react-icons/md";
@@ -22,7 +22,7 @@ interface ImageFile extends File {
 }
 
 const FormAddProduct = () => {
-  const mutation = useProductAdd();
+  const mutation = useProductCreation();
   const { data: category } = useCategory();
 
   const [productBody, setProductBody] = useState<ProductBodyModel>({
@@ -93,7 +93,10 @@ const FormAddProduct = () => {
 
     console.log({ imageFile, file: productBody.image });
 
-    await mutation.mutateAsync(formData);
+    await mutation.mutateAsync({
+      type: "create",
+      data: formData,
+    });
   };
 
   const handleChangeImage = (e: React.ChangeEvent<HTMLInputElement>) => {

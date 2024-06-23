@@ -43,7 +43,7 @@ export const TableItem: React.FC<TableItemProps> = ({
         <div className="flex items-center justify-center gap-1">
           <div className="w-20">
             <Link
-              to={`/admin/products/edit/${id}`}
+              to={`/admin/product/edit/${id}`}
               className="hover:opacity-70 text-sm text-white rounded-full px-2 bg-yellow-500 flex justify-center items-center gap-1"
             >
               <FaEdit /> Edit

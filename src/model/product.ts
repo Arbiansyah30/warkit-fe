@@ -8,6 +8,7 @@ export interface ProductModel {
     name?: string,
     price?: number,
     image?: string,
+    categoryId?: string
     category?: CategoryModel,
     stock?: number
 }

@@ -1,5 +1,5 @@
 import { useCategory } from "@hooks/home/useCategory";
-import { useProductById, useProductUpdate } from "@hooks/home/useProduct";
+import { useProductById, useProductCreation } from "@hooks/home/useProduct";
 import { ProductBodyModel } from "@model/product";
 import { useQueryClient } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
@@ -27,7 +27,7 @@ const FormUpdateProduct = () => {
   const { id } = useParams<{ id: string }>();
   const { data: category } = useCategory();
   const { data: product, isLoading } = useProductById();
-  const mutation = useProductUpdate();
+  const mutation = useProductCreation();
 
   useEffect(() => {
     if (product && product.data) {
@@ -109,7 +109,11 @@ const FormUpdateProduct = () => {
 
     console.log({ imageFile, file: productBody.image });
 
-    await mutation.mutateAsync(formData);
+    await mutation.mutateAsync({
+      data: formData,
+      type: "update",
+      id,
+    });
   };
 
   const handleChangeImage = (e: React.ChangeEvent<HTMLInputElement>) => {

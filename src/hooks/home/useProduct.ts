@@ -11,6 +11,14 @@ interface Options {
   search?: string;
 }
 
+type PayloadType = 'create' | 'update' | 'delete'
+
+interface ProductCreation {
+  type: PayloadType
+  data?: FormData
+  id?: string
+}
+
 export function useProduct(options?: Options) {
   const [searchParams] = useSearchParams();
   const categoryId =
@@ -36,62 +44,95 @@ export function useProduct(options?: Options) {
   return query;
 }
 
-export function useProductAdd() {
+export function useProductCreation() {
   const queryClient = useQueryClient();
   const navigate = useNavigate()
-  return useMutation({
-    mutationFn: (formData: FormData) => {
-      console.log(formData);
-      return productService.post(formData, { contentType: "form-data" });
-    },
-    onSuccess: (res) => {
-      alert(res.message);
-      navigate("/admin/products")
-      return queryClient.removeQueries({ queryKey: ["products"] });
-    },
-    onError: (err: ApiErrorResponse<ApiResponse>) => {
-      alert(err.response?.data.message);
-    },
-  });
-}
-
-export function useProductUpdate() {
-  const queryClient = useQueryClient()
-  const navigate = useNavigate()
-  const { id } = useParams()
-  const { refetch } = useProductById()
-
-  return useMutation({
-    mutationFn: (formData: FormData) =>
-      productService.put(formData, { contentType: "form-data", path: id }),
-    onSuccess: (res) => {
-      navigate("/admin/products")
-      alert(res.message);
-      refetch()
-      return queryClient.removeQueries({ queryKey: ["products"] });
-    },
-    onError: (err: ApiErrorResponse<ApiResponse>) => {
-      alert(err.response?.data.message);
-    },
-  });
-}
-
-export function useProductDelete() {
-  // const queryClient = useQueryClient();
   const { refetch } = useProduct()
 
-  return useMutation({
-    mutationFn: (id: string) => productService.delete({ path: id }),
-    onSuccess: () => {
+  const mutation = useMutation({
+    mutationFn: async ({ data, type, id }: ProductCreation) => {
+      switch (type) {
+        case 'create':
+          return productService.post(data, { contentType: "form-data" })
+        case 'update':
+          return productService.put(data, { contentType: "form-data", path: id })
+        case 'delete':
+          return productService.delete({ path: id })
+        default:
+          return productService.post(data, { contentType: "form-data" })
+      }
+    },
+    onSuccess: (res) => {
+      alert(res.message),
+        navigate("/admin/product")
       refetch()
-      alert("Product deleted successfully.");
-      // return queryClient.removeQueries({ queryKey: ["products"] });
+      return queryClient.removeQueries({ queryKey: ["products"] })
     },
+
     onError: (err: ApiErrorResponse<ApiResponse>) => {
-      alert(err.response?.data.message);
-    },
-  });
+      alert(err.response?.data.message)
+
+    }
+  })
+  return mutation
 }
+
+// export function useProductAdd() {
+//   const queryClient = useQueryClient();
+//   const navigate = useNavigate()
+//   return useMutation({
+//     mutationFn: (formData: FormData) => {
+//       console.log(formData);
+//       return productService.post(formData, { contentType: "form-data" });
+//     },
+//     onSuccess: (res) => {
+//       alert(res.message);
+//       navigate("/admin/products")
+//       return queryClient.removeQueries({ queryKey: ["products"] });
+//     },
+//     onError: (err: ApiErrorResponse<ApiResponse>) => {
+//       alert(err.response?.data.message);
+//     },
+//   });
+// }
+
+// export function useProductUpdate() {
+//   const queryClient = useQueryClient()
+//   const navigate = useNavigate()
+//   const { id } = useParams()
+//   const { refetch } = useProductById()
+
+//   return useMutation({
+//     mutationFn: (formData: FormData) =>
+//       productService.put(formData, { contentType: "form-data", path: id }),
+//     onSuccess: (res) => {
+//       navigate("/admin/product")
+//       alert(res.message);
+//       refetch()
+//       return queryClient.removeQueries({ queryKey: ["products"] });
+//     },
+//     onError: (err: ApiErrorResponse<ApiResponse>) => {
+//       alert(err.response?.data.message);
+//     },
+//   });
+// }
+
+// export function useProductDelete() {
+//   // const queryClient = useQueryClient();
+//   const { refetch } = useProduct()
+
+//   return useMutation({
+//     mutationFn: (id: string) => productService.delete({ path: id }),
+//     onSuccess: () => {
+//       refetch()
+//       alert("Product deleted successfully.");
+//       // return queryClient.removeQueries({ queryKey: ["products"] });
+//     },
+//     onError: (err: ApiErrorResponse<ApiResponse>) => {
+//       alert(err.response?.data.message);
+//     },
+//   });
+// }
 
 export function useProductById() {
   const { id } = useParams()

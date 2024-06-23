@@ -1,4 +1,4 @@
-import { useProduct, useProductDelete } from "@hooks/home/useProduct";
+import { useProduct, useProductCreation } from "@hooks/home/useProduct";
 import { Link, useSearchParams } from "react-router-dom";
 import { convertQueryParamsToObject } from "../../../libs/helper";
 import Pagination from "../../global/Pagination";
@@ -6,7 +6,7 @@ import { Table, TableBody, TableHead, TableItem } from "./Table";
 
 const ProductsTable = () => {
   const { data: products, isLoading } = useProduct();
-  const mutation = useProductDelete();
+  const mutation = useProductCreation();
 
   const [searchParams, setSearchParams] = useSearchParams();
   const queryParams = convertQueryParamsToObject(searchParams.toString());
@@ -14,9 +14,12 @@ const ProductsTable = () => {
     setSearchParams({ ...queryParams, page: String(page) });
   };
 
-  const handleDelete = (id: string) => {
+  const handleDelete = async (id: string) => {
     if (confirm("Are you sure you want to delete this product?")) {
-      mutation.mutate(id);
+      await mutation.mutateAsync({
+        type: "delete",
+        id,
+      });
     }
   };
 
@@ -30,7 +33,7 @@ const ProductsTable = () => {
         <div className="py-6 flex flex-wrap items-center justify-between">
           <h4 className="text-xl font-bold text-white">Data Products</h4>
           <Link
-            to="/admin/products/add"
+            to="/admin/product/add"
             className="text-sm font-medium text-white bg-blue-600 py-2 px-4 rounded-full hover:opacity-90"
           >
             Add Product
