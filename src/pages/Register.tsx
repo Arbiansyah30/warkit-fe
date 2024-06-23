@@ -3,7 +3,7 @@ import FormRegister from "../components/auth/FormRegister";
 
 const RegisterView = () => {
   return (
-    <AuthLayout title="Register">
+    <AuthLayout auth="Register">
       <FormRegister />
     </AuthLayout>
   );

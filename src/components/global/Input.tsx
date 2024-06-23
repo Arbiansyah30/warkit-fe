@@ -25,12 +25,16 @@ const Input: React.FC<InputProps> = ({
         name={name}
         className={`w-full rounded border ${
           showBackground ? "bg-[#F9FAFB]" : "bg-transparent"
-        } px-3 py-2 font-normal outline-none transition focus:border-[#1D4ED8] active:border-[#1D4ED8] ${
-          error ? "border-red-500" : "border-stroke"
-        } ${isLoading ? "cursor-not-allowed" : ""}`}
+        } px-3 py-2 font-normal outline-none transition ${
+          error
+            ? "focus:border-[#DC2626] active:border-[#DC2626]"
+            : "focus:border-[#1D4ED8] active:border-[#1D4ED8]"
+        } ${error ? "border-red-500" : "border-stroke"} ${
+          isLoading ? "cursor-not-allowed" : ""
+        }`}
         {...rest}
       />
-      {error && <p className="text-[#DC2626] text-xs">{error}</p>}
+      {error ? <p className="text-[#DC2626] text-xs">{error}</p> : null}
     </div>
   );
 };

@@ -1,4 +1,4 @@
-import { useAuthLogin } from "@hooks/auth/useAuth";
+import { useAuthRegister } from "@hooks/auth/useAuth";
 import { AuthRegisterBodyModel } from "@model/auth";
 import { useState } from "react";
 import Button from "../global/Button";
@@ -18,10 +18,10 @@ const FormRegister = () => {
     ...InitialValue,
   });
 
-  const mutation = useAuthLogin();
+  const mutation = useAuthRegister();
 
   const validate = () => {
-    if (!authBody.email || !authBody.password) {
+    if (!authBody.email || !authBody.password || !authBody.name) {
       const newErrors: AuthRegisterBodyModel = { ...InitialValue };
 
       if (!authBody.email) {
@@ -29,6 +29,9 @@ const FormRegister = () => {
       }
       if (!authBody.password) {
         newErrors.password = "Password is required";
+      }
+      if (!authBody.name) {
+        newErrors.name = "Name is required";
       }
       setErrors(newErrors);
       return false;
@@ -50,31 +53,36 @@ const FormRegister = () => {
     >
       <div className="w-full flex flex-col gap-1 items-start">
         <Input
+          type="name"
+          name="name"
+          error={!authBody.name ? errors.name : ""}
+          placeholder="Name"
+          onChange={(e) =>
+            setAuthBody((prev) => ({ ...prev, name: e.target.value }))
+          }
+        />
+      </div>
+      <div className="w-full flex flex-col gap-1 items-start">
+        <Input
           type="email"
           name="email"
-          error={errors.email}
+          error={!authBody.email ? errors.email : ""}
           placeholder="Email"
           onChange={(e) =>
             setAuthBody((prev) => ({ ...prev, email: e.target.value }))
           }
         />
-        {errors.email && (
-          <p className="text-[#DC2626] text-xs">{errors.email}</p>
-        )}
       </div>
       <div className="w-full flex flex-col gap-1 items-start">
         <Input
           name="password"
           type="password"
-          error={errors.password}
+          error={!authBody.password ? errors.password : ""}
           placeholder="Password"
           onChange={(e) =>
             setAuthBody((prev) => ({ ...prev, password: e.target.value }))
           }
         />
-        {errors.password && (
-          <p className="text-[#DC2626] text-xs">{errors.password}</p>
-        )}
       </div>
 
       <Button primary>Submit</Button>
