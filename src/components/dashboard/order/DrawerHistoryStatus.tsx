@@ -23,7 +23,7 @@ const DrawerHistoryStatus: React.FC<IDrawerHistory> = ({ onHide, show }) => {
         <h1 className="text-xl text-white font-semibold">History Status</h1>
         <div className="flex flex-col gap-4">
           {history?.data?.map((item, index) => (
-            <div className="flex justify-between items-center">
+            <div key={index} className="flex justify-between items-center">
               <p
                 className={`px-4 py-1 rounded text-sm text-white ${
                   item?.status === "PAID" ? "bg-green-500" : "bg-gray-500"

@@ -4,6 +4,8 @@ import { useQueryClient } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import Input from "../../global/Input";
+import { useAtom } from "jotai";
+import { loadingBarAtom } from "../../../store/loadingBar";
 
 const InitialValue: CategoryBodyModel = {
   name: "",
@@ -13,6 +15,14 @@ const FormUpdateCategory = () => {
   const { id } = useParams<{ id: string }>();
   const { data: categoryById, isLoading } = useCategoryById();
   const mutation = useCategoryCreation();
+
+  // global
+  const [, setLoadingBar] = useAtom(loadingBarAtom);
+
+  // loading bar
+  useEffect(() => {
+    setLoadingBar(mutation.isPending || isLoading);
+  }, [mutation.isPending, isLoading]);
 
   useEffect(() => {
     if (categoryById && categoryById.data) {
@@ -70,10 +80,6 @@ const FormUpdateCategory = () => {
   useEffect(() => {
     return queryClient.removeQueries({ queryKey: ["products"] });
   }, [id]);
-
-  if (isLoading) {
-    return <div className="text-white">Loading...</div>;
-  }
 
   return (
     <div className="flex flex-col gap-9">

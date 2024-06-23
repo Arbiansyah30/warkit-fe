@@ -4,10 +4,21 @@ import { convertQueryParamsToObject } from "../../../libs/helper";
 import Pagination from "../../global/Pagination";
 import { Table, TableBody, TableHead } from "../../global/Table";
 import { TableItem } from "./Table";
+import { useAtom } from "jotai";
+import { loadingBarAtom } from "../../../store/loadingBar";
+import { useEffect } from "react";
 
 const CategoryTable = () => {
-  const { data: categories } = useCategory();
+  const { data: categories, isLoading } = useCategory();
   const mutation = useCategoryCreation();
+
+  // global
+  const [, setLoadingBar] = useAtom(loadingBarAtom);
+
+  // loading bar
+  useEffect(() => {
+    setLoadingBar(isLoading);
+  }, [isLoading]);
 
   const [searchParams, setSearchParams] = useSearchParams();
   const queryParams = convertQueryParamsToObject(searchParams.toString());

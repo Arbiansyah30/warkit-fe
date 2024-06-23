@@ -1,10 +1,12 @@
 import { useCategory } from "@hooks/home/useCategory";
 import { useProductCreation } from "@hooks/home/useProduct";
 import { ProductBodyModel } from "@model/product";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { MdArrowDropDown } from "react-icons/md";
 import DefaultImage from "../../../assets/default-image.png";
 import Input from "../../global/Input";
+import { useAtom } from "jotai";
+import { loadingBarAtom } from "../../../store/loadingBar";
 
 const InitialValue: ProductBodyModel = {
   name: "",
@@ -23,7 +25,15 @@ interface ImageFile extends File {
 
 const FormAddProduct = () => {
   const mutation = useProductCreation();
-  const { data: category } = useCategory();
+  const { data: category, isLoading } = useCategory();
+
+    // global
+    const [, setLoadingBar] = useAtom(loadingBarAtom);
+
+    // loading bar
+    useEffect(() => {
+      setLoadingBar(mutation.isPending || isLoading);
+    }, [mutation.isPending, isLoading]);
 
   const [productBody, setProductBody] = useState<ProductBodyModel>({
     ...InitialValue,

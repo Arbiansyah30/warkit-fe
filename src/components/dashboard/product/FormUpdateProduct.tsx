@@ -7,6 +7,8 @@ import { MdArrowDropDown } from "react-icons/md";
 import { useParams } from "react-router-dom";
 import DefaultImage from "../../../assets/default-image.png";
 import Input from "../../global/Input";
+import { loadingBarAtom } from "../../../store/loadingBar";
+import { useAtom } from "jotai";
 
 const InitialValue: ProductBodyModel = {
   name: "",
@@ -28,6 +30,14 @@ const FormUpdateProduct = () => {
   const { data: category } = useCategory();
   const { data: product, isLoading } = useProductById();
   const mutation = useProductCreation();
+
+    // global
+    const [, setLoadingBar] = useAtom(loadingBarAtom);
+
+    // loading bar
+    useEffect(() => {
+      setLoadingBar(mutation.isPending || isLoading);
+    }, [mutation.isPending, isLoading]);
 
   useEffect(() => {
     if (product && product.data) {
@@ -153,10 +163,6 @@ const FormUpdateProduct = () => {
   useEffect(() => {
     return queryClient.removeQueries({ queryKey: ["products"] });
   }, [id]);
-
-  if (isLoading) {
-    return <div className="text-white">Loading...</div>;
-  }
 
   return (
     <div className="flex flex-col gap-9">

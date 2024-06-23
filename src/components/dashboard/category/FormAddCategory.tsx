@@ -1,7 +1,9 @@
 import { useCategoryCreation } from "@hooks/home/useCategory";
 import { CategoryBodyModel } from "@model/category";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Input from "../../global/Input";
+import { useAtom } from "jotai";
+import { loadingBarAtom } from "../../../store/loadingBar";
 
 const InitialValue: CategoryBodyModel = {
   name: "",
@@ -9,6 +11,16 @@ const InitialValue: CategoryBodyModel = {
 
 const FormAddCategory = () => {
   const mutation = useCategoryCreation();
+  console.log("mutation", mutation);
+  
+
+    // global
+    const [, setLoadingBar] = useAtom(loadingBarAtom);
+
+    // loading bar
+    useEffect(() => {
+      setLoadingBar(mutation.isPending);
+    }, [mutation.isPending]);
 
   const [categoryBody, setCategoryBody] = useState<CategoryBodyModel>({
     ...InitialValue,
@@ -62,6 +74,7 @@ const FormAddCategory = () => {
                 error={errors.name}
                 name="name"
                 value={categoryBody.name}
+                disabled={mutation.isPending}
                 onChange={(e) => {
                   setCategoryBody({ ...categoryBody, name: e.target.value });
                 }}

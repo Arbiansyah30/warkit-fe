@@ -4,10 +4,21 @@ import { convertQueryParamsToObject } from "../../../libs/helper";
 import Pagination from "../../global/Pagination";
 import { Table, TableBody, TableHead } from "../../global/Table";
 import { TableItem } from "./Table";
+import { useEffect } from "react";
+import { loadingBarAtom } from "../../../store/loadingBar";
+import { useAtom } from "jotai";
 
 const ProductsTable = () => {
   const { data: products, isLoading } = useProduct();
   const mutation = useProductCreation();
+
+  // global
+  const [, setLoadingBar] = useAtom(loadingBarAtom);
+
+  // loading bar
+  useEffect(() => {
+    setLoadingBar(isLoading);
+  }, [isLoading]);
 
   const [searchParams, setSearchParams] = useSearchParams();
   const queryParams = convertQueryParamsToObject(searchParams.toString());
@@ -23,10 +34,6 @@ const ProductsTable = () => {
       });
     }
   };
-
-  if (isLoading) {
-    return <div className="text-white">Loading...</div>;
-  }
 
   return (
     <>
