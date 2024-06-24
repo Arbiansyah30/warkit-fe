@@ -2,24 +2,24 @@ import { IncomeItem } from "@model/income";
 import { formatDate } from "../../../../libs/helper/FormatTime";
 
 interface ITableItem extends IncomeItem {
-  name: string;
+  totalQty: number;
 }
 
 export const TableItem: React.FC<ITableItem> = ({
   createdAt,
   nominal,
-  name,
+  totalQty,
 }) => {
   return (
     <tr>
       <td className="px-4 py-2">
-        <p className="text-white">{name}</p>
+        <p className="text-white">{formatDate(createdAt)}</p>
+      </td>
+      <td className="px-4 py-2">
+        <p className="text-white">{totalQty}</p>
       </td>
       <td className="px-4 py-2">
         <p className="text-white">{nominal}</p>
-      </td>
-      <td className="px-4 py-2">
-        <p className="text-white">{formatDate(createdAt)}</p>
       </td>
       {/* <td className="px-4 ">
         <div className="flex items-center justify-center gap-1">

@@ -6,7 +6,8 @@ export interface IncomeItem {
         name: string,
         paymentMethod: "QRIS" | "CASH",
         settlementTime: string,
-        totalAmount: number
+        totalAmount: number,
+        totalQuantity: number
     },
     createdAt: Date
 }
