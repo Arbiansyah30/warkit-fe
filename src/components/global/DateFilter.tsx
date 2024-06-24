@@ -1,6 +1,6 @@
 // src/components/DateFilter.tsx
 import React, { useState } from "react";
-import { DateRange, RangeKeyDict } from "react-date-range";
+import { DateRange } from "react-date-range";
 import { addDays } from "date-fns";
 import "react-date-range/dist/styles.css";
 import "react-date-range/dist/theme/default.css";
