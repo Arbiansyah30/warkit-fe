@@ -8,7 +8,7 @@ export const TableHead: React.FC<TableHeadList> = ({ HeadList }) => {
       <tr className="bg-gray-2 text-left dark:bg-meta-4 border-y border-[#eee]">
         {HeadList.map((head, index) => (
           <th
-            className={`px-4 py-4 font-medium text-white ${
+            className={`px-4 py-4 font-medium text-nowrap text-white ${
               index === HeadList.length - 1 && "text-center"
             }`}
             key={index}

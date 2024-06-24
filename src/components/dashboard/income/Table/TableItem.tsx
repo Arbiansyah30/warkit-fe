@@ -13,7 +13,7 @@ export const TableItem: React.FC<ITableItem> = ({
   return (
     <tr>
       <td className="px-4 py-2">
-        <p className="text-white">{formatDate(createdAt)}</p>
+        <p className="text-white text-nowrap">{formatDate(createdAt)}</p>
       </td>
       <td className="px-4 py-2">
         <p className="text-white">{totalQty}</p>

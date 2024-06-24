@@ -13,7 +13,6 @@ export interface IncomeItem {
 }
 
 export interface IncomeModel {
-
     incomes: IncomeItem[],
     totalIncome: number
 }
