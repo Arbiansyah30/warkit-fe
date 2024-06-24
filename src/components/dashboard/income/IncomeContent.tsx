@@ -6,21 +6,16 @@ import { Table, TableBody, TableHead } from "../../global/Table";
 import { TableItem } from "./Table";
 import { useAtom } from "jotai";
 import { loadingBarAtom } from "../../../store/loadingBar";
-import { useEffect, useState } from "react";
-import { IncomeItem } from "@model/income";
-import DateFilter from "../../global/DateFilter";
+import { useEffect } from "react";
 
 export const IncomeContent = () => {
-  const { data: incomeResponse, isLoading } = useIncome();
-  const [filteredIncome, setFilteredIncome] = useState<IncomeItem[]>([]);
+  const { data: income, isLoading } = useIncome();
 
-  
   // global
   const [, setLoadingBar] = useAtom(loadingBarAtom);
 
   // loading bar
   useEffect(() => {
-    setFilteredIncome(incomeResponse?.data?.incomes || []);
     setLoadingBar(isLoading);
   }, [isLoading]);
 
@@ -30,31 +25,25 @@ export const IncomeContent = () => {
     setSearchParams({ ...queryParams, page: String(page) });
   };
 
-  const handleFilter = (startDate: Date, endDate: Date) => {
-    if (!incomeResponse?.data?.incomes) return;
-    const income: IncomeItem[] = incomeResponse?.data?.incomes;
-    const filtered = income.filter((item) => {
-        const createdAt = new Date(item.createdAt);
-        return createdAt >= startDate && createdAt <= endDate;
-    });
-    setFilteredIncome(filtered);
-};
-
-  console.log(filteredIncome);
-
   return (
     <>
       <div className="rounded-md border border-stroke w-full bg-gray-900 px-5 shadow-default dark:bg-boxdark sm:px-7">
         <div className="py-6  flex flex-col items-start justify-between">
           <h4 className="text-xl font-bold text-white">Data Income</h4>
-          <DateFilter onFilter={handleFilter} />
         </div>
         <div className="w-full overflow-x-auto">
           <Table>
-            <TableHead HeadList={["Date Time", "Total Product Sold", "Total Nominal", ""]} />
+            <TableHead
+              HeadList={[
+                "Date Time",
+                "Total Product Sold",
+                "Total Nominal",
+                "",
+              ]}
+            />
             <TableBody>
               <>
-                {filteredIncome.map((item, index) => (
+                {income?.data?.incomes.map((item, index) => (
                   <TableItem
                     key={index}
                     totalQty={item.transaction?.totalQuantity as number}
@@ -67,11 +56,11 @@ export const IncomeContent = () => {
           </Table>
         </div>
       </div>
-      {/* <Pagination
+      <Pagination
         currentPage={income?.meta?.page as number}
         totalPages={income?.meta?.totalPages as number}
         onPageChange={handleChangePage}
-      /> */}
+      />
     </>
   );
 };
