@@ -6,6 +6,8 @@ export interface QueryParams {
   name?: string,
   search?: string,
   categoryId?: string
+  from?: string,
+  to?: string
 }
 
 export interface ApiOption {
