@@ -2,7 +2,6 @@ import { TransactionModel } from "@model/transaction";
 import React from "react";
 import { FaInfoCircle } from "react-icons/fa";
 import { Link } from "react-router-dom";
-import { formatRupiah } from "../../../../libs/helper";
 import PaymentCash from "../PaymentCash";
 
 interface ITableItem extends TransactionModel {
