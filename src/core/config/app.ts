@@ -10,4 +10,5 @@ export const API_ENDPOINT = {
     register: `${CONFIG_APP.base_url}/auth/register`,
     transaction: `${CONFIG_APP.base_url}/transaction`,
     income: `${CONFIG_APP.base_url}/income`,
+    payment: `${CONFIG_APP.base_url}/payment`,
 }

@@ -16,7 +16,7 @@ const NavbarAdmin: React.FC<{
   const [loadingBar, setLoadingBar] = useAtom(loadingBarAtom);
   return (
     <>
-      <header className="sticky bg-gray-900 top-0 z-[999] flex shadow-lg">
+      <header className="fixed bg-gray-900 top-0 left-0 right-0 z-[999] flex shadow-lg">
         <div className="flex flex-grow items-center justify-between px-4 py-6 shadow-2 md:px-6 2xl:px-11">
           <div className="flex items-center gap-2 sm:gap-4 hover:text-secondary text-white">
             {/* Hamburger Toggle BTN */}

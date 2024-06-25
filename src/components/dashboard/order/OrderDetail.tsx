@@ -85,6 +85,14 @@ const OrderDetail: React.FC = () => {
               <strong>Total Amount:</strong>{" "}
               {formatRupiah(transactionById?.data?.totalAmount || 0)}
             </p>
+            <p>
+              <strong>Total Paid:</strong>{" "}
+              {formatRupiah(transactionById?.data?.totalPaid || 0)}
+            </p>
+            <p>
+              <strong>Total Return:</strong>{" "}
+              {formatRupiah(transactionById?.data?.totalReturn || 0)}
+            </p>
           </div>
 
           <h3 className="text-xl font-semibold mb-4">Products</h3>

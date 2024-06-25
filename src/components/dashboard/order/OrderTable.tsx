@@ -36,12 +36,14 @@ const OrderTable = () => {
           <Table>
             <TableHead
               HeadList={[
+                // "Serial Number",
                 "Name",
                 "Email",
                 "Payment Method",
                 "Status",
-                "Total Quantity",
-                "Total Amount",
+                // "Total Amount",
+                // "Total Paid",
+                // "Total Return",
                 "Actions",
               ]}
             />
@@ -50,14 +52,16 @@ const OrderTable = () => {
                 {transaction?.data?.map((item, index) => (
                   <TableItem
                     key={index}
+                    serialNumber={item.serialNumber}
                     onPrint={(id) => alert(`print ${id}`)}
                     name={item.name}
                     email={item.email}
                     paymentMethod={item.paymentMethod}
                     id={item.id}
                     status={item.status}
-                    totalAmount={item.totalAmount}
-                    totalQuantity={item.totalQuantity}
+                    // totalAmount={item.totalAmount}
+                    // totalPaid={item.totalPaid}
+                    // totalReturn={item.totalReturn}
                   />
                 ))}
               </>
