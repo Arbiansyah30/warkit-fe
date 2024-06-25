@@ -1,7 +1,9 @@
 import { usePaymentUpdate } from "@hooks/home/useTransactionCreation";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Input from "../../global/Input";
 import { PaymentModel } from "@model/transaction";
+import { useAtom } from "jotai";
+import { loadingBarAtom } from "../../../store/loadingBar";
 
 const PaymentCash: React.FC<{ orderId: string }> = ({ orderId }) => {
   const mutation = usePaymentUpdate();
@@ -11,13 +13,21 @@ const PaymentCash: React.FC<{ orderId: string }> = ({ orderId }) => {
     Partial<Record<keyof PaymentModel, string>>
   >({});
 
+  // global
+  const [, setLoadingBar] = useAtom(loadingBarAtom);
+
+  // loading bar
+  useEffect(() => {
+    setLoadingBar(mutation.isPending);
+  }, [mutation.isPending]);
+
   const validate = () => {
     const newErrors: Partial<Record<keyof PaymentModel, string>> = {};
 
     let isValid = true;
 
     if (!totalPaid) {
-      newErrors.totalPaid = "Total is required";
+      newErrors.totalPaid = "Payment is required";
       isValid = false;
     }
 
@@ -35,7 +45,7 @@ const PaymentCash: React.FC<{ orderId: string }> = ({ orderId }) => {
     setTotalPaid("");
   };
 
-  const handlePayment = async (e : React.FormEvent<HTMLFormElement>) => {
+  const handlePayment = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!validate()) return;
     await mutation.mutateAsync({
@@ -62,6 +72,7 @@ const PaymentCash: React.FC<{ orderId: string }> = ({ orderId }) => {
             <h2 className="text-xl font-semibold mb-4">Enter Payment Value</h2>
             <form onSubmit={handlePayment}>
               <Input
+                disabled={mutation.isPending}
                 name="payment"
                 type="number"
                 className="w-full p-2 border border-gray-300 rounded mb-4"

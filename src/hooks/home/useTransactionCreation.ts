@@ -77,7 +77,8 @@ export function usePaymentUpdate() {
       }
     },
     onSuccess: (res) => {
-      alert(res.message), refetch();
+      alert(res.message);
+      refetch();
       return queryClient.removeQueries({ queryKey: ["transactions"] });
     },
 

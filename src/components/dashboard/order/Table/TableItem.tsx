@@ -5,11 +5,12 @@ import { Link } from "react-router-dom";
 import PaymentCash from "../PaymentCash";
 
 interface ITableItem extends TransactionModel {
-  onPrint: (id: string) => void;
+  item: TransactionModel;
+  onPrint: (item: TransactionModel) => void;
 }
 
 export const TableItem: React.FC<ITableItem> = ({
-  // serialNumber,
+  item,
   name,
   email,
   paymentMethod,
@@ -59,9 +60,9 @@ export const TableItem: React.FC<ITableItem> = ({
             <FaInfoCircle size={12} /> Detail
           </Link>
           {status == "UNPAID" && paymentMethod === "CASH" && <PaymentCash orderId={id as string} />}
-          {status == "UNPAID" && paymentMethod !== "CASH" && (
+          {status !== "UNPAID" && (
             <button
-              onClick={() => onPrint(id as string)}
+              onClick={() => onPrint(item)}
               className="hover:opacity-70 text-sm text-white px-3 py-1 rounded-md bg-black flex justify-center items-center"
             >
               Print

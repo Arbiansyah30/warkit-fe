@@ -7,6 +7,7 @@ import { TableItem } from "./Table";
 import { useAtom } from "jotai";
 import { loadingBarAtom } from "../../../store/loadingBar";
 import { useEffect } from "react";
+import { handlePrint } from "../../global/ThermalPrint";
 
 const OrderTable = () => {
   const { data: transaction, isLoading } = useTransaction();
@@ -51,9 +52,10 @@ const OrderTable = () => {
               <>
                 {transaction?.data?.map((item, index) => (
                   <TableItem
+                    item={item}
                     key={index}
                     serialNumber={item.serialNumber}
-                    onPrint={(id) => alert(`print ${id}`)}
+                    onPrint={(item) => handlePrint(item)}
                     name={item.name}
                     email={item.email}
                     paymentMethod={item.paymentMethod}
