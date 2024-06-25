@@ -114,6 +114,8 @@ export const printKitchenReceipt = (order: TransactionModel) => {
 };
 
 export const handlePrint: (transaction: TransactionModel) => void = (transaction) => {
-  printCustomerReceipt(transaction);
-  printKitchenReceipt(transaction);
+  console.log("Transaction:", transaction);
+  
+  // printCustomerReceipt(transaction);
+  // printKitchenReceipt(transaction);
 };
