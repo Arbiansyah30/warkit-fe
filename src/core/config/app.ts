@@ -1,6 +1,7 @@
 export const CONFIG_APP = {
-    base_url: "http://localhost:5000"
-    // base_url: "https://c536-2001-448a-2040-89a9-7461-dc3a-9763-247f.ngrok-free.app"
+    // base_url: "http://localhost:5000"
+    base_url: import.meta.env.POS_BASE_URL
+    // base_url: "https://pos-system-api-drab.vercel.app"
 }
 
 export const API_ENDPOINT = {
