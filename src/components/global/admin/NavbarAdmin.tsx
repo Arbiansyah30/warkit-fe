@@ -15,11 +15,11 @@ const NavbarAdmin: React.FC<{
   const [profileDropdownOpen, setProfileDropdownOpen] = useState(false);
   const profile = useProfile();
   const [loadingBar, setLoadingBar] = useAtom(loadingBarAtom);
+  const navigate = useNavigate();
 
   function logout() {
     const token = localStorage.getItem("token") || "";
     if (token) {
-      const navigate = useNavigate();
       localStorage.removeItem("token");
       navigate("/admin/login");
       alert("Logout success");
