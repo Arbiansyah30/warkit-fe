@@ -13,7 +13,7 @@ export function useAuthLogin() {
             alert(res.message)
             navigate("/admin/product")
         },
-        onError: (err) => alert(err.message)
+        onError: (err: ApiErrorResponse<ApiResponse>) => alert(err.response?.data.message)
     })
     return mutation
 }
@@ -29,4 +29,14 @@ export function useAuthRegister() {
         onError: (err: ApiErrorResponse<ApiResponse>) => alert(err.response?.data.message)
     })
     return mutation
+}
+
+
+export function useAuth() {
+    const token = localStorage.getItem("token") || ""
+
+    if (token) {
+        return { token }
+    }
+    return null
 }

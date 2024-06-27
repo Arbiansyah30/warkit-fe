@@ -1,12 +1,19 @@
+import { useAuth } from "@hooks/auth/useAuth";
 import { useState } from "react";
-import NavbarAdmin from "../../components/global/admin/NavbarAdmin";
+import { Navigate, Outlet } from "react-router-dom";
 import Sidebar from "../../components/global/Sidebar/Sidebar";
-import { Outlet } from "react-router-dom";
+import NavbarAdmin from "../../components/global/admin/NavbarAdmin";
 
 const AdminView = () => {
   const [hamburger, setHamburger] = useState<boolean>(false);
 
-  const handleHamburger = (value: boolean = true) => {    
+  const auth = useAuth();
+
+  if (!auth?.token) {
+    return <Navigate to={"/admin/login"} replace />;
+  }
+
+  const handleHamburger = (value: boolean = true) => {
     if (value) {
       setHamburger(!hamburger);
     } else {
