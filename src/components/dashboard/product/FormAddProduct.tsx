@@ -1,12 +1,12 @@
 import { useCategory } from "@hooks/home/useCategory";
 import { useProductCreation } from "@hooks/home/useProduct";
 import { ProductBodyModel } from "@model/product";
+import { useAtom } from "jotai";
 import { useEffect, useState } from "react";
 import { MdArrowDropDown } from "react-icons/md";
 import DefaultImage from "../../../assets/default-image.png";
-import Input from "../../global/Input";
-import { useAtom } from "jotai";
 import { loadingBarAtom } from "../../../store/loadingBar";
+import Input from "../../global/Input";
 
 const InitialValue: ProductBodyModel = {
   name: "",
@@ -27,13 +27,13 @@ const FormAddProduct = () => {
   const mutation = useProductCreation();
   const { data: category, isLoading } = useCategory();
 
-    // global
-    const [, setLoadingBar] = useAtom(loadingBarAtom);
+  // global
+  const [, setLoadingBar] = useAtom(loadingBarAtom);
 
-    // loading bar
-    useEffect(() => {
-      setLoadingBar(mutation.isPending || isLoading);
-    }, [mutation.isPending, isLoading]);
+  // loading bar
+  useEffect(() => {
+    setLoadingBar(mutation.isPending || isLoading);
+  }, [mutation.isPending, isLoading]);
 
   const [productBody, setProductBody] = useState<ProductBodyModel>({
     ...InitialValue,
@@ -245,7 +245,7 @@ const FormAddProduct = () => {
               </Input>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-4">
+            <div className="grid grid-cols-1 gap-6 mb-4">
               <div className="mx-auto">
                 <img
                   src={imageFile?.preview || DefaultImage}
@@ -253,8 +253,18 @@ const FormAddProduct = () => {
                   className="max-w-[200px] h-[200px] max-h-[200px] mx-auto"
                 />
               </div>
-              <div>
+              <div className="w-full">
+                {/* <Input
+                  type="file"
+                  name="image"
+                  placeholder="Upload Image Product"
+                  error={errors.image}
+                  onChange={handleChangeImage}
+                >
+                  Upload Image
+                </Input> */}
                 <Input
+                  isFile
                   type="file"
                   name="image"
                   placeholder="Upload Image Product"

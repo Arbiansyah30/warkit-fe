@@ -1,17 +1,17 @@
 import { useTransaction } from "@hooks/home/useTransactionCreation";
+import { useAtom } from "jotai";
+import { useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
 import { convertQueryParamsToObject } from "../../../libs/helper";
+import { loadingBarAtom } from "../../../store/loadingBar";
 import Pagination from "../../global/Pagination";
 import { Table, TableBody, TableHead } from "../../global/Table";
 import { TableItem } from "./Table";
-import { useAtom } from "jotai";
-import { loadingBarAtom } from "../../../store/loadingBar";
-import { useEffect } from "react";
+// import { handlePrint } from "../../global/ThermalPrint";
 
 const OrderTable = () => {
   const { data: transaction, isLoading } = useTransaction();
 
-  
   // global
   const [, setLoadingBar] = useAtom(loadingBarAtom);
 
@@ -36,12 +36,14 @@ const OrderTable = () => {
           <Table>
             <TableHead
               HeadList={[
+                // "Serial Number",
                 "Name",
                 "Email",
                 "Payment Method",
                 "Status",
-                "Total Quantity",
-                "Total Amount",
+                // "Total Amount",
+                // "Total Paid",
+                // "Total Return",
                 "Actions",
               ]}
             />
@@ -49,15 +51,19 @@ const OrderTable = () => {
               <>
                 {transaction?.data?.map((item, index) => (
                   <TableItem
+                    item={item}
                     key={index}
-                    onPrint={(id) => alert(`print ${id}`)}
+                    serialNumber={item.serialNumber}
+                    // onPrint={(item) => handlePrint(item)}
+                    onPrint={(item) => alert("print" + item)}
                     name={item.name}
                     email={item.email}
                     paymentMethod={item.paymentMethod}
                     id={item.id}
                     status={item.status}
-                    totalAmount={item.totalAmount}
-                    totalQuantity={item.totalQuantity}
+                    // totalAmount={item.totalAmount}
+                    // totalPaid={item.totalPaid}
+                    // totalReturn={item.totalReturn}
                   />
                 ))}
               </>

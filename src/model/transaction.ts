@@ -11,7 +11,16 @@ export interface TransactionModel {
     status?: string,
     totalQuantity?: number,
     totalAmount?: number,
-    transactionDetails?: TransactionDetailModel[]
+    totalPaid?: number,
+    totalReturn?: number,
+    serialNumber?: string,
+    payMoney?: number,
+    transactionDetails?: TransactionDetailModel[],
+    createdAt?: Date
+}
+
+export interface PaymentModel   {
+    totalPaid: number,
 }
 
 export interface TransactionDetailModel {

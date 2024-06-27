@@ -1,6 +1,6 @@
 import { ApiErrorResponse, ApiResponse } from "@core/libs/api/types";
-import { TransactionModel } from "@model/transaction";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { PaymentModel, TransactionModel } from "@model/transaction";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { transactionService } from "../../services/transaction";
 import { useParams, useSearchParams } from "react-router-dom";
 
@@ -9,6 +9,12 @@ type PayloadType = "create" | "update";
 interface Payload {
   type: PayloadType;
   data: TransactionModel;
+}
+
+interface PaymentCreation {
+  id: string;
+  type?: PayloadType;
+  data: PaymentModel;
 }
 
 interface Options {
@@ -57,11 +63,37 @@ export const useTransactionCreation = () => {
   return mutation;
 };
 
+export function usePaymentUpdate() {
+  const queryClient = useQueryClient();
+  const { refetch } = useTransaction();
+
+  const mutation = useMutation({
+    mutationFn: async ({ data, type, id }: PaymentCreation) => {
+      switch (type) {
+        case "update":
+          return transactionService.putPayment(data, { path: id });
+        default:
+          return transactionService.putPayment(data, { path: id });
+      }
+    },
+    onSuccess: (res) => {
+      alert(res.message);
+      refetch();
+      return queryClient.removeQueries({ queryKey: ["transactions"] });
+    },
+
+    onError: (err: ApiErrorResponse<ApiResponse>) => {
+      alert(err.response?.data.message);
+    },
+  });
+  return mutation;
+}
+
 export function useTransactionById() {
-    const { id } = useParams()
-    return useQuery({
-      queryKey: ["TransactionById", id],
-      queryFn: () => transactionService.getById({ path: id }),
-      enabled: !!id,
-    });
-  }
+  const { id } = useParams();
+  return useQuery({
+    queryKey: ["TransactionById", id],
+    queryFn: () => transactionService.getById({ path: id }),
+    enabled: !!id,
+  });
+}
