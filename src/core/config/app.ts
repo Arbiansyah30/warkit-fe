@@ -1,7 +1,5 @@
 export const CONFIG_APP = {
-    base_url: "http://localhost:5000"
-    // base_url: import.meta.env.POS_BASE_URL
-    // base_url: "https://pos-system-api-drab.vercel.app"
+    base_url: import.meta.env.POS_BASE_URL
 }
 
 export const API_ENDPOINT = {
