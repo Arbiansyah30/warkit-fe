@@ -40,7 +40,7 @@ async function createRequest<Res = unknown, Req = unknown>(
         }),
         ...apiOption?.headers,
       },
-      data: JSON.stringify(body),
+      data: body,
 
     }
   );
