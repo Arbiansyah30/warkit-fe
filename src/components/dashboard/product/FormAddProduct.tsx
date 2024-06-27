@@ -29,6 +29,7 @@ const FormAddProduct = () => {
 
   // global
   const [, setLoadingBar] = useAtom(loadingBarAtom);
+  const [formatedValue, setFormatedValue] = useState<string>("");
 
   // loading bar
   useEffect(() => {
@@ -101,8 +102,6 @@ const FormAddProduct = () => {
     //   console.log(`${key}: ${value}`);
     // }
 
-    console.log({ imageFile, file: productBody.image });
-
     await mutation.mutateAsync({
       type: "create",
       data: formData,
@@ -143,7 +142,7 @@ const FormAddProduct = () => {
   };
   return (
     <div className="flex flex-col gap-9">
-      <div className="rounded-sm border border-stroke text-white bg-gray-900 shadow-default dark:border-strokedark dark:bg-boxdark">
+      <div className="rounded-md border border-stroke text-white bg-gray-900 shadow-default dark:border-strokedark dark:bg-boxdark">
         <div className="border-b border-stroke px-6 py-4 dark:border-strokedark">
           <h3 className="font-medium">Add Products</h3>
         </div>
@@ -233,26 +232,32 @@ const FormAddProduct = () => {
                 placeholder="Enter Product Price"
                 error={errors.price}
                 name="price"
-                value={productBody.price}
+                value={formatedValue || 0}
                 onChange={(e) => {
+                  const numericValue = Number(
+                    e.target.value.replace(/\D/g, "")
+                  ); // Menghapus semua karakter non-digit
+                  const formatted = new Intl.NumberFormat("id-ID").format(
+                    numericValue
+                  );
+                  setFormatedValue(formatted);
                   setProductBody({
                     ...productBody,
-                    price: parseInt(e.target.value) || 0,
+                    price: numericValue,
                   });
                 }}
               >
                 Product Price
               </Input>
             </div>
-
-            <div className="grid grid-cols-1 gap-6 mb-4">
-              <div className="mx-auto">
-                <img
-                  src={imageFile?.preview || DefaultImage}
-                  alt="Buku Yang Mau di Upload"
-                  className="max-w-[200px] h-[200px] max-h-[200px] mx-auto"
-                />
-              </div>
+            <div className="flex justify-start items-center my-6">
+              <img
+                src={imageFile?.preview || DefaultImage}
+                alt="Buku Yang Mau di Upload"
+                className="max-w-[200px] h-[200px] max-h-[200px] rounded-md object-cover"
+              />
+            </div>
+            <div className="grid grid-cols-1 gap-6 mb-4 ">
               <div className="w-full">
                 {/* <Input
                   type="file"

@@ -27,7 +27,8 @@ const Input: React.FC<InputProps> = ({
       {isFile ? (
         <input
           type="file"
-          className="file-input file-input-bordered w-full max-w-xs"
+          className="file-input file-input-bordered w-full text-black"
+          {...rest}
         />
       ) : (
         <input

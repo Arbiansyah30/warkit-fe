@@ -1,11 +1,11 @@
 import { useCategoryById, useCategoryCreation } from "@hooks/home/useCategory";
 import { CategoryBodyModel } from "@model/category";
 import { useQueryClient } from "@tanstack/react-query";
+import { useAtom } from "jotai";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import Input from "../../global/Input";
-import { useAtom } from "jotai";
 import { loadingBarAtom } from "../../../store/loadingBar";
+import Input from "../../global/Input";
 
 const InitialValue: CategoryBodyModel = {
   name: "",
@@ -83,7 +83,7 @@ const FormUpdateCategory = () => {
 
   return (
     <div className="flex flex-col gap-9">
-      <div className="rounded-sm border border-stroke text-white bg-gray-900 shadow-default dark:border-strokedark dark:bg-boxdark">
+      <div className="rounded-md border border-stroke text-white bg-gray-900 shadow-default dark:border-strokedark dark:bg-boxdark">
         <div className="border-b border-stroke px-6 py-4 dark:border-strokedark">
           <h3 className="font-medium">Update Category</h3>
         </div>

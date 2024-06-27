@@ -1,9 +1,9 @@
 import { useCategoryCreation } from "@hooks/home/useCategory";
 import { CategoryBodyModel } from "@model/category";
-import { useEffect, useState } from "react";
-import Input from "../../global/Input";
 import { useAtom } from "jotai";
+import { useEffect, useState } from "react";
 import { loadingBarAtom } from "../../../store/loadingBar";
+import Input from "../../global/Input";
 
 const InitialValue: CategoryBodyModel = {
   name: "",
@@ -12,15 +12,14 @@ const InitialValue: CategoryBodyModel = {
 const FormAddCategory = () => {
   const mutation = useCategoryCreation();
   console.log("mutation", mutation);
-  
 
-    // global
-    const [, setLoadingBar] = useAtom(loadingBarAtom);
+  // global
+  const [, setLoadingBar] = useAtom(loadingBarAtom);
 
-    // loading bar
-    useEffect(() => {
-      setLoadingBar(mutation.isPending);
-    }, [mutation.isPending]);
+  // loading bar
+  useEffect(() => {
+    setLoadingBar(mutation.isPending);
+  }, [mutation.isPending]);
 
   const [categoryBody, setCategoryBody] = useState<CategoryBodyModel>({
     ...InitialValue,
@@ -61,7 +60,7 @@ const FormAddCategory = () => {
   };
   return (
     <div className="flex flex-col gap-9">
-      <div className="rounded-sm border border-stroke text-white bg-gray-900 shadow-default dark:border-strokedark dark:bg-boxdark">
+      <div className="rounded-md border border-stroke text-white bg-gray-900 shadow-default dark:border-strokedark dark:bg-boxdark">
         <div className="border-b border-stroke px-6 py-4 dark:border-strokedark">
           <h3 className="font-medium">Add Category</h3>
         </div>

@@ -1,12 +1,13 @@
 import { useProduct, useProductCreation } from "@hooks/home/useProduct";
+import { useQueryClient } from "@tanstack/react-query";
+import { useAtom } from "jotai";
+import { useEffect } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 import { convertQueryParamsToObject } from "../../../libs/helper";
+import { loadingBarAtom } from "../../../store/loadingBar";
 import Pagination from "../../global/Pagination";
 import { Table, TableBody, TableHead } from "../../global/Table";
 import { TableItem } from "./Table";
-import { useEffect } from "react";
-import { loadingBarAtom } from "../../../store/loadingBar";
-import { useAtom } from "jotai";
 
 const ProductsTable = () => {
   const { data: products, isLoading } = useProduct();
@@ -34,6 +35,12 @@ const ProductsTable = () => {
       });
     }
   };
+
+  const queryClient = useQueryClient();
+
+  useEffect(() => {
+    return queryClient.removeQueries({ queryKey: ["product"] });
+  });
 
   return (
     <>

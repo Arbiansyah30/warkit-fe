@@ -2,13 +2,13 @@ import { useCategory } from "@hooks/home/useCategory";
 import { useProductById, useProductCreation } from "@hooks/home/useProduct";
 import { ProductBodyModel } from "@model/product";
 import { useQueryClient } from "@tanstack/react-query";
+import { useAtom } from "jotai";
 import { useEffect, useState } from "react";
 import { MdArrowDropDown } from "react-icons/md";
 import { useParams } from "react-router-dom";
 import DefaultImage from "../../../assets/default-image.png";
-import Input from "../../global/Input";
 import { loadingBarAtom } from "../../../store/loadingBar";
-import { useAtom } from "jotai";
+import Input from "../../global/Input";
 
 const InitialValue: ProductBodyModel = {
   name: "",
@@ -31,13 +31,13 @@ const FormUpdateProduct = () => {
   const { data: product, isLoading } = useProductById();
   const mutation = useProductCreation();
 
-    // global
-    const [, setLoadingBar] = useAtom(loadingBarAtom);
+  // global
+  const [, setLoadingBar] = useAtom(loadingBarAtom);
 
-    // loading bar
-    useEffect(() => {
-      setLoadingBar(mutation.isPending || isLoading);
-    }, [mutation.isPending, isLoading]);
+  // loading bar
+  useEffect(() => {
+    setLoadingBar(mutation.isPending || isLoading);
+  }, [mutation.isPending, isLoading]);
 
   useEffect(() => {
     if (product && product.data) {
@@ -166,7 +166,7 @@ const FormUpdateProduct = () => {
 
   return (
     <div className="flex flex-col gap-9">
-      <div className="rounded-sm border border-stroke text-white bg-gray-900 shadow-default dark:border-strokedark dark:bg-boxdark">
+      <div className="rounded-md border border-stroke text-white bg-gray-900 shadow-default dark:border-strokedark dark:bg-boxdark">
         <div className="border-b border-stroke px-6 py-4 dark:border-strokedark">
           <h3 className="font-medium">Update Products</h3>
         </div>
@@ -264,20 +264,21 @@ const FormUpdateProduct = () => {
               </Input>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-4">
-              <div className="mx-auto">
-                <img
-                  src={
-                    imageFile?.preview ||
-                    (productBody.image as string) ||
-                    DefaultImage
-                  }
-                  alt="Buku Yang Mau di Upload"
-                  className="max-w-[200px] h-[200px] max-h-[200px] mx-auto object-cover"
-                />
-              </div>
-              <div>
+            <div className="flex justify-start items-center my-6">
+              <img
+                src={
+                  imageFile?.preview ||
+                  (productBody.image as string) ||
+                  DefaultImage
+                }
+                alt="Buku Yang Mau di Upload"
+                className="max-w-[200px] h-[200px] max-h-[200px] rounded-md object-cover"
+              />
+            </div>
+            <div className="grid grid-cols-1 gap-6 mb-4 ">
+              <div className="w-full">
                 <Input
+                  isFile
                   type="file"
                   name="image"
                   placeholder="Upload Image Product"
