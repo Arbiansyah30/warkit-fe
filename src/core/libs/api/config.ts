@@ -31,6 +31,7 @@ async function createRequest<Res = unknown, Req = unknown>(
     }),
     {
       method,
+      withCredentials: true,
 
       headers: {
         "Content-Type": `${getContentType(apiOption?.contentType || "json")}`,
@@ -41,6 +42,7 @@ async function createRequest<Res = unknown, Req = unknown>(
         ...apiOption?.headers,
       },
       data: body,
+
     }
   );
   // const data: Res = await res.json();
