@@ -31,7 +31,6 @@ async function createRequest<Res = unknown, Req = unknown>(
     }),
     {
       method,
-      withCredentials: true,
       headers: {
         "Content-Type": `${getContentType(apiOption?.contentType || "json")}`,
         ...(apiOption?.bearerToken &&
