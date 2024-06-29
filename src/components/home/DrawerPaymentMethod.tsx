@@ -1,12 +1,13 @@
 import { useTransactionCreation } from "@hooks/home/useTransactionCreation";
 import { PaymentMethod } from "@model/transaction";
-import { useAtomValue } from "jotai";
-import { useRef, useState } from "react";
+import { useAtom, useAtomValue } from "jotai";
+import { useEffect, useRef, useState } from "react";
 import QRIS from "../../assets/images/qris.png";
 import CASH from "../../assets/images/icon _wallet.svg";
 import { CartMapper } from "../../mapper/CartMapper";
 import { transactionAtom } from "../../store/transaction";
 import Button from "../global/Button";
+import { loadingBarAtom } from "../../store/loadingBar";
 
 interface IDrawer {
   onHide: () => void;
@@ -40,16 +41,24 @@ const DrawerMethodPayment: React.FC<IDrawer> = ({ onHide, show = false }) => {
 
   const mutation = useTransactionCreation();
 
-  const handleTransaction = async () => {
-    await mutation.mutateAsync({
-      type: "create",
-      data: {
-        name: transaction.name,
-        email: transaction.email,
-        paymentMethod: selected as PaymentMethod,
-        details: filteredTransactionIds,
-      },
-    });
+  // global
+  const [, setLoadingBar] = useAtom(loadingBarAtom);
+
+  // loading bar
+  useEffect(() => {
+    setLoadingBar(mutation.isPending);
+  }, [mutation.isPending]);
+
+  const handleTransaction = async () => {  
+    // await mutation.mutateAsync({
+    //   type: "create",
+    //   data: {
+    //     name: transaction.name,
+    //     email: transaction.email,
+    //     paymentMethod: selected as PaymentMethod,
+    //     details: filteredTransactionIds,
+    //   },
+    // });
   };
 
   return (
@@ -111,7 +120,7 @@ const DrawerMethodPayment: React.FC<IDrawer> = ({ onHide, show = false }) => {
         <Button
           onClick={handleTransaction}
           primary={!!selected}
-          disabled={!selected}
+          disabled={!selected || mutation.isPending}
         >
           NEXT
         </Button>
