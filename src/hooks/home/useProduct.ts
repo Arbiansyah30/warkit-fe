@@ -1,8 +1,11 @@
 import { ApiErrorResponse, ApiResponse } from "@core/libs/api/types";
 import useDebounce from "@hooks/global/useDebounce";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useSetAtom } from "jotai";
+import toast from "react-hot-toast";
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { productService } from "../../services/products";
+import { loadingBarAtom } from "../../store/loadingBar";
 
 interface Options {
   page?: number;
@@ -48,6 +51,7 @@ export function useProductCreation() {
   const queryClient = useQueryClient();
   const navigate = useNavigate()
   const { refetch } = useProduct()
+  const setLoading = useSetAtom(loadingBarAtom)
 
   const mutation = useMutation({
     mutationFn: async ({ data, type, id }: ProductCreation) => {
@@ -63,14 +67,16 @@ export function useProductCreation() {
       }
     },
     onSuccess: (res) => {
-      alert(res.message),
-        navigate("/admin/product")
+      setLoading(false)
+      toast.success(res.message as string)
+      navigate("/admin/product")
       refetch()
       return queryClient.removeQueries({ queryKey: ["products"] })
     },
 
     onError: (err: ApiErrorResponse<ApiResponse>) => {
-      alert(err.response?.data.message)
+      setLoading(false)
+      toast.error(err.response?.data?.message as string)
 
     }
   })

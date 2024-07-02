@@ -19,7 +19,21 @@ const Button: React.FC<IButtonProps> = ({
   sizes = "md",
   ...rest
 }) => {
-  if (success) {
+  if (disabled) {
+    return (
+      <button
+        disabled={disabled}
+        className={
+          sizes === "md"
+            ? "bg-[#aeaeae] w-full p-2 rounded-md text-white font-semibold duration-300"
+            : "bg-[#aeaeae] w-full p-2 rounded-md text-white font-medium duration-300 text-xs"
+        }
+        {...rest}
+      >
+        {children}
+      </button>
+    );
+  } else if (success) {
     return (
       <button
         className={
@@ -61,11 +75,10 @@ const Button: React.FC<IButtonProps> = ({
   } else {
     return (
       <button
-        disabled={disabled}
         className={
           sizes === "md"
-            ? "bg-[#aeaeae] w-full p-2 rounded-md text-white font-semibold duration-300"
-            : "bg-[#aeaeae] w-full p-2 rounded-md text-white font-medium duration-300 text-xs"
+            ? "bg-[#1D4ED8] w-full p-2 rounded-md text-white font-semibold duration-300"
+            : "bg-[#1D4ED8] w-full p-2 rounded-md text-white font-medium duration-300 text-xs"
         }
         {...rest}
       >

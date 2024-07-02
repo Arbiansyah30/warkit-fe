@@ -5,6 +5,7 @@ import { useEffect } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 import { convertQueryParamsToObject } from "../../../libs/helper";
 import { loadingBarAtom } from "../../../store/loadingBar";
+import EmptyData from "../../global/EmptyData";
 import Pagination from "../../global/Pagination";
 import { Table, TableBody, TableHead } from "../../global/Table";
 import { TableItem } from "./Table";
@@ -28,12 +29,10 @@ const ProductsTable = () => {
   };
 
   const handleDelete = async (id: string) => {
-    if (confirm("Are you sure you want to delete this product?")) {
-      await mutation.mutateAsync({
-        type: "delete",
-        id,
-      });
-    }
+    await mutation.mutateAsync({
+      type: "delete",
+      id,
+    });
   };
 
   const queryClient = useQueryClient();
@@ -67,18 +66,41 @@ const ProductsTable = () => {
               ]}
             />
             <TableBody>
-              {products?.data?.map((item) => (
-                <TableItem
-                  key={item.id}
-                  id={item.id}
-                  name={item.name}
-                  category={item.category}
-                  image={item.image}
-                  price={item.price}
-                  stock={item.stock}
-                  onClickDelete={handleDelete}
-                />
-              ))}
+              {isLoading ? (
+                <>
+                  <tr>
+                    <td colSpan={6}>
+                      <div className="flex w-full h-48 justify-center items-center text-white">
+                        Loading...
+                      </div>
+                    </td>
+                  </tr>
+                </>
+              ) : !products?.data?.length ? (
+                <tr>
+                  <td colSpan={6}>
+                    <EmptyData title="Product" action />
+                  </td>
+                </tr>
+              ) : (
+                <>
+                  {products?.data?.map((item) => (
+                    <TableItem
+                      key={item.id}
+                      id={item.id}
+                      name={item.name}
+                      category={item.category}
+                      image={item.image}
+                      price={item.price}
+                      stock={item.stock}
+                      onClickDelete={handleDelete}
+                      isError={mutation.isError}
+                      isPending={mutation.isPending}
+                      isSuccess={mutation.isSuccess}
+                    />
+                  ))}
+                </>
+              )}
             </TableBody>
           </Table>
         </div>

@@ -1,4 +1,5 @@
 import { IncomeItem } from "@model/income";
+import { formatRupiah } from "../../../../libs/helper";
 import { formatDate } from "../../../../libs/helper/FormatTime";
 
 interface ITableItem extends IncomeItem {
@@ -19,7 +20,7 @@ export const TableItem: React.FC<ITableItem> = ({
         <p className="text-white">{totalQty}</p>
       </td>
       <td className="px-4 py-2">
-        <p className="text-white">{nominal}</p>
+        <p className="text-white">{formatRupiah(nominal)}</p>
       </td>
       {/* <td className="px-4 ">
         <div className="flex items-center justify-center gap-1">

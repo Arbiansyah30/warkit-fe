@@ -1,12 +1,13 @@
 import { useCategory, useCategoryCreation } from "@hooks/home/useCategory";
+import { useAtom } from "jotai";
+import { useEffect } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 import { convertQueryParamsToObject } from "../../../libs/helper";
+import { loadingBarAtom } from "../../../store/loadingBar";
+import EmptyData from "../../global/EmptyData";
 import Pagination from "../../global/Pagination";
 import { Table, TableBody, TableHead } from "../../global/Table";
 import { TableItem } from "./Table";
-import { useAtom } from "jotai";
-import { loadingBarAtom } from "../../../store/loadingBar";
-import { useEffect } from "react";
 
 const CategoryTable = () => {
   const { data: categories, isLoading } = useCategory();
@@ -27,14 +28,12 @@ const CategoryTable = () => {
   };
 
   const handleDelete = (id: string) => {
-    if (confirm("Are you sure you want to delete this product?")) {
-      mutation.mutate({
-        type: "delete",
-        data: {
-          id,
-        },
-      });
-    }
+    mutation.mutate({
+      type: "delete",
+      data: {
+        id,
+      },
+    });
   };
 
   return (
@@ -53,14 +52,35 @@ const CategoryTable = () => {
           <Table>
             <TableHead HeadList={["Name", "Actions"]} />
             <TableBody>
-              {categories?.data?.map((item, index) => (
-                <TableItem
-                  key={index}
-                  id={item.id}
-                  name={item.name}
-                  onClickDelete={handleDelete}
-                />
-              ))}
+              {isLoading ? (
+                <tr>
+                  <td colSpan={3}>
+                    <div className="flex w-full h-48 justify-center items-center text-white">
+                      Loading...
+                    </div>
+                  </td>
+                </tr>
+              ) : !categories?.data?.length ? (
+                <tr>
+                  <td colSpan={6}>
+                    <EmptyData title="Categories" action />
+                  </td>
+                </tr>
+              ) : (
+                <>
+                  {categories?.data?.map((item, index) => (
+                    <TableItem
+                      key={index}
+                      id={item.id}
+                      name={item.name}
+                      onClickDelete={handleDelete}
+                      isPending={mutation.isPending}
+                      isSuccess={mutation.isSuccess}
+                      isError={mutation.isError}
+                    />
+                  ))}
+                </>
+              )}
             </TableBody>
           </Table>
         </div>

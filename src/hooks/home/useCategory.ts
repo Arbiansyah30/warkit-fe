@@ -1,8 +1,11 @@
 import { ApiErrorResponse, ApiResponse } from "@core/libs/api/types";
 import { CategoryDTO } from "@model/category";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useSetAtom } from "jotai";
+import toast from "react-hot-toast";
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { categoryService } from "../../services/category";
+import { loadingBarAtom } from "../../store/loadingBar";
 
 interface Options {
   page?: number,
@@ -35,7 +38,7 @@ export function useCategory(options?: Options) {
 export function useCategoryCreation() {
   const queryClient = useQueryClient()
   const navigate = useNavigate()
-
+  const setLoading = useSetAtom(loadingBarAtom)
   const mutation = useMutation({
     mutationFn: async ({ data, type }: CategoryCreation) => {
       switch (type) {
@@ -50,15 +53,19 @@ export function useCategoryCreation() {
       }
     },
     onSuccess: (res) => {
-      alert(res.message)
+      setLoading(false)
+      toast.success(res.message as string)
       navigate('/admin/category')
+
       queryClient.removeQueries({ queryKey: ['categories'] })
       queryClient.removeQueries({ queryKey: ['categoryById'] })
       return
     },
     onError: (err: ApiErrorResponse<ApiResponse>) => {
-      alert(err.response?.data.message)
+      setLoading(false)
+      toast.error(err.response?.data.message as string)
     }
+
   })
   return mutation
 }

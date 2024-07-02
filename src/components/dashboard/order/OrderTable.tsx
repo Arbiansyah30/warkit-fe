@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
 import { convertQueryParamsToObject } from "../../../libs/helper";
 import { loadingBarAtom } from "../../../store/loadingBar";
+import EmptyData from "../../global/EmptyData";
 import Pagination from "../../global/Pagination";
 import { Table, TableBody, TableHead } from "../../global/Table";
 import { TableItem } from "./Table";
@@ -49,33 +50,51 @@ const OrderTable = () => {
             />
             <TableBody>
               <>
-                {transaction?.data?.map((item, index) => (
-                  <TableItem
-                    item={item}
-                    key={index}
-                    serialNumber={item.serialNumber}
-                    // onPrint={(item) => handlePrint(item)}
-                    onPrint={(item) => alert("print" + item)}
-                    name={item.name}
-                    email={item.email}
-                    paymentMethod={item.paymentMethod}
-                    id={item.id}
-                    status={item.status}
-                    // totalAmount={item.totalAmount}
-                    // totalPaid={item.totalPaid}
-                    // totalReturn={item.totalReturn}
-                  />
-                ))}
+                {isLoading ? (
+                  <tr>
+                    <td colSpan={5}>
+                      <div className="flex w-full h-48 justify-center items-center text-white">
+                        Loading...
+                      </div>
+                    </td>
+                  </tr>
+                ) : !transaction?.data?.length ? (
+                  <tr>
+                    <td colSpan={5}>
+                      <EmptyData title="Transaction" action={false} />
+                    </td>
+                  </tr>
+                ) : (
+                  transaction?.data?.map((item, index) => (
+                    <TableItem
+                      item={item}
+                      key={index}
+                      serialNumber={item.serialNumber}
+                      // onPrint={(item) => handlePrint(item)}
+                      onPrint={(item) => alert("print" + item)}
+                      name={item.name}
+                      email={item.email}
+                      paymentMethod={item.paymentMethod}
+                      id={item.id}
+                      status={item.status}
+                      // totalAmount={item.totalAmount}
+                      // totalPaid={item.totalPaid}
+                      // totalReturn={item.totalReturn}
+                    />
+                  ))
+                )}
               </>
             </TableBody>
           </Table>
         </div>
       </div>
-      <Pagination
-        currentPage={transaction?.meta?.page as number}
-        totalPages={transaction?.meta?.totalPages as number}
-        onPageChange={handleChangePage}
-      />
+      {transaction?.data?.length && (
+        <Pagination
+          currentPage={transaction?.meta?.page as number}
+          totalPages={transaction?.meta?.totalPages as number}
+          onPageChange={handleChangePage}
+        />
+      )}
     </>
   );
 };

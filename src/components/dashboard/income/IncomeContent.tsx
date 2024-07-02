@@ -1,15 +1,16 @@
 import { useIncome } from "@hooks/admin/useIncome";
+import { IncomeModel } from "@model/income";
 import { useAtom } from "jotai";
 import { useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
 import { convertQueryParamsToObject } from "../../../libs/helper";
 import { loadingBarAtom } from "../../../store/loadingBar";
 import DateFilter from "../../global/DateFilter";
+import DropdownPrint from "../../global/DropdownPrint";
+import EmptyData from "../../global/EmptyData";
 import Pagination from "../../global/Pagination";
 import { Table, TableBody, TableHead } from "../../global/Table";
 import { TableItem } from "./Table";
-import DropdownPrint from "../../global/DropdownPrint";
-import { IncomeModel } from "@model/income";
 
 export const IncomeContent = () => {
   const { data: incomeResponse, isLoading } = useIncome();
@@ -52,14 +53,30 @@ export const IncomeContent = () => {
             />
             <TableBody>
               <>
-                {incomeResponse?.data?.incomes?.map((item, index) => (
-                  <TableItem
-                    key={index}
-                    totalQty={item.transaction?.totalQuantity as number}
-                    nominal={item.nominal}
-                    createdAt={item.createdAt}
-                  />
-                ))}
+                {isLoading ? (
+                  <tr>
+                    <td colSpan={4}>
+                      <div className="flex w-full h-48 justify-center items-center text-white">
+                        Loading...
+                      </div>
+                    </td>
+                  </tr>
+                ) : !incomeResponse?.data?.incomes.length ? (
+                  <tr>
+                    <td colSpan={4}>
+                      <EmptyData title="Income" action={false} />
+                    </td>
+                  </tr>
+                ) : (
+                  incomeResponse?.data?.incomes?.map((item, index) => (
+                    <TableItem
+                      key={index}
+                      totalQty={item.transaction?.totalQuantity as number}
+                      nominal={item.nominal}
+                      createdAt={item.createdAt}
+                    />
+                  ))
+                )}
               </>
             </TableBody>
           </Table>

@@ -38,7 +38,7 @@ const FormLogin = () => {
     if (!validate()) return;
     await mutation.mutateAsync(authBody);
   };
-
+  console.log(mutation.isPaused);
   return (
     <form
       onSubmit={handleSubmit}
@@ -75,7 +75,9 @@ const FormLogin = () => {
         </Input>
       </div>
 
-      <Button primary>Submit</Button>
+      <Button primary={!mutation.isPending} disabled={mutation.isPending}>
+        {mutation.isPending ? "Loading..." : "Submit"}
+      </Button>
     </form>
   );
 };
