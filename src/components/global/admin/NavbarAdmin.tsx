@@ -1,6 +1,7 @@
 import { useProfile } from "@hooks/home/useProfile";
 import { useAtom } from "jotai";
 import React, { useState } from "react";
+import toast from "react-hot-toast";
 import { IoMdArrowDropdown } from "react-icons/io";
 import { RiLogoutBoxLine } from "react-icons/ri";
 import { RxHamburgerMenu } from "react-icons/rx";
@@ -22,7 +23,7 @@ const NavbarAdmin: React.FC<{
     if (token) {
       localStorage.removeItem("token");
       navigate("/admin/login");
-      alert("Logout success");
+      toast.success("Logout success");
     }
   }
   return (

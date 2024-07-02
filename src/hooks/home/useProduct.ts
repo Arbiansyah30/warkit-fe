@@ -5,7 +5,7 @@ import { useSetAtom } from "jotai";
 import toast from "react-hot-toast";
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { productService } from "../../services/products";
-import { loadingBarAtom } from "../../store/loadingBar";
+import { loadingCircle } from "../../store/loadingBar";
 
 interface Options {
   page?: number;
@@ -51,7 +51,7 @@ export function useProductCreation() {
   const queryClient = useQueryClient();
   const navigate = useNavigate()
   const { refetch } = useProduct()
-  const setLoading = useSetAtom(loadingBarAtom)
+  const setLoading = useSetAtom(loadingCircle)
 
   const mutation = useMutation({
     mutationFn: async ({ data, type, id }: ProductCreation) => {

@@ -290,9 +290,12 @@ const FormAddProduct = () => {
               </button>
               <button
                 type="submit"
-                className="flex w-full justify-center rounded bg-blue-600 p-3 font-medium text-white hover:bg-opacity-90"
+                disabled={mutation.isPending}
+                className={`flex w-full justify-center rounded ${
+                  mutation.isPending ? "bg-gray-300" : "bg-blue-600"
+                } p-3 font-medium text-white hover:bg-opacity-90`}
               >
-                Add
+                {mutation.isPending ? "Loading..." : "Add"}
               </button>
             </div>
           </div>

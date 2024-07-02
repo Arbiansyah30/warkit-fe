@@ -298,10 +298,13 @@ const FormUpdateProduct = () => {
                 Reset
               </button>
               <button
+                disabled={mutation.isPending}
                 type="submit"
-                className="flex w-full justify-center rounded bg-blue-600 p-3 font-medium text-white hover:bg-opacity-90"
+                className={`flex w-full justify-center rounded ${
+                  mutation.isPending ? "bg-gray-300" : "bg-blue-600"
+                } p-3 font-medium text-white hover:bg-opacity-90`}
               >
-                Update
+                {mutation.isPending ? "Loading..." : "Update"}
               </button>
             </div>
           </div>

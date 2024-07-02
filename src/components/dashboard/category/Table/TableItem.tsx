@@ -5,7 +5,7 @@ import { FaEdit, FaTrash } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
-import { loadingBarAtom } from "../../../../store/loadingBar";
+import { loadingCircle } from "../../../../store/loadingBar";
 
 type onDelete = (id: string) => void;
 
@@ -24,7 +24,7 @@ export const TableItem: React.FC<TableItemProps> = ({
   isSuccess,
   isError,
 }) => {
-  const [loading, setLoading] = useAtom(loadingBarAtom);
+  const [loading, setLoading] = useAtom(loadingCircle);
   const toggle = () =>
     withReactContent(Swal)
       .fire({

@@ -1,4 +1,5 @@
 import { ProductModel } from "@model/product";
+import toast from "react-hot-toast";
 import { formatRupiah } from "../../libs/helper";
 import Button from "../global/Button";
 
@@ -19,7 +20,7 @@ const CardProduct = ({ image, name, price, stock, id }: ProductModel) => {
       cart.push({ id: id as string, qty: 1 });
     }
     localStorage.setItem("cart", JSON.stringify(cart));
-    alert("Product added to cart");
+    toast.success("Product added to cart");
   };
 
   return (

@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 import { formatRupiah } from "../../../../libs/helper";
-import { loadingBarAtom } from "../../../../store/loadingBar";
+import { loadingCircle } from "../../../../store/loadingBar";
 
 type onDelete = (id: string) => void;
 
@@ -29,7 +29,7 @@ export const TableItem: React.FC<TableItemProps> = ({
   isPending,
   isSuccess,
 }) => {
-  const [loading, setLoading] = useAtom(loadingBarAtom);
+  const [loading, setLoading] = useAtom(loadingCircle);
   const toggle = () =>
     withReactContent(Swal)
       .fire({
