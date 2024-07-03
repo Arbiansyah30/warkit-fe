@@ -1,4 +1,4 @@
-import { useTransaction } from "@hooks/home/useTransactionCreation";
+import { usePrintPayment, useTransaction } from "@hooks/home/useTransactionCreation";
 import { useAtom } from "jotai";
 import { useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
@@ -11,6 +11,7 @@ import { TableItem } from "./Table";
 // import { handlePrint } from "../../global/ThermalPrint";
 
 const OrderTable = () => {
+  const mutation = usePrintPayment();
   const { data: transaction, isLoading } = useTransaction();
 
   // global
@@ -18,13 +19,21 @@ const OrderTable = () => {
 
   // loading bar
   useEffect(() => {
-    setLoadingBar(isLoading);
-  }, [isLoading]);
+    setLoadingBar(isLoading || mutation.isPending);
+  }, [isLoading, mutation.isPending]);
 
   const [searchParams, setSearchParams] = useSearchParams();
   const queryParams = convertQueryParamsToObject(searchParams.toString());
   const handleChangePage = (page: number) => {
     setSearchParams({ ...queryParams, page: String(page) });
+  };
+
+  const hanldePrint = async (id: string) => {
+    await mutation.mutateAsync({
+      data: {
+        id,
+      },
+    });
   };
 
   return (
@@ -71,7 +80,7 @@ const OrderTable = () => {
                       key={index}
                       serialNumber={item.serialNumber}
                       // onPrint={(item) => handlePrint(item)}
-                      onPrint={(item) => alert("print" + item)}
+                      onPrint={(item) => hanldePrint(item.id as string)}
                       name={item.name}
                       email={item.email}
                       paymentMethod={item.paymentMethod}

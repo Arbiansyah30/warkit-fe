@@ -23,6 +23,10 @@ export interface PaymentModel   {
     totalPaid: number,
 }
 
+export interface PrintPaymentModel {
+    id: string,
+}
+
 export interface TransactionDetailModel {
     productId: string,
     quantity: number,

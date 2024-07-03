@@ -7,7 +7,7 @@ import { useParams, useSearchParams } from "react-router-dom";
 type PayloadType = "create" | "update";
 
 interface Payload {
-  type: PayloadType;
+  type?: PayloadType;
   data: TransactionModel;
 }
 
@@ -15,6 +15,12 @@ interface PaymentCreation {
   id: string;
   type?: PayloadType;
   data: PaymentModel;
+}
+
+interface PrintPaymentCreation {
+  data: {
+    id: string;
+  };
 }
 
 interface Options {
@@ -96,4 +102,19 @@ export function useTransactionById() {
     queryFn: () => transactionService.getById({ path: id }),
     enabled: !!id,
   });
+}
+
+// mutation usePrinter payment with body id
+export function usePrintPayment() {
+  const mutation = useMutation({
+    mutationFn: ({ data }: PrintPaymentCreation) => {
+      return transactionService.printPayment(data);
+    },
+    onSuccess: (res) => {
+      alert(res.message);
+    },
+    onError: (err: ApiErrorResponse<ApiResponse>) =>
+      alert(err.response?.data.message),
+  });
+  return mutation;
 }
