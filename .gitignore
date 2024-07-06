@@ -12,9 +12,11 @@ dist
 dist-ssr
 *.local
 
+# env
+.env
+
 # Editor directories and files
 .vscode/*
-.env
 !.vscode/extensions.json
 .idea
 .DS_Store
