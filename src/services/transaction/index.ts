@@ -9,4 +9,6 @@ export const transactionService = {
     getById: HTTP_REQUEST.get<ApiResponse<TransactionModel>>(API_ENDPOINT.transaction),
     putPayment: HTTP_REQUEST.put<ApiResponse<PaymentModel>>(API_ENDPOINT.payment),
     printPayment: HTTP_REQUEST.post<ApiResponse<PrintPaymentModel>>(API_ENDPOINT.transaction + "/print"),
+    today: HTTP_REQUEST.get<ApiResponse<TransactionModel[]>>(API_ENDPOINT.transaction + "/now/today"),
+    week: HTTP_REQUEST.get<ApiResponse<TransactionModel[]>>(API_ENDPOINT.transaction + "/now/week"),
 }

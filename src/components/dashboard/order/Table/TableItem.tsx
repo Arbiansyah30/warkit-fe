@@ -2,6 +2,7 @@ import { TransactionModel } from "@model/transaction";
 import React from "react";
 import { FaInfoCircle } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import { formatDate } from "../../../../libs/helper/FormatTime";
 import PaymentCash from "../PaymentCash";
 
 interface ITableItem extends TransactionModel {
@@ -10,6 +11,7 @@ interface ITableItem extends TransactionModel {
 }
 
 export const TableItem: React.FC<ITableItem> = ({
+  createdAt,
   item,
   name,
   email,
@@ -26,6 +28,9 @@ export const TableItem: React.FC<ITableItem> = ({
       {/* <td className="px-4 py-2">
         <p className="text-white">{serialNumber}</p>
       </td> */}
+      <td className="px-4 py-2">
+        <p className="text-white">{formatDate(createdAt as Date)}</p>
+      </td>
       <td className="px-4 py-2">
         <p className="text-white">{name}</p>
       </td>
@@ -59,7 +64,9 @@ export const TableItem: React.FC<ITableItem> = ({
           >
             <FaInfoCircle size={12} /> Detail
           </Link>
-          {status == "UNPAID" && paymentMethod === "CASH" && <PaymentCash orderId={id as string} />}
+          {status == "UNPAID" && paymentMethod === "CASH" && (
+            <PaymentCash orderId={id as string} />
+          )}
           {status !== "UNPAID" && (
             <button
               onClick={() => onPrint(item)}

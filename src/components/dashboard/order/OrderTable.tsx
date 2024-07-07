@@ -1,4 +1,7 @@
-import { usePrintPayment, useTransaction } from "@hooks/home/useTransactionCreation";
+import {
+  usePrintPayment,
+  useTransaction,
+} from "@hooks/home/useTransactionCreation";
 import { useAtom } from "jotai";
 import { useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
@@ -47,6 +50,7 @@ const OrderTable = () => {
             <TableHead
               HeadList={[
                 // "Serial Number",
+                "Date Time",
                 "Name",
                 "Email",
                 "Payment Method",
@@ -78,6 +82,7 @@ const OrderTable = () => {
                     <TableItem
                       item={item}
                       key={index}
+                      createdAt={item.createdAt}
                       serialNumber={item.serialNumber}
                       // onPrint={(item) => handlePrint(item)}
                       onPrint={(item) => hanldePrint(item.id as string)}

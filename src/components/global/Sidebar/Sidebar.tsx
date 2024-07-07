@@ -1,7 +1,9 @@
+import { useProfile } from "@hooks/home/useProfile";
 import useResponsive from "@hooks/useResponsive";
 import React, { useEffect, useState } from "react";
 import { FaBox, FaChartBar, FaTags } from "react-icons/fa";
 import { FaArrowLeftLong } from "react-icons/fa6";
+import { MdSpaceDashboard } from "react-icons/md";
 import { useLocation } from "react-router-dom";
 import ItemSidebar from "./Item";
 
@@ -12,8 +14,13 @@ const Sidebar: React.FC<{
   const location = useLocation();
   const [isActive, setIsActive] = useState<string | null>("Products");
   const { isLaptop } = useResponsive();
-
+  const { role } = useProfile();
   const menuItems = [
+    {
+      name: "Dashboard",
+      icon: <MdSpaceDashboard />,
+      link: "/admin/dashboard",
+    },
     {
       name: "Product",
       icon: <FaBox />,
@@ -27,10 +34,13 @@ const Sidebar: React.FC<{
     {
       name: "Reports",
       icon: <FaChartBar />,
-      dropdown: [
-        { name: "Transaction Report", link: "/admin/transaction" },
-        { name: "Income Report", link: "/admin/income" },
-      ],
+      dropdown:
+        role.toLowerCase() === "owner"
+          ? [
+              { name: "Transaction Report", link: "/admin/transaction" },
+              { name: "Income Report", link: "/admin/income" },
+            ]
+          : [{ name: "Transaction Report", link: "/admin/transaction" }],
     },
   ];
 

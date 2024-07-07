@@ -1,8 +1,9 @@
 import { ApiErrorResponse, ApiResponse } from "@core/libs/api/types";
 import { PaymentModel, TransactionModel } from "@model/transaction";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { transactionService } from "../../services/transaction";
+import toast from "react-hot-toast";
 import { useParams, useSearchParams } from "react-router-dom";
+import { transactionService } from "../../services/transaction";
 
 type PayloadType = "create" | "update";
 
@@ -83,13 +84,13 @@ export function usePaymentUpdate() {
       }
     },
     onSuccess: (res) => {
-      alert(res.message);
+      toast.success(res.message as string);
       refetch();
       return queryClient.removeQueries({ queryKey: ["transactions"] });
     },
 
     onError: (err: ApiErrorResponse<ApiResponse>) => {
-      alert(err.response?.data.message);
+      toast.error(err.response?.data.message as string);
     },
   });
   return mutation;
@@ -117,4 +118,17 @@ export function usePrintPayment() {
       alert(err.response?.data.message),
   });
   return mutation;
+}
+
+export function useTransactionToday() {
+  return useQuery({
+    queryKey: ["TransactionToday"],
+    queryFn: () => transactionService.today(),
+  });
+}
+export function useTransactionWeek() {
+  return useQuery({
+    queryKey: ["TransactionWeek"],
+    queryFn: () => transactionService.week(),
+  });
 }

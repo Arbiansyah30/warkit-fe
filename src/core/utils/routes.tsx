@@ -3,6 +3,7 @@ import RegisterView from "@pages/Register";
 import AddCategoryPage from "@pages/category/AddCategory";
 import DataCategoryPage from "@pages/category/DataCategory";
 import UpdateCategoryPage from "@pages/category/UpdateCategory";
+import DashboardView from "@pages/dashboard/Dashboard";
 import AdminView from "@pages/global/Admin";
 import AuthView from "@pages/global/Auth";
 import Home from "@pages/home";
@@ -79,6 +80,10 @@ export const router = createBrowserRouter([
       {
         path: "/admin/income",
         element: <IncomeView />,
+      },
+      {
+        path: "/admin/dashboard",
+        element: <DashboardView />,
       },
     ],
   },
