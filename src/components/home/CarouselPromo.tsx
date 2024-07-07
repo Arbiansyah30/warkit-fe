@@ -15,8 +15,8 @@ const CarouselPromo = () => {
       showThumbs={false}
     >
       {!products?.data?.length
-        ? defautltImageList.map((item) => (
-            <div className="flex items-center justify-center w-full max-h-[100vh] h-full min-h-[250px] bg-gray-100">
+        ? defautltImageList.map((item, index) => (
+            <div key={index} className="flex items-center justify-center w-full max-h-[100vh] h-full min-h-[250px] bg-gray-100">
               <div className="w-full h-full flex items-center justify-center">
                 <img
                   src={item}
