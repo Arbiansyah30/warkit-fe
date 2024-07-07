@@ -44,6 +44,42 @@ const OrderTable = () => {
       <div className="rounded-md border border-stroke w-full bg-gray-900 px-5 shadow-default dark:bg-boxdark sm:px-7">
         <div className="py-6  flex flex-wrap items-center justify-between">
           <h4 className="text-xl font-bold text-white">Data Transaction</h4>
+          <div className="flex items-center gap-3">
+            {searchParams.get("status") && (
+              <p
+                className="text-white cursor-pointer"
+                onClick={() => setSearchParams({})}
+              >
+                RESET
+              </p>
+            )}
+            <div className="flex items-center gap-3">
+              <p
+                className={`${
+                  searchParams.get("status")?.toLowerCase() === "paid"
+                    ? "bg-blue-500"
+                    : "bg-gray-500"
+                } text-white px-3 py-1 rounded cursor-pointer`}
+                onClick={() =>
+                  setSearchParams({ ...queryParams, status: "paid" })
+                }
+              >
+                PAID
+              </p>
+              <p
+                className={`${
+                  searchParams.get("status")?.toLowerCase() === "unpaid"
+                    ? "bg-blue-500"
+                    : "bg-gray-500"
+                } text-white px-3 py-1 rounded cursor-pointer`}
+                onClick={() =>
+                  setSearchParams({ ...queryParams, status: "unpaid" })
+                }
+              >
+                UNPAID
+              </p>
+            </div>
+          </div>
         </div>
         <div className="w-full overflow-x-auto">
           <Table>

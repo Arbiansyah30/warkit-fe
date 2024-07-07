@@ -35,13 +35,15 @@ export function useTransaction(options?: Options) {
   const [searchParams] = useSearchParams();
   const page = options?.page || searchParams.get("page") || 1;
   const perPage = options?.perPage || searchParams.get("perPage") || 10;
+  const status = options?.perPage?.toString().toUpperCase() || searchParams.get("status")?.toUpperCase() || undefined
   const query = useQuery({
-    queryKey: ["transactions", { page, perPage }],
+    queryKey: ["transactions", { page, perPage, status }],
     queryFn: () =>
       transactionService.get({
         queryParams: {
           perPage: perPage ? Number(perPage) : undefined,
           page: page ? Number(page) : undefined,
+          status: status as 'PAID' | 'UNPAID'
         },
       }),
   });
