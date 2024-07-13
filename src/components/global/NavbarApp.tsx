@@ -1,8 +1,9 @@
-import { useEffect, useState } from "react";
-import Section from "../../container/Section";
-import NotificationCart from "../home/NotificationCart";
 import { useProduct } from "@hooks/home/useProduct";
 import { ProductModel, ProductModelWithQty } from "@model/product";
+import { useEffect, useState } from "react";
+import LOGO from "../../assets/images/LOGO.png";
+import Section from "../../container/Section";
+import NotificationCart from "../home/NotificationCart";
 
 interface CartItem {
   id: string;
@@ -74,7 +75,7 @@ const NavbarApp = () => {
       >
         <div className="w-full flex items-center justify-between">
           <div>
-            <h1 className="text-3xl font-bold">POS</h1>
+            <img src={LOGO} width={50} />
           </div>
           <NotificationCart
             cart={cart}
