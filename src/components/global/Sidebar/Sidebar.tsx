@@ -5,6 +5,7 @@ import { FaBox, FaChartBar, FaTags } from "react-icons/fa";
 import { FaArrowLeftLong } from "react-icons/fa6";
 import { MdSpaceDashboard } from "react-icons/md";
 import { useLocation } from "react-router-dom";
+import LOGO from "../../../assets/images/LOGO.png";
 import ItemSidebar from "./Item";
 
 const Sidebar: React.FC<{
@@ -69,7 +70,7 @@ const Sidebar: React.FC<{
       }`}
     >
       <div className="flex items-center justify-between gap-2 px-6 py-5 lg:py-6">
-        <h1 className="text-3xl font-bold">Logo</h1>
+        <img src={LOGO} width={60} />
         <button
           type="button"
           onClick={() => handleHamburger(true)}
