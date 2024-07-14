@@ -69,7 +69,7 @@ const Sidebar: React.FC<{
           : "translate-x-0"
       }`}
     >
-      <div className="flex items-center justify-between gap-2 px-6 py-5 lg:py-6">
+      <div className="flex items-center justify-center max-lg:justify-between gap-2 px-6 py-5 lg:py-6">
         <img src={LOGO} width={60} />
         <button
           type="button"
