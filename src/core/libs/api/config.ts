@@ -39,7 +39,11 @@ async function createRequest<Res = unknown, Req = unknown>(
           Authorization: `Bearer ${apiOption.bearerToken}`,
         }),
         ...apiOption?.headers,
+        "Cache-Control": "no-cache",
+        "Pragma": "no-cache",
+        "Expires": 0,
       },
+      timeout:10000,
       data: body,
 
     }
