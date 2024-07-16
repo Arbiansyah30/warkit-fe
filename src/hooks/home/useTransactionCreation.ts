@@ -1,4 +1,5 @@
 import { ApiErrorResponse, ApiResponse } from "@core/libs/api/types";
+import useDebounce from "@hooks/global/useDebounce";
 import { PaymentModel, TransactionModel } from "@model/transaction";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import toast from "react-hot-toast";
@@ -33,17 +34,20 @@ interface Options {
 
 export function useTransaction(options?: Options) {
   const [searchParams] = useSearchParams();
+  const searchQuery = searchParams.get('search')
+  const search = useDebounce(searchQuery || '', 500)
   const page = options?.page || searchParams.get("page") || 1;
   const perPage = options?.perPage || searchParams.get("perPage") || 10;
   const status = options?.perPage?.toString().toUpperCase() || searchParams.get("status")?.toUpperCase() || undefined
   const query = useQuery({
-    queryKey: ["transactions", { page, perPage, status }],
+    queryKey: ["transactions", { page, perPage, status, search }],
     queryFn: () =>
       transactionService.get({
         queryParams: {
           perPage: perPage ? Number(perPage) : undefined,
           page: page ? Number(page) : undefined,
-          status: status as 'PAID' | 'UNPAID'
+          status: status as 'PAID' | 'UNPAID',
+          search
         },
       }),
   });
