@@ -24,7 +24,7 @@ const CardProduct = ({ image, name, price, stock, id }: ProductModel) => {
   };
 
   return (
-    <div className="text-center px-3 py-4 bg-white shadow-xl h-full flex flex-col justify-between rounded-md">
+    <div className="text-center px-3 py-4 overflow-hidden bg-white shadow-xl h-full max-h-80 flex flex-col justify-between rounded-md">
       <div className="w-full max-h-[180px] h-full rounded-md overflow-hidden">
         <img
           src={image}
@@ -34,8 +34,8 @@ const CardProduct = ({ image, name, price, stock, id }: ProductModel) => {
         />
       </div>
       <div>
-        <h1 className="text-xl font-semibold">{name}</h1>
-        <p>{formatRupiah(price as number)}</p>
+        <h1 className="text-xl font-semibold line-clamp-2 break-words">{name}kkkkkkkkkkkkk</h1>
+        <p className="line-clamp-1 break-words">{formatRupiah(price as number)}</p>
         <div className="flex gap-1 flex-wrap justify-between text-[13px] mb-3">
           <p className="text-start">stock :{stock}</p>
           <div className="flex-1 flex justify-end">
