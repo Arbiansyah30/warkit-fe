@@ -33,7 +33,7 @@ const CardProduct = ({ image, name, price, stock, id }: ProductModel) => {
           className="w-full h-full object-cover"
         />
       </div>
-      <div>
+      <div className="h-min">
         <h1 className="text-xl font-semibold line-clamp-2 break-words">{name}</h1>
         <p className="line-clamp-1 break-words">{formatRupiah(price as number)}</p>
         <div className="flex gap-1 flex-wrap justify-between text-[13px] mb-3">
