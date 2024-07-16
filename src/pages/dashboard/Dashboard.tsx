@@ -6,7 +6,7 @@ import TableAdminLayout from "../../components/global/admin/TableAdminLayout";
 
 const Dashboard = () => {
   return (
-    <div className="flex flex-col gap-20">
+    <div className="flex flex-col gap-8">
       <TableAdminLayout title="Transaction Today">
         <TransactionDay />
       </TableAdminLayout>

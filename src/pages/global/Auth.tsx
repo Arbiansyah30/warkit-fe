@@ -9,7 +9,7 @@ const AuthView = () => {
     return <Navigate to={"/admin/category"} replace />;
   }
   return (
-    <div className="flex items-center w-full h-screen">
+    <div className="flex items-center py-10 w-full min-h-screen">
       <Section className="max-w-sm w-full mx-auto box-content">
         <Outlet />
       </Section>
