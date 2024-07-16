@@ -118,10 +118,10 @@ export function usePrintPayment() {
       return transactionService.printPayment(data);
     },
     onSuccess: (res) => {
-      alert(res.message);
+      toast.success(res.message as string);
     },
     onError: (err: ApiErrorResponse<ApiResponse>) =>
-      alert(err.response?.data.message),
+      toast.error(err.response?.data.message as string),
   });
   return mutation;
 }
