@@ -75,7 +75,7 @@ const NavbarApp = () => {
       >
         <div className="w-full flex items-center justify-between">
           <div>
-            <img src={LOGO} width={50} />
+            <img src={LOGO} width={70} />
           </div>
           <NotificationCart
             cart={cart}

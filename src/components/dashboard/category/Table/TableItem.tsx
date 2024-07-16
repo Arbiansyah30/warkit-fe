@@ -1,3 +1,4 @@
+import { useProfile } from "@hooks/home/useProfile";
 import { CategoryModel } from "@model/category";
 import { useAtom } from "jotai";
 import { useEffect } from "react";
@@ -25,6 +26,8 @@ export const TableItem: React.FC<TableItemProps> = ({
   isError,
 }) => {
   const [loading, setLoading] = useAtom(loadingCircle);
+  const { role } = useProfile();
+
   const toggle = () =>
     withReactContent(Swal)
       .fire({
@@ -71,12 +74,14 @@ export const TableItem: React.FC<TableItemProps> = ({
                 <FaEdit /> Edit
               </Link>
             </div>
-            <button
-              onClick={toggle}
-              className="hover:opacity-70 text-sm text-white rounded-full px-2 bg-red-500 flex justify-center items-center gap-1 w-20"
-            >
-              <FaTrash /> Hapus
-            </button>
+            {role.toLowerCase() === "owner" && (
+              <button
+                onClick={toggle}
+                className="hover:opacity-70 text-sm text-white rounded-full px-2 bg-red-500 flex justify-center items-center gap-1 w-20"
+              >
+                <FaTrash /> Hapus
+              </button>
+            )}
           </div>
         </td>
       </tr>
