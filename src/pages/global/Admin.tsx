@@ -25,13 +25,13 @@ const AdminView = () => {
     <div className="flex min-h-screen">
       <Sidebar hamburger={hamburger} handleHamburger={handleHamburger} />
       <div
-        className={`relative flex flex-col duration-300 overflow-hidden flex-1 max-w-full ${
-          hamburger ? "pl-72" : ""
-        }`}
+        className={`relative flex flex-col duration-300 overflow-hidden flex-1 max-w-full`}
       >
         <NavbarAdmin handleHamburger={handleHamburger} />
-        <main className="mt-[86px]">
-          <div className="mx-auto max-w-screen-2xl p-4 md:p-6 2xl:p-10">
+        <main className={`mt-[86px]`}>
+          <div
+            className={`mx-auto max-w-screen-2xl p-4 md:p-6 2xl:p-10 xl:ml-72`}
+          >
             <Outlet />
           </div>
         </main>
