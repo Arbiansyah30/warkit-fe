@@ -12,7 +12,7 @@ export function useAuthLogin() {
         onSuccess: (res) => {
             localStorage.setItem("token", res?.data?.accessToken as string)
             toast.success(res.message as string)
-            navigate("/admin/product")
+            navigate("/admin/dashboard")
         },
         onError: (err: ApiErrorResponse<ApiResponse>) => toast.error(err.response?.data.message as string)
     })

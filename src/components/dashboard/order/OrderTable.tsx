@@ -138,13 +138,13 @@ const OrderTable = () => {
           </Table>
         </div>
       </div>
-      {transaction?.data?.length && (
+      {transaction?.data?.length ? (
         <Pagination
           currentPage={transaction?.meta?.page as number}
           totalPages={transaction?.meta?.totalPages as number}
           onPageChange={handleChangePage}
         />
-      )}
+      ) : null}
     </>
   );
 };
