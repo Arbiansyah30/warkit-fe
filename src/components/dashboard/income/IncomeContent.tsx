@@ -3,9 +3,10 @@ import { IncomeModel } from "@model/income";
 import { useAtom } from "jotai";
 import { useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
+import { DatePicker } from "rsuite";
+import "rsuite/DatePicker/styles/index.css";
 import { convertQueryParamsToObject } from "../../../libs/helper";
 import { loadingBarAtom } from "../../../store/loadingBar";
-import DateFilter from "../../global/DateFilter";
 import DropdownPrint from "../../global/DropdownPrint";
 import EmptyData from "../../global/EmptyData";
 import Pagination from "../../global/Pagination";
@@ -29,6 +30,14 @@ export const IncomeContent = () => {
     setSearchParams({ ...queryParams, page: String(page) });
   };
 
+  useEffect(() => {
+    const date = searchParams.get("date");
+    if (date?.includes("undefined")) {
+      setSearchParams({});
+      return;
+    }
+  }, [JSON.stringify({ date: searchParams.get("date") })]);
+
   // console.log(filteredIncome);
 
   return (
@@ -37,9 +46,23 @@ export const IncomeContent = () => {
         <div className="py-2 flex flex-col gap-2">
           <div className="flex justify-between items-center gap-5 flex-wrap">
             <h4 className="text-xl font-bold text-white">Data Income</h4>
-            <DateFilter />
+            {/* <DateFilter /> */}
+            <div className="mr-5">
+              <DatePicker
+                onChange={(value) =>
+                  setSearchParams({
+                    ...queryParams,
+                    date: `${value?.getFullYear()}-${
+                      (value?.getMonth() as number) + 1
+                    }-${value?.getUTCDate()}`,
+                  })
+                }
+              />
+            </div>
           </div>
-          <DropdownPrint dataIncome={incomeResponse?.data as IncomeModel} />
+          <div className="mr-5">
+            <DropdownPrint dataIncome={incomeResponse?.data as IncomeModel} />
+          </div>
         </div>
         <div className="w-full overflow-x-auto">
           <Table>

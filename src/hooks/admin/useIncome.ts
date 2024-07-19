@@ -4,14 +4,14 @@ import { incomeService } from "../../services/income";
 
 export function useIncome() {
     const [searchParams] = useSearchParams();
-    const from = searchParams.get("from") || undefined;
-    const to = searchParams.get("to") || undefined;
+    const date = searchParams.get("date") || undefined;
+    // const from = searchParams.get("from") || undefined;
+    // const to = searchParams.get("to") || undefined;
     const query = useQuery({
-        queryKey: ['income', { from, to }],
+        queryKey: ['income', { date }],
         queryFn: () => incomeService.get({
             queryParams: {
-                from,
-                to
+                date
             }
         })
     })

@@ -32,6 +32,7 @@
     "react-spinners": "^0.14.1",
     "react-thermal-printer": "^0.18.1",
     "react-top-loading-bar": "^2.3.1",
+    "rsuite": "^5.67.0",
     "sweetalert2": "^11.12.1",
     "sweetalert2-react-content": "^5.0.7",
     "vite-tsconfig-paths": "^4.3.2",

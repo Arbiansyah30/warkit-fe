@@ -9,6 +9,7 @@ export interface QueryParams {
   from?: string,
   to?: string,
   status?: 'PAID' | 'UNPAID'
+  date?: string
 }
 
 export interface ApiOption {
