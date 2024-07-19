@@ -16,7 +16,7 @@ export function useIncome() {
         queryFn: () => incomeService.get({
             queryParams: {
                 from,
-                to,
+                to: to ? to : from,
                 page: page ? Number(page) : undefined,
                 perPage: perPage ? Number(perPage) : undefined
             }
