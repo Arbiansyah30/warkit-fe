@@ -67,11 +67,11 @@ export const useTransactionCreation = () => {
         window.location.href = res.data?.redirect_url;
         return;
       }
-      alert(res.message);
+      toast.success(res.message as string);
       window.location.reload();
     },
     onError: (err: ApiErrorResponse<ApiResponse>) =>
-      alert(err.response?.data.message),
+      toast.error(err.response?.data.message as string),
   });
   return mutation;
 };
@@ -137,4 +137,18 @@ export function useTransactionWeek() {
     queryKey: ["TransactionWeek"],
     queryFn: () => transactionService.week(),
   });
+}
+
+export function useCancelTransaction() {
+  const { refetch } = useTransaction();
+  const mutation = useMutation({
+    mutationFn: (id: string) => transactionService.cancel({ transactionId: id }),
+    onSuccess: (res) => {
+      toast.success(res.message as string);
+      refetch()
+    },
+    onError: (err: ApiErrorResponse<ApiResponse>) =>
+      toast.error(err.response?.data.message as string),
+  });
+  return mutation;
 }

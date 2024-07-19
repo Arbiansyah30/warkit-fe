@@ -3,6 +3,7 @@ import React from "react";
 import { FaInfoCircle } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { formatDate } from "../../../../libs/helper/FormatTime";
+import { CanceledAction } from "../CanceledAction";
 import PaymentCash from "../PaymentCash";
 
 interface ITableItem extends TransactionModel {
@@ -43,6 +44,8 @@ export const TableItem: React.FC<ITableItem> = ({
       <td className="px-4 text-xs text-center text-white py-2">
         {status === "PAID" ? (
           <p className="bg-green-500 px-3 py-1 rounded">{status}</p>
+        ) : status === "CANCEL" ? (
+          <p className="bg-red-500 px-3 py-1 rounded">{status}</p>
         ) : (
           <p className="bg-gray-500 px-3 py-1 rounded">{status}</p>
         )}
@@ -66,6 +69,9 @@ export const TableItem: React.FC<ITableItem> = ({
           </Link>
           {status == "UNPAID" && paymentMethod === "CASH" && (
             <PaymentCash orderId={id as string} />
+          )}
+          {status == "UNPAID" && paymentMethod === "CASH" && (
+            <CanceledAction id={id as string} />
           )}
           {status !== "UNPAID" && (
             <button
