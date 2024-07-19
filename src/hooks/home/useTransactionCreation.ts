@@ -46,7 +46,7 @@ export function useTransaction(options?: Options) {
         queryParams: {
           perPage: perPage ? Number(perPage) : undefined,
           page: page ? Number(page) : undefined,
-          status: status as 'PAID' | 'UNPAID',
+          status: status as 'PAID' | 'UNPAID' | 'CANCEL',
           search
         },
       }),

@@ -78,6 +78,18 @@ const OrderTable = () => {
               >
                 UNPAID
               </p>
+              <p
+                className={`${
+                  searchParams.get("status")?.toLowerCase() === "cancel"
+                    ? "bg-blue-500"
+                    : "bg-gray-500"
+                } text-white px-3 py-1 rounded cursor-pointer`}
+                onClick={() =>
+                  setSearchParams({ ...queryParams, status: "cancel" })
+                }
+              >
+                CANCEL
+              </p>
             </div>
           </div>
         </div>
