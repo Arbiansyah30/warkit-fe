@@ -73,7 +73,7 @@ export const TableItem: React.FC<ITableItem> = ({
           {status == "UNPAID" && paymentMethod === "CASH" && (
             <CanceledAction id={id as string} />
           )}
-          {status !== "UNPAID" && (
+          {status === "PAID" && (
             <button
               onClick={() => onPrint(item)}
               className="hover:opacity-70 text-sm text-white px-3 py-1 rounded-md bg-black flex justify-center items-center"
