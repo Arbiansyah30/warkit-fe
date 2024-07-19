@@ -31,12 +31,31 @@ export const IncomeContent = () => {
   };
 
   useEffect(() => {
-    const date = searchParams.get("date");
-    if (date?.includes("undefined")) {
-      setSearchParams({});
+    const from = searchParams.get("from");
+    const to = searchParams.get("to");
+
+    if (from?.includes("undefined")) {
+      const { from, ...rest } = queryParams;
+      setSearchParams({ ...rest });
       return;
     }
-  }, [JSON.stringify({ date: searchParams.get("date") })]);
+    if (to?.includes("undefined")) {
+      const { to, ...rest } = queryParams;
+      setSearchParams({ ...rest });
+      return;
+    }
+
+    if (!from) {
+      const { to, from, ...rest } = queryParams;
+      setSearchParams({ ...rest });
+      return;
+    }
+  }, [
+    JSON.stringify({
+      from: searchParams.get("from"),
+      to: searchParams.get("to"),
+    }),
+  ]);
 
   // console.log(filteredIncome);
 
@@ -47,17 +66,49 @@ export const IncomeContent = () => {
           <div className="flex justify-between items-center gap-5 flex-wrap">
             <h4 className="text-xl font-bold text-white">Data Income</h4>
             {/* <DateFilter /> */}
-            <div className="mr-5">
+            <div className="mr-5 flex items-center gap-5">
               <DatePicker
+                name="from"
                 onChange={(value) =>
                   setSearchParams({
                     ...queryParams,
-                    date: `${value?.getFullYear()}-${
+                    from: `${value?.getFullYear()}-${
                       (value?.getMonth() as number) + 1
                     }-${value?.getUTCDate()}`,
                   })
                 }
               />
+              {searchParams.get("from") ? (
+                <>
+                  <p className="text-white">TO</p>
+                  <DatePicker
+                    name="to"
+                    onChange={(value) =>
+                      setSearchParams({
+                        ...queryParams,
+                        to: `${value?.getFullYear()}-${
+                          (value?.getMonth() as number) + 1
+                        }-${value?.getUTCDate()}`,
+                      })
+                    }
+                  />
+                </>
+              ) : null}
+              {/* <InputGroup style={{ width: 500 }}>
+                <DatePicker
+                  format="yyyy-MM-dd HH:mm:ss"
+                  block
+                  appearance="subtle"
+                  style={{ width: 230 }}
+                />
+                <InputGroup.Addon>to</InputGroup.Addon>
+                <DatePicker
+                  format="yyyy-MM-dd HH:mm:ss"
+                  block
+                  appearance="subtle"
+                  style={{ width: 230 }}
+                />
+              </InputGroup> */}
             </div>
           </div>
           <div className="mr-5">
