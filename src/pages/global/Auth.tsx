@@ -6,7 +6,7 @@ const AuthView = () => {
   const auth = useAuth();
 
   if (auth?.token) {
-    return <Navigate to={"/admin/category"} replace />;
+    return <Navigate to={"/admin/dashboard"} replace />;
   }
   return (
     <div className="flex items-center py-10 w-full min-h-screen">
