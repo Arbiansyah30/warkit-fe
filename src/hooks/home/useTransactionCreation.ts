@@ -63,6 +63,7 @@ export const useTransactionCreation = () => {
       return transactionService.post(data);
     },
     onSuccess: (res) => {
+      localStorage.removeItem('cart')
       if (res.data?.redirect_url) {
         window.location.href = res.data?.redirect_url;
         return;
