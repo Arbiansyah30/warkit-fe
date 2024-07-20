@@ -14,7 +14,7 @@ const NavbarApp = () => {
   const [cart, setCart] = useState<ProductModel[]>([]);
   const [cartCount, setCartCount] = useState<number>(0);
   const [isScroll, setIsScroll] = useState<boolean>(false);
-  const { data: products } = useProduct();
+  const { data: products } = useProduct({ all: true });
   const [localProducts, setLocalProducts] = useState<ProductModel[]>([]);
 
   const listenScrollEvent = (): void => {
