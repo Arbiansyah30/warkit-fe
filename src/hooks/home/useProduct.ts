@@ -6,7 +6,6 @@ import toast from "react-hot-toast";
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { productService } from "../../services/products";
 import { loadingCircle } from "../../store/loadingBar";
-import { all } from "axios";
 
 interface Options {
   page?: number;
