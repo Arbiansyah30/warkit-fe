@@ -30,7 +30,15 @@ const DropdownPrint: React.FC<{ dataIncome: IncomeModel }> = ({
       Income: row.nominal,
     }));
 
-    const worksheet = XLSX.utils.json_to_sheet(worksheetData);
+    const worksheet = XLSX.utils.json_to_sheet([
+      ...worksheetData,
+      {
+        No: "Total",
+        Date: "",
+        "Total Product Sold": "",
+        Income: formatRupiah(dataIncome?.totalIncome as number),
+      },
+    ]);
     const workbook = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(workbook, worksheet, "Report");
 
