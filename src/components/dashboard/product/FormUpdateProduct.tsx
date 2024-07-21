@@ -104,7 +104,6 @@ const FormUpdateProduct = () => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log("Form Submitted 1:", productBody);
     if (!validate()) return;
     const formData = new FormData();
     Object.entries(productBody).forEach(([key, value]) => {
@@ -118,8 +117,6 @@ const FormUpdateProduct = () => {
         formData.append(key, value);
       }
     });
-
-    console.log({ imageFile, file: productBody.image });
 
     await mutation.mutateAsync({
       data: formData,
