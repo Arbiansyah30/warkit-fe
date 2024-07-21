@@ -8,9 +8,9 @@ import { formatRupiah } from "../../libs/helper";
 import { TransactionModel } from "@model/transaction";
 
 const Dashboard = () => {
+  const { data: Transaction, isLoading } = useTransaction();
   const { data: dataTransactionDay, isLoading: isLoadingDay } = useTransactionToday();
   const { data: dataTransactionWeek, isLoading: isLoadingWeek } = useTransactionWeek();
-  const { data: Transaction, isLoading } = useTransaction();
 
   const calculateTotalAmount = (transactions: TransactionModel[] | undefined) => {
     return transactions?.reduce((total, transaction) => {
@@ -28,6 +28,16 @@ const Dashboard = () => {
   const totalTransactionWeekAmount = calculateTotalAmount(dataTransactionWeek?.data);
   const totalTransactionQrisAmount = calculateTotalByPaymentMethod(Transaction?.data, 'QRIS');
   const totalTransactionCashAmount = calculateTotalByPaymentMethod(Transaction?.data, 'CASH');
+
+  if (isLoading) return (
+    <tr>
+      <td colSpan={7}>
+        <div className="flex w-full h-48 justify-center items-center text-white">
+          Loading...
+        </div>
+      </td>
+    </tr>
+  );
 
   return (
     <div className="flex flex-col gap-8">
