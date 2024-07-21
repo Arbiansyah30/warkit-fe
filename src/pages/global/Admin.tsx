@@ -30,7 +30,7 @@ const AdminView = () => {
         <NavbarAdmin handleHamburger={handleHamburger} />
         <main className={`mt-[86px]`}>
           <div
-            className={`mx-auto max-w-screen-2xl p-4 md:p-6 2xl:p-10 xl:ml-72`}
+            className={`mx-auto max-w-screen-2xl p-4 md:p-6 2xl:p-10`}
           >
             <Outlet />
           </div>

@@ -34,7 +34,7 @@ export function useProduct(options?: Options) {
   const search = useDebounce(searchQuery as string, 500);
 
   const query = useQuery({
-    queryKey: ["products", { categoryId, perPage, page, search }],
+    queryKey: ["products", { categoryId, perPage, page, name: search }],
     queryFn: () =>
       productService.get({
         queryParams: {

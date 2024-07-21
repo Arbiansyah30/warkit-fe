@@ -1,11 +1,12 @@
-import { useTransactionToday } from "@hooks/home/useTransactionCreation";
 import EmptyData from "../../global/EmptyData";
 import { Table, TableHead } from "../../global/Table";
 import { TableItem } from "./Table/TableItem";
+import { TransactionModel } from "@model/transaction";
 
-export const TransactionDay = () => {
-  const { data: Transaction, isLoading } = useTransactionToday();
-
+export const TransactionDay: React.FC<{
+  Transaction: TransactionModel[] | undefined;
+  isLoading: boolean;
+}> = ({ Transaction, isLoading }) => {
   return (
     <>
       <div className="rounded-md border border-stroke w-full bg-gray-900 px-5 shadow-default dark:bg-boxdark sm:px-7">
@@ -29,21 +30,25 @@ export const TransactionDay = () => {
               ]}
             />
             {isLoading ? (
-              <tr>
-                <td colSpan={7}>
-                  <div className="flex w-full h-48 justify-center items-center text-white">
-                    Loading...
-                  </div>
-                </td>
-              </tr>
-            ) : !Transaction?.data?.length ? (
-              <tr>
-                <td colSpan={7}>
-                  <EmptyData title="Transaction" action={false} />
-                </td>
-              </tr>
+              <tbody>
+                <tr>
+                  <td colSpan={7}>
+                    <div className="flex w-full h-48 justify-center items-center text-white">
+                      Loading...
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            ) : !Transaction?.length ? (
+              <tbody>
+                <tr>
+                  <td colSpan={7}>
+                    <EmptyData title="Transaction" action={false} />
+                  </td>
+                </tr>
+              </tbody>
             ) : (
-              Transaction?.data?.map((item, index) => (
+              Transaction?.map((item, index) => (
                 <TableItem key={index} {...item} />
               ))
             )}
