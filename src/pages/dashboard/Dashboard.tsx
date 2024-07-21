@@ -30,13 +30,9 @@ const Dashboard = () => {
   const totalTransactionCashAmount = calculateTotalByPaymentMethod(Transaction?.data, 'CASH');
 
   if (isLoading) return (
-    <tr>
-      <td colSpan={7}>
-        <div className="flex w-full h-48 justify-center items-center text-white">
+        <div className="flex w-full h-48 justify-center items-center text-center text-white">
           Loading...
         </div>
-      </td>
-    </tr>
   );
 
   return (
