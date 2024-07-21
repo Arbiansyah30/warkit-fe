@@ -61,12 +61,12 @@ const Sidebar: React.FC<{
 
   return (
     <aside
-      className={`max-lg:fixed fixed flex-0 left-0 top-0 z-[9999] flex min-h-screen shrink-0 w-72 flex-col overflow-y-hidden shadow-lg bg-gray-900 text-gray-200 duration-300 ease-linear ${
+      className={`max-lg:relative relative flex-0 left-0 top-0 z-[9999] flex min-h-screen shrink-0 w-72 flex-col overflow-y-hidden shadow-lg bg-gray-900 text-gray-200 duration-300 ease-linear ${
         isLaptop
           ? hamburger
-            ? "translate-x-0"
-            : "translate-x-[-100%]"
-          : "translate-x-0"
+            ? "w-72"
+            : "w-0"
+          : "w-72"
       }`}
     >
       <div className="flex items-center justify-center max-lg:justify-between gap-2 px-6 py-5 lg:py-6">
