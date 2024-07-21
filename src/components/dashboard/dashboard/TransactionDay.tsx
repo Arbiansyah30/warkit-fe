@@ -1,10 +1,9 @@
-import { useTransactionToday } from "@hooks/home/useTransactionCreation";
 import EmptyData from "../../global/EmptyData";
 import { Table, TableHead } from "../../global/Table";
 import { TableItem } from "./Table/TableItem";
+import { TransactionModel } from "@model/transaction";
 
-export const TransactionDay = () => {
-  const { data: Transaction, isLoading } = useTransactionToday();
+export const TransactionDay: React.FC<{ Transaction: TransactionModel[] | undefined; isLoading: boolean }> = ({ Transaction, isLoading }) => {
 
   return (
     <>
@@ -36,14 +35,14 @@ export const TransactionDay = () => {
                   </div>
                 </td>
               </tr>
-            ) : !Transaction?.data?.length ? (
+            ) : !Transaction?.length ? (
               <tr>
                 <td colSpan={7}>
                   <EmptyData title="Transaction" action={false} />
                 </td>
               </tr>
             ) : (
-              Transaction?.data?.map((item, index) => (
+              Transaction?.map((item, index) => (
                 <TableItem key={index} {...item} />
               ))
             )}
