@@ -12,6 +12,7 @@ interface Options {
   perPage?: number;
   categoryId?: string;
   search?: string;
+  all?: boolean;
 }
 
 type PayloadType = 'create' | 'update' | 'delete'
@@ -24,11 +25,11 @@ interface ProductCreation {
 
 export function useProduct(options?: Options) {
   const [searchParams] = useSearchParams();
-  const categoryId =
+  const categoryId = options?.all ? undefined :
     options?.categoryId || searchParams.get("categoryId") || undefined;
-  const page = options?.page || searchParams.get("page") || 1;
-  const perPage = options?.perPage || searchParams.get("perPage") || 10;
-  const searchQuery =
+  const page = options?.all ? undefined : options?.page || searchParams.get("page") || 1;
+  const perPage = options?.all ? undefined : options?.perPage || searchParams.get("perPage") || 10;
+  const searchQuery = options?.all ? undefined :
     options?.search || searchParams.get("search") || undefined;
   const search = useDebounce(searchQuery as string, 500);
 
