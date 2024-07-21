@@ -1,12 +1,20 @@
 import { IncomeModel } from "@model/income";
+import jsPDF from "jspdf";
+import autoTable from "jspdf-autotable";
 import React, { useState } from "react";
-import { FaChevronDown, FaFilePdf, FaFileExcel, FaChevronUp } from "react-icons/fa";
-import * as XLSX from 'xlsx';
-import jsPDF from 'jspdf';
-import autoTable from 'jspdf-autotable';
+import {
+  FaChevronDown,
+  FaChevronUp,
+  FaFileExcel,
+  FaFilePdf,
+} from "react-icons/fa";
+import * as XLSX from "xlsx";
+import { formatRupiah } from "../../libs/helper";
 import { formatDate } from "../../libs/helper/FormatTime";
 
-const DropdownPrint: React.FC<{ dataIncome: IncomeModel }> = ({ dataIncome }) => {
+const DropdownPrint: React.FC<{ dataIncome: IncomeModel }> = ({
+  dataIncome,
+}) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleDropdown = () => {
@@ -18,20 +26,23 @@ const DropdownPrint: React.FC<{ dataIncome: IncomeModel }> = ({ dataIncome }) =>
     const worksheetData = dataIncome?.incomes.map((row, index) => ({
       No: index + 1,
       Date: formatDate(row.createdAt),
-      'Total Product Sold': row.transaction?.totalQuantity ?? 0,
+      "Total Product Sold": row.transaction?.totalQuantity ?? 0,
       Income: row.nominal,
     }));
 
     const worksheet = XLSX.utils.json_to_sheet(worksheetData);
     const workbook = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(workbook, worksheet, 'Report');
+    XLSX.utils.book_append_sheet(workbook, worksheet, "Report");
 
-    const excelBuffer = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
-    const blob = new Blob([excelBuffer], { type: 'application/octet-stream' });
+    const excelBuffer = XLSX.write(workbook, {
+      bookType: "xlsx",
+      type: "array",
+    });
+    const blob = new Blob([excelBuffer], { type: "application/octet-stream" });
 
-    const link = document.createElement('a');
+    const link = document.createElement("a");
     link.href = URL.createObjectURL(blob);
-    link.download = 'report.xlsx';
+    link.download = "report.xlsx";
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
@@ -40,42 +51,40 @@ const DropdownPrint: React.FC<{ dataIncome: IncomeModel }> = ({ dataIncome }) =>
   // Cetak PDF
   const handleExportPDF = () => {
     const doc = new jsPDF();
-    
+
     // Menambahkan judul dengan posisi yang tepat
-    doc.text('Sales Report', 14, 20);
-    
+    doc.text("Sales Report", 14, 20);
+
     const rows = dataIncome?.incomes.map((row, index) => [
       index + 1,
       formatDate(row.createdAt),
       row.transaction?.totalQuantity ?? 0,
-      row.nominal 
+      formatRupiah(row.nominal) as string,
     ]);
-  
     autoTable(doc, {
       startY: 30,
-      head: [['No', 'Date', 'Total Product Sold', 'Income']],
-      body: rows as Array<Array<string | number>>, 
-      theme: 'striped',
+      head: [["No", "Date", "Total Product Sold", "Income"]],
+      body: [...rows, ["Total", "", "", formatRupiah(dataIncome?.totalIncome)]],
+      theme: "striped",
       headStyles: { fillColor: [41, 128, 185] },
-      styles: { halign: 'center' }, 
+      styles: { halign: "center" },
       columnStyles: {
-        0: { halign: 'center', cellWidth: 20 }, 
-        1: { halign: 'center', cellWidth: 50 }, 
-        2: { halign: 'center', cellWidth: 50 }, 
-        3: { halign: 'center', cellWidth: 50 }, 
+        0: { halign: "center", cellWidth: 20 },
+        1: { halign: "center", cellWidth: 50 },
+        2: { halign: "center", cellWidth: 50 },
+        3: { halign: "center", cellWidth: 50 },
       },
     });
-  
-    const pdfBlob = doc.output('blob');
-  
-    const link = document.createElement('a');
+
+    const pdfBlob = doc.output("blob");
+
+    const link = document.createElement("a");
     link.href = URL.createObjectURL(pdfBlob);
-    link.download = 'report.pdf';
+    link.download = "report.pdf";
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
   };
-  
 
   return (
     <div className="relative text-right">
