@@ -24,3 +24,24 @@ export function useIncome() {
     })
     return query
 }
+
+export function useIncomeWithoutPage() {
+    const [searchParams] = useSearchParams();
+    const from = searchParams.get("from") || undefined;
+    const to = searchParams.get("to") || undefined;
+
+    // const from = searchParams.get("from") || undefined;
+    // const to = searchParams.get("to") || undefined;
+    const query = useQuery({
+        queryKey: ['income', { from, to }],
+        queryFn: () => incomeService.get({
+            queryParams: {
+                from,
+                to: to ? to : from,
+                page: 1,
+                perPage: 1000000
+            }
+        })
+    })
+    return query
+} 

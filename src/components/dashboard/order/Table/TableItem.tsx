@@ -29,7 +29,7 @@ export const TableItem: React.FC<ITableItem> = ({
       {/* <td className="px-4 py-2">
         <p className="text-white">{serialNumber}</p>
       </td> */}
-      <td className="px-4 py-2">
+      <td className="px-4 py-2 min-w-52">
         <p className="text-white">{formatDate(createdAt as Date)}</p>
       </td>
       <td className="px-4 py-2">

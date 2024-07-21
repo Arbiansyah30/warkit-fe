@@ -1,11 +1,11 @@
-import { useIncome } from "@hooks/admin/useIncome";
+import { useIncome, useIncomeWithoutPage } from "@hooks/admin/useIncome";
 import { IncomeModel } from "@model/income";
 import { useAtom } from "jotai";
 import { useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
 import { DatePicker } from "rsuite";
 import "rsuite/DatePicker/styles/index.css";
-import { convertQueryParamsToObject } from "../../../libs/helper";
+import { convertQueryParamsToObject, formatRupiah } from "../../../libs/helper";
 import { loadingBarAtom } from "../../../store/loadingBar";
 import DropdownPrint from "../../global/DropdownPrint";
 import EmptyData from "../../global/EmptyData";
@@ -15,6 +15,7 @@ import { TableItem } from "./Table";
 
 export const IncomeContent = () => {
   const { data: incomeResponse, isLoading } = useIncome();
+  const { data: incomeWithoutPage } = useIncomeWithoutPage();
 
   // global
   const [, setLoadingBar] = useAtom(loadingBarAtom);
@@ -112,7 +113,9 @@ export const IncomeContent = () => {
             </div>
           </div>
           <div className="mr-5">
-            <DropdownPrint dataIncome={incomeResponse?.data as IncomeModel} />
+            <DropdownPrint
+              dataIncome={incomeWithoutPage?.data as IncomeModel}
+            />
           </div>
         </div>
         <div className="w-full overflow-x-auto">
@@ -142,14 +145,28 @@ export const IncomeContent = () => {
                     </td>
                   </tr>
                 ) : (
-                  incomeResponse?.data?.incomes?.map((item, index) => (
-                    <TableItem
-                      key={index}
-                      totalQty={item.transaction?.totalQuantity as number}
-                      nominal={item.nominal}
-                      createdAt={item.createdAt}
-                    />
-                  ))
+                  <>
+                    {incomeResponse?.data?.incomes?.map((item, index) => (
+                      <TableItem
+                        key={index}
+                        totalQty={item.transaction?.totalQuantity as number}
+                        nominal={item.nominal}
+                        createdAt={item.createdAt}
+                      />
+                    ))}
+                    <tr>
+                      <td colSpan={5}>
+                        <div className="w-full border-t border-solid border-white py-2 flex items-center justify-end">
+                          <div className="flex items-center gap-3">
+                            <p className="text-white">Total Income : </p>
+                            <p className="text-white">
+                              {formatRupiah(incomeResponse.data.totalIncome)}
+                            </p>
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+                  </>
                 )}
               </>
             </TableBody>

@@ -39,15 +39,20 @@ export function useTransaction(options?: Options) {
   const page = options?.page || searchParams.get("page") || 1;
   const perPage = options?.perPage || searchParams.get("perPage") || 10;
   const status = options?.perPage?.toString().toUpperCase() || searchParams.get("status")?.toUpperCase() || undefined
+  const from = searchParams.get("from")?.includes('undefined') ? undefined : searchParams.get("from") || undefined;
+  const to = searchParams.get("to") || undefined;
+
   const query = useQuery({
-    queryKey: ["transactions", { page, perPage, status, search }],
+    queryKey: ["transactions", { page, perPage, status, search, from, to }],
     queryFn: () =>
       transactionService.get({
         queryParams: {
           perPage: perPage ? Number(perPage) : undefined,
           page: page ? Number(page) : undefined,
           status: status as 'PAID' | 'UNPAID' | 'CANCEL',
-          search
+          search,
+          from,
+          to: to ? to : from,
         },
       }),
   });

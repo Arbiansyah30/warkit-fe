@@ -60,6 +60,7 @@ const TableAdminLayout: React.FC<NavbarTable> = ({
         <div className="flex items-center justify-end">
           <div className="w-64">
             <Input
+              value={queries[searchKey] || ""}
               onChange={handleChangeSearch}
               name="search"
               placeholder={`Search ${title}`}

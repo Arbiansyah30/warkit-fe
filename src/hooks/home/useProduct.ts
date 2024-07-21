@@ -48,6 +48,19 @@ export function useProduct(options?: Options) {
   return query;
 }
 
+export const useProductCart = () => {
+
+  return useQuery({
+    queryKey: ["productCart"],
+    queryFn: () => productService.get({
+      queryParams: {
+        page: 1,
+        perPage: 1000,
+      }
+    })
+  })
+}
+
 export function useProductCreation() {
   const queryClient = useQueryClient();
   const navigate = useNavigate()

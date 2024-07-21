@@ -4,13 +4,13 @@ import {
   useTransactionToday,
   useTransactionWeek,
 } from "@hooks/home/useTransactionCreation";
+import { TransactionModel } from "@model/transaction";
 import {
   TransactionDay,
   TransactionWeek,
 } from "../../components/dashboard/dashboard";
 import TableAdminLayout from "../../components/global/admin/TableAdminLayout";
 import { formatRupiah } from "../../libs/helper";
-import { TransactionModel } from "@model/transaction";
 import chart from "../../libs/helper/Chart";
 import { useEffect } from "react";
 
@@ -147,7 +147,7 @@ const Dashboard = () => {
                   <h4 className="text-title-md font-bold text-white">
                     Total Transaction Today
                   </h4>
-                  <span className="text-sm font-medium">
+                  <span className="text-sm font-medium text-white">
                     {formatRupiah(totalTransactionDayAmount)}
                   </span>
                 </div>
@@ -157,7 +157,7 @@ const Dashboard = () => {
                   <h4 className="text-title-md font-bold text-white">
                     Total Transaction Week
                   </h4>
-                  <span className="text-sm font-medium">
+                  <span className="text-sm font-medium text-white">
                     {formatRupiah(totalTransactionWeekAmount)}
                   </span>
                 </div>
@@ -174,7 +174,7 @@ const Dashboard = () => {
                   <h4 className="text-title-md font-bold text-white">
                     Total Transaction Method Cash
                   </h4>
-                  <span className="text-sm font-medium">
+                  <span className="text-sm font-medium text-white">
                     {formatRupiah(totalTransactionQrisAmount)}
                   </span>
                 </div>
@@ -184,7 +184,7 @@ const Dashboard = () => {
                   <h4 className="text-title-md font-bold text-white">
                     Total Transaction Method QRIS
                   </h4>
-                  <span className="text-sm font-medium">
+                  <span className="text-sm font-medium text-white">
                     {formatRupiah(totalTransactionCashAmount)}
                   </span>
                 </div>
@@ -201,7 +201,7 @@ const Dashboard = () => {
                   <h4 className="text-title-md font-bold text-white">
                     Total Transaction Status Paid
                   </h4>
-                  <span className="text-sm font-medium">
+                  <span className="text-sm font-medium text-white">
                     {formatRupiah(totalTransactionPaidAmount)}
                   </span>
                 </div>
@@ -211,7 +211,7 @@ const Dashboard = () => {
                   <h4 className="text-title-md font-bold text-white">
                     Total Transaction Status Unpaid
                   </h4>
-                  <span className="text-sm font-medium">
+                  <span className="text-sm font-medium text-white">
                     {formatRupiah(totalTransactionUnpaidAmount)}
                   </span>
                 </div>
@@ -221,7 +221,7 @@ const Dashboard = () => {
                   <h4 className="text-title-md font-bold text-white">
                     Total Transaction Status Cancel
                   </h4>
-                  <span className="text-sm font-medium">
+                  <span className="text-sm font-medium text-white">
                     {formatRupiah(totalTransactionCancelAmount)}
                   </span>
                 </div>
