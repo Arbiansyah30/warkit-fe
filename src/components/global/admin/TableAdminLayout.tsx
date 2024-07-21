@@ -62,7 +62,7 @@ const TableAdminLayout: React.FC<NavbarTable> = ({
             <Input
               onChange={handleChangeSearch}
               name="search"
-              placeholder="Search Transaction"
+              placeholder={`Search ${title}`}
               style={{ color: "#FFF" }}
             />
           </div>
