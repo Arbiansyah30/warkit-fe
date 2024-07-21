@@ -140,6 +140,13 @@ export function useTransactionWeek() {
   });
 }
 
+export function useTransactionMonth(month: string) {
+  return useQuery({
+    queryKey: ["TransactionMonth", month],
+    queryFn: () => transactionService.month({ path: month }),
+  });
+}
+
 export function useCancelTransaction() {
   const { refetch } = useTransaction();
   const mutation = useMutation({

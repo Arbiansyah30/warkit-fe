@@ -1,5 +1,6 @@
 import {
   useTransaction,
+  useTransactionMonth,
   useTransactionToday,
   useTransactionWeek,
 } from "@hooks/home/useTransactionCreation";
@@ -10,6 +11,8 @@ import {
 import TableAdminLayout from "../../components/global/admin/TableAdminLayout";
 import { formatRupiah } from "../../libs/helper";
 import { TransactionModel } from "@model/transaction";
+import chart from "../../libs/helper/Chart";
+import { useEffect } from "react";
 
 const Dashboard = () => {
   const { data: Transaction, isLoading } = useTransaction();
@@ -17,7 +20,32 @@ const Dashboard = () => {
     useTransactionToday();
   const { data: dataTransactionWeek, isLoading: isLoadingWeek } =
     useTransactionWeek();
-
+  const { data: january, isLoading: isLoadingJan } = useTransactionMonth("1");
+  const { data: february, isLoading: isLoadingFeb } = useTransactionMonth("2");
+  const { data: march, isLoading: isLoadingMar } = useTransactionMonth("3");
+  const { data: april, isLoading: isLoadingApr } = useTransactionMonth("4");
+  const { data: mayy, isLoading: isLoadingMay } = useTransactionMonth("5");
+  const { data: june, isLoading: isLoadingJun } = useTransactionMonth("6");
+  const { data: july, isLoading: isLoadingJul } = useTransactionMonth("7");
+  const { data: august, isLoading: isLoadingAug } = useTransactionMonth("8");
+  const { data: september, isLoading: isLoadingSep } = useTransactionMonth("9");
+  const { data: october, isLoading: isLoadingOct } = useTransactionMonth("10");
+  const { data: november, isLoading: isLoadingNov } = useTransactionMonth("11");
+  const { data: december, isLoading: isLoadingDec } = useTransactionMonth("12");
+  const isLoadingAllMonth = () => {
+    return isLoadingJan &&
+    isLoadingFeb &&
+    isLoadingMar &&
+    isLoadingApr &&
+    isLoadingMay &&
+    isLoadingJun &&
+    isLoadingJul &&
+    isLoadingAug &&
+    isLoadingSep &&
+    isLoadingOct &&
+    isLoadingNov &&
+    isLoadingDec;
+  };
   const calculateTotalAmount = (
     transactions: TransactionModel[] | undefined
   ) => {
@@ -80,6 +108,26 @@ const Dashboard = () => {
     Transaction?.data,
     "CANCEL"
   );
+
+  useEffect(() => {
+    console.log("loading all month", isLoadingAllMonth());
+     
+    if (!isLoadingAllMonth()) {
+      const jan = calculateTotalAmount(january?.data);
+      const feb = calculateTotalAmount(february?.data);
+      const mar = calculateTotalAmount(march?.data);
+      const apr = calculateTotalAmount(april?.data);
+      const may = calculateTotalAmount(mayy?.data);
+      const jun = calculateTotalAmount(june?.data);
+      const jul = calculateTotalAmount(july?.data);
+      const aug = calculateTotalAmount(august?.data);
+      const sep = calculateTotalAmount(september?.data);
+      const oct = calculateTotalAmount(october?.data);
+      const nov = calculateTotalAmount(november?.data);
+      const dec = calculateTotalAmount(december?.data);
+      chart([jan, feb, mar, apr, may, jun, jul, aug, sep, oct, nov, dec]);
+    }
+  }, [isLoadingAllMonth()]);
 
   return (
     <div className="flex flex-col gap-8">
@@ -182,6 +230,24 @@ const Dashboard = () => {
           </div>
         </>
       )}
+      <div className="col-span-12 rounded-sm border border-stroke bg-gray-900 px-5 pb-5 pt-7 shadow-default sm:px-7">
+        {isLoadingAllMonth() ? (
+          <div className="flex w-full h-48 justify-center items-center text-center text-white">
+            Loading...
+          </div>
+        ) : (
+          <>
+            <div>
+              <h3 className="text-xl font-bold text-white">
+                Total Transaction Month in {new Date().getFullYear()}
+              </h3>
+            </div>
+            <div>
+              <div id="chartTransaction" className="-ml-5"></div>
+            </div>
+          </>
+        )}
+      </div>
       <TableAdminLayout title="Transaction Today">
         <TransactionDay
           Transaction={dataTransactionDay?.data}

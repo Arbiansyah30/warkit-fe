@@ -12,5 +12,6 @@ export const transactionService = {
     printPayment: HTTP_REQUEST.post<ApiResponse<PrintPaymentModel>>(API_ENDPOINT.print),
     today: HTTP_REQUEST.get<ApiResponse<TransactionModel[]>>(API_ENDPOINT.transaction + "/now/today"),
     week: HTTP_REQUEST.get<ApiResponse<TransactionModel[]>>(API_ENDPOINT.transaction + "/now/week"),
+    month: HTTP_REQUEST.get<ApiResponse<TransactionModel[]>>(API_ENDPOINT.transaction + "/now/month"),
     cancel: HTTP_REQUEST.put<ApiResponse, { transactionId: string }>(API_ENDPOINT.transaction + "/cancel"),
 }
