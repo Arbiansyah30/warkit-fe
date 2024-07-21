@@ -112,6 +112,8 @@ const FormUpdateProduct = () => {
         if (imageFile) {
           formData.append("image", imageFile);
         }
+      } else if (key === "category") {
+        formData.append("categoryId", value.id);
       } else {
         formData.append(key, value);
       }

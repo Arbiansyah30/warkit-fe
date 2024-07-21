@@ -78,3 +78,15 @@ export function useCategoryById() {
     enabled: !!id,
   });
 }
+
+export function useCategoryFilter() {
+  return useQuery({
+    queryKey: ["categoryFilter"],
+    queryFn: () => categoryService.get({
+      queryParams: {
+        perPage: 1000,
+        page: 1
+      }
+    })
+  })
+}

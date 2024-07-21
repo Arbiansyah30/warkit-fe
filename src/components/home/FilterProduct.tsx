@@ -1,4 +1,4 @@
-import { useCategory } from "@hooks/home/useCategory";
+import { useCategoryFilter } from "@hooks/home/useCategory";
 import { CategoryModel } from "@model/category";
 import { useState } from "react";
 import { useSearchParams } from "react-router-dom";
@@ -6,7 +6,7 @@ import { convertQueryParamsToObject } from "../../libs/helper";
 
 const FilterProduct = () => {
   const [isActive, setIsActive] = useState<string>("");
-  const { data: category } = useCategory();
+  const { data: category } = useCategoryFilter();
   const [searchParams, setSearchParams] = useSearchParams();
   const queryParams = convertQueryParamsToObject(searchParams.toString());
 
