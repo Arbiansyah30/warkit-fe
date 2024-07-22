@@ -9,7 +9,7 @@ interface SeriesData {
 }
 
 // Fungsi utama untuk membuat chart
-const chart = (monthlyData: number[]): any => {
+const chartOption = (monthlyData: number[]): any => {
   const months: string[] = [
     "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
   ];
@@ -105,15 +105,16 @@ const chart = (monthlyData: number[]): any => {
     },
   };
 
-  const chartSelector = document.querySelectorAll("#chartTransaction");
+  return chartFourOptions;
+  // const chartSelector = document.querySelectorAll("#chartTransaction");
 
-  if (chartSelector.length) {
-    const chartTransaction = new ApexCharts(
-      document.querySelector("#chartTransaction"),
-      chartFourOptions
-    );
-    chartTransaction.render();
-  }
+  // if (chartSelector.length) {
+  //   const chartTransaction = new ApexCharts(
+  //     document.querySelector("#chartTransaction"),
+  //     chartFourOptions
+  //   );
+  //   chartTransaction.render();
+  // }
 };
 
-export default chart;
+export default chartOption;
