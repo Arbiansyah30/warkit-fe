@@ -4,6 +4,7 @@ export interface IncomeItem {
     transaction?: {
         id: string,
         name: string,
+        email: string
         paymentMethod: "QRIS" | "CASH",
         settlementTime: string,
         totalAmount: number,

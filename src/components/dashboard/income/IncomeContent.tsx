@@ -95,21 +95,6 @@ export const IncomeContent = () => {
                   />
                 </>
               ) : null}
-              {/* <InputGroup style={{ width: 500 }}>
-                <DatePicker
-                  format="yyyy-MM-dd HH:mm:ss"
-                  block
-                  appearance="subtle"
-                  style={{ width: 230 }}
-                />
-                <InputGroup.Addon>to</InputGroup.Addon>
-                <DatePicker
-                  format="yyyy-MM-dd HH:mm:ss"
-                  block
-                  appearance="subtle"
-                  style={{ width: 230 }}
-                />
-              </InputGroup> */}
             </div>
           </div>
           <div className="mr-5">
@@ -123,6 +108,8 @@ export const IncomeContent = () => {
             <TableHead
               HeadList={[
                 "Date Time",
+                "Name",
+                "Email",
                 "Total Product Sold",
                 "Total Nominal",
                 "",
@@ -152,6 +139,8 @@ export const IncomeContent = () => {
                         totalQty={item.transaction?.totalQuantity as number}
                         nominal={item.nominal}
                         createdAt={item.createdAt}
+                        name={item.transaction?.name as string}
+                        email={item.transaction?.email as string}
                       />
                     ))}
                     <tr>
