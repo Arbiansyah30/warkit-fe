@@ -152,7 +152,7 @@ const Dashboard = () => {
       const oct = calculateTotalAmount(october?.data);
       const nov = calculateTotalAmount(november?.data);
       const dec = calculateTotalAmount(december?.data);
-
+      console.log(jul)
       if (chartInstanceRef.current) {
         chartInstanceRef.current.destroy();
       }
@@ -265,34 +265,34 @@ const Dashboard = () => {
           </div>
           {(searchParams.get("filter") === "date" ||
             !searchParams.get("filter")) && (
-            <div className="flex flex-col gap-2">
-              <h2 className="font-medium text-base text-white">
-                Total Transaction By Date
-              </h2>
-              <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6">
-                <div className="rounded-md bg-gray-900 px-7 py-6">
-                  <div className="text-center">
-                    <h4 className="text-title-md font-bold text-white">
-                      Transaction Today
-                    </h4>
-                    <span className="text-sm font-medium text-white">
-                      {formatRupiah(totalTransactionDayAmount)}
-                    </span>
+              <div className="flex flex-col gap-2">
+                <h2 className="font-medium text-base text-white">
+                  Total Transaction By Date
+                </h2>
+                <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6">
+                  <div className="rounded-md bg-gray-900 px-7 py-6">
+                    <div className="text-center">
+                      <h4 className="text-title-md font-bold text-white">
+                        Transaction Today
+                      </h4>
+                      <span className="text-sm font-medium text-white">
+                        {formatRupiah(totalTransactionDayAmount)}
+                      </span>
+                    </div>
                   </div>
-                </div>
-                <div className="rounded-md bg-gray-900 px-7 py-6">
-                  <div className="text-center">
-                    <h4 className="text-title-md font-bold text-white">
-                      Transaction Week
-                    </h4>
-                    <span className="text-sm font-medium text-white">
-                      {formatRupiah(totalTransactionWeekAmount)}
-                    </span>
+                  <div className="rounded-md bg-gray-900 px-7 py-6">
+                    <div className="text-center">
+                      <h4 className="text-title-md font-bold text-white">
+                        Transaction Week
+                      </h4>
+                      <span className="text-sm font-medium text-white">
+                        {formatRupiah(totalTransactionWeekAmount)}
+                      </span>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-          )}
+            )}
           {searchParams.get("filter") === "payment" && (
             <div className="flex flex-col gap-2">
               <h2 className="font-medium text-base text-white">
