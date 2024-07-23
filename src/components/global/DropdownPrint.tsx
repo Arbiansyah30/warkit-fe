@@ -26,6 +26,8 @@ const DropdownPrint: React.FC<{ dataIncome: IncomeModel }> = ({
     const worksheetData = dataIncome?.incomes.map((row, index) => ({
       No: index + 1,
       Date: formatDate(row.createdAt),
+      Name: row.transaction?.name ?? "",
+      Email: row.transaction?.email ?? "",
       "Total Product Sold": row.transaction?.totalQuantity ?? 0,
       Income: row.nominal,
     }));
@@ -35,6 +37,8 @@ const DropdownPrint: React.FC<{ dataIncome: IncomeModel }> = ({
       {
         No: "Total",
         Date: "",
+        Name: "",
+        Email: "",
         "Total Product Sold": "",
         Income: formatRupiah(dataIncome?.totalIncome as number),
       },
@@ -61,26 +65,33 @@ const DropdownPrint: React.FC<{ dataIncome: IncomeModel }> = ({
     const doc = new jsPDF();
 
     // Menambahkan judul dengan posisi yang tepat
-    doc.text("Sales Report", 14, 20);
+    doc.text("Sales Report Warmindo Kita", 14, 20);
 
     const rows = dataIncome?.incomes.map((row, index) => [
       index + 1,
       formatDate(row.createdAt),
+      row.transaction?.name,
+      row.transaction?.email,
       row.transaction?.totalQuantity ?? 0,
       formatRupiah(row.nominal) as string,
     ]);
     autoTable(doc, {
       startY: 30,
-      head: [["No", "Date", "Total Product Sold", "Income"]],
-      body: [...rows, ["Total", "", "", formatRupiah(dataIncome?.totalIncome)]],
+      head: [["No", "Date", "Name", "Email", "Total Product", "Income"]],
+      body: [
+        ...(rows as any),
+        ["Total", "", "", "", "", formatRupiah(dataIncome?.totalIncome)],
+      ],
       theme: "striped",
       headStyles: { fillColor: [41, 128, 185] },
       styles: { halign: "center" },
       columnStyles: {
         0: { halign: "center", cellWidth: 20 },
-        1: { halign: "center", cellWidth: 50 },
-        2: { halign: "center", cellWidth: 50 },
-        3: { halign: "center", cellWidth: 50 },
+        1: { halign: "center", cellWidth: 40 },
+        2: { halign: "center", cellWidth: 25 },
+        3: { halign: "center", cellWidth: 35 },
+        4: { halign: "center", cellWidth: 25 },
+        5: { halign: "center", cellWidth: 35 },
       },
     });
 

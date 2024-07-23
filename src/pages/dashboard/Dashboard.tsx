@@ -6,7 +6,7 @@ import {
 } from "@hooks/home/useTransactionCreation";
 import { TransactionModel } from "@model/transaction";
 import ApexCharts from "apexcharts";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { DatePicker } from "rsuite";
 import {
@@ -21,11 +21,16 @@ import chartOption from "../../libs/helper/Chart";
 const Dashboard = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const queryParams = convertQueryParamsToObject(searchParams.toString());
+  const [open, setOpen] = useState<boolean>(false);
   const { data: Transaction, isLoading } = useTransaction();
-  const { data: dataTransactionDay, isLoading: isLoadingDay } =
-    useTransactionToday();
-  const { data: dataTransactionWeek, isLoading: isLoadingWeek } =
-    useTransactionWeek();
+  const {
+    data: dataTransactionDay,
+    isLoading: isLoadingDay,
+  } = useTransactionToday();
+  const {
+    data: dataTransactionWeek,
+    isLoading: isLoadingWeek,
+  } = useTransactionWeek();
   const { data: january, isLoading: isLoadingJan } = useTransactionMonth("1");
   const { data: february, isLoading: isLoadingFeb } = useTransactionMonth("2");
   const { data: march, isLoading: isLoadingMar } = useTransactionMonth("3");
@@ -59,6 +64,12 @@ const Dashboard = () => {
   const calculateTotalAmount = (
     transactions: TransactionModel[] | undefined
   ) => {
+    if (
+      searchParams.get("year") !== new Date().getFullYear().toString() &&
+      searchParams.get("year")
+    ) {
+      return 0;
+    }
     return (
       transactions?.reduce(
         (total, transaction) => total + (transaction.totalAmount || 0),
@@ -187,6 +198,7 @@ const Dashboard = () => {
     october,
     november,
     december,
+    searchParams.get("year"),
   ]);
 
   return (
@@ -197,67 +209,128 @@ const Dashboard = () => {
         </div>
       ) : (
         <>
-          <div className="flex flex-col gap-2">
-            <h2 className="font-medium text-base text-white">
-              Total Transaction By Date
-            </h2>
-            <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6">
-              <div className="rounded-md bg-gray-900 px-7 py-6">
-                <div className="text-center">
-                  <h4 className="text-title-md font-bold text-white">
-                    Transaction Today
-                  </h4>
-                  <span className="text-sm font-medium text-white">
-                    {formatRupiah(totalTransactionDayAmount)}
-                  </span>
+          <div className="flex items-center gap-10">
+            <div className="dropdown">
+              <div
+                tabIndex={0}
+                role="button"
+                className="btn m-1"
+                onClick={() => setOpen((prev) => !prev)}
+              >
+                {searchParams.get("filter") || "Select Filter"}
+              </div>
+              {open && (
+                <ul
+                  tabIndex={0}
+                  className="dropdown-content menu bg-base-100 rounded-box z-[1] w-52 p-2 shadow"
+                >
+                  <li
+                    onClick={() => {
+                      setSearchParams({ ...queryParams, filter: "date" });
+                      setOpen((prev) => !prev);
+                    }}
+                  >
+                    <a>By Date</a>
+                  </li>
+                  <li
+                    onClick={() => {
+                      setSearchParams({ ...queryParams, filter: "status" });
+                      setOpen((prev) => !prev);
+                    }}
+                  >
+                    <a>By Status</a>
+                  </li>
+                  <li
+                    onClick={() => {
+                      setSearchParams({ ...queryParams, filter: "payment" });
+                      setOpen((prev) => !prev);
+                    }}
+                  >
+                    <a>By Payment Method</a>
+                  </li>
+                </ul>
+              )}
+            </div>
+            {searchParams.get("filter") && (
+              <p
+                className="text-white text-lg cursor-pointer"
+                onClick={() => {
+                  const { filter, ...rest } = queryParams;
+                  setSearchParams({ ...rest });
+                }}
+              >
+                RESET
+              </p>
+            )}
+          </div>
+          {(searchParams.get("filter") === "date" ||
+            !searchParams.get("filter")) && (
+            <div className="flex flex-col gap-2">
+              <h2 className="font-medium text-base text-white">
+                Total Transaction By Date
+              </h2>
+              <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6">
+                <div className="rounded-md bg-gray-900 px-7 py-6">
+                  <div className="text-center">
+                    <h4 className="text-title-md font-bold text-white">
+                      Transaction Today
+                    </h4>
+                    <span className="text-sm font-medium text-white">
+                      {formatRupiah(totalTransactionDayAmount)}
+                    </span>
+                  </div>
+                </div>
+                <div className="rounded-md bg-gray-900 px-7 py-6">
+                  <div className="text-center">
+                    <h4 className="text-title-md font-bold text-white">
+                      Transaction Week
+                    </h4>
+                    <span className="text-sm font-medium text-white">
+                      {formatRupiah(totalTransactionWeekAmount)}
+                    </span>
+                  </div>
                 </div>
               </div>
-              <div className="rounded-md bg-gray-900 px-7 py-6">
-                <div className="text-center">
-                  <h4 className="text-title-md font-bold text-white">
-                    Transaction Week
-                  </h4>
-                  <span className="text-sm font-medium text-white">
-                    {formatRupiah(totalTransactionWeekAmount)}
-                  </span>
-                </div>
+            </div>
+          )}
+          {searchParams.get("filter") === "payment" && (
+            <div className="flex flex-col gap-2">
+              <h2 className="font-medium text-base text-white">
+                Total Transaction By Payment Method
+              </h2>
+              <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6">
+                <Card
+                  label="Transaction Method Cash"
+                  value={formatRupiah(totalTransactionCashAmount)}
+                />
+                <Card
+                  label="Transaction Method QRIS"
+                  value={formatRupiah(totalTransactionQrisAmount)}
+                />
               </div>
             </div>
-          </div>
-          <div className="flex flex-col gap-2">
-            <h2 className="font-medium text-base text-white">
-              Total Transaction By Payment Method
-            </h2>
-            <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6">
-              <Card
-                label="Transaction Method Cash"
-                value={formatRupiah(totalTransactionCashAmount)}
-              />
-              <Card
-                label="Transaction Method QRIS"
-                value={formatRupiah(totalTransactionQrisAmount)}
-              />
+          )}
+          {searchParams.get("filter") === "status" && (
+            <div className="flex flex-col gap-2">
+              <h2 className="font-medium text-base text-white">
+                Total Transaction By Status
+              </h2>
+              <div className="grid grid-cols-1 gap-4 lg:grid-cols-3 lg:gap-6">
+                <Card
+                  label="Transaction Status Paid"
+                  value={formatRupiah(totalTransactionPaidAmount)}
+                />
+                <Card
+                  label="Transaction Status Unpaid"
+                  value={formatRupiah(totalTransactionUnpaidAmount)}
+                />
+                <Card
+                  label="Transaction Status Cancel"
+                  value={formatRupiah(totalTransactionCancelAmount)}
+                />
+              </div>
             </div>
-          </div>
-          <div className="flex flex-col gap-2">
-            <h2 className="font-medium text-base text-white">
-              Total Transaction By Status
-            </h2>
-            <div className="grid grid-cols-1 gap-4 lg:grid-cols-3 lg:gap-6">
-              <Card
-                label="Transaction Status Paid"
-                value={formatRupiah(totalTransactionPaidAmount)}
-              />
-              <Card
-                label="Transaction Status Unpaid"
-                value={formatRupiah(totalTransactionUnpaidAmount)}
-              />
-              <Card
-                label="Transaction Status Cancel"
-                value={formatRupiah(totalTransactionCancelAmount)}
-              />
-            </div>
-          </div>
+          )}
         </>
       )}
       <div className="flex items-center justify-end">
