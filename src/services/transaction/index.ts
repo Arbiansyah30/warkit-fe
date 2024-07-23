@@ -1,7 +1,6 @@
 import { API_ENDPOINT } from "@core/config/app";
 import { HTTP_REQUEST } from "@core/libs/api/config";
 import { ApiResponse } from "@core/libs/api/types";
-import { IncomeModel } from "@model/income";
 import { PaymentModel, PrintPaymentModel, TransactionCreationResponse, TransactionModel } from "@model/transaction";
 
 interface IncomeNew {
