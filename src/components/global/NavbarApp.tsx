@@ -1,4 +1,4 @@
-import { useProduct } from "@hooks/home/useProduct";
+import { useProductCart } from "@hooks/home/useProduct";
 import { ProductModel, ProductModelWithQty } from "@model/product";
 import { useEffect, useState } from "react";
 import LOGO from "../../assets/images/LOGO.png";
@@ -14,9 +14,9 @@ const NavbarApp = () => {
   const [cart, setCart] = useState<ProductModel[]>([]);
   const [cartCount, setCartCount] = useState<number>(0);
   const [isScroll, setIsScroll] = useState<boolean>(false);
-  const { data: products } = useProduct();
+  const { data: products } = useProductCart();
   const [localProducts, setLocalProducts] = useState<ProductModel[]>([]);
-
+  console.log(products);
   const listenScrollEvent = (): void => {
     if (window.scrollY > 0) {
       setIsScroll(true);

@@ -8,7 +8,8 @@ export interface QueryParams {
   categoryId?: string
   from?: string,
   to?: string,
-  status?: 'PAID' | 'UNPAID'
+  status?: 'PAID' | 'UNPAID' | 'CANCEL',
+  date?: string
 }
 
 export interface ApiOption {

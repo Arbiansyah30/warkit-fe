@@ -35,11 +35,14 @@ const ListProduct = () => {
               name="search"
               placeholder="Search Product..."
               onChange={handleChangeSearch}
+              value={queryParams.search || ""}
             />
           </div>
         </div>
-        <div className={`grid py-3 max-sm:grid-cols-2 max-lg:grid-cols-3 max-2xl:grid-cols-4 grid-cols-5 max-sm:gap-3 gap-5 h-max items-start justify-center`}>
-        {/* <div className="grid py-3 max-sm:grid-cols-2 max-lg:grid-cols-3 max-2xl:grid-cols-4 grid-cols-5 max-sm:gap-3 gap-5 h-max items-start justify-center"> */}
+        <div
+          className={`grid py-3 max-sm:grid-cols-2 max-lg:grid-cols-3 max-2xl:grid-cols-4 grid-cols-5 max-sm:gap-3 gap-5 h-max items-stretch justify-center`}
+        >
+          {/* <div className="grid py-3 max-sm:grid-cols-2 max-lg:grid-cols-3 max-2xl:grid-cols-4 grid-cols-5 max-sm:gap-3 gap-5 h-max items-start justify-center"> */}
           {products?.data?.map((item) => (
             <CardProduct
               key={item.id}

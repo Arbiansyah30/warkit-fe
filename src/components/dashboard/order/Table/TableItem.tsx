@@ -3,6 +3,7 @@ import React from "react";
 import { FaInfoCircle } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { formatDate } from "../../../../libs/helper/FormatTime";
+import { CanceledAction } from "../CanceledAction";
 import PaymentCash from "../PaymentCash";
 
 interface ITableItem extends TransactionModel {
@@ -28,7 +29,7 @@ export const TableItem: React.FC<ITableItem> = ({
       {/* <td className="px-4 py-2">
         <p className="text-white">{serialNumber}</p>
       </td> */}
-      <td className="px-4 py-2">
+      <td className="px-4 py-2 min-w-52">
         <p className="text-white">{formatDate(createdAt as Date)}</p>
       </td>
       <td className="px-4 py-2">
@@ -43,6 +44,8 @@ export const TableItem: React.FC<ITableItem> = ({
       <td className="px-4 text-xs text-center text-white py-2">
         {status === "PAID" ? (
           <p className="bg-green-500 px-3 py-1 rounded">{status}</p>
+        ) : status === "CANCEL" ? (
+          <p className="bg-red-500 px-3 py-1 rounded">{status}</p>
         ) : (
           <p className="bg-gray-500 px-3 py-1 rounded">{status}</p>
         )}
@@ -67,7 +70,10 @@ export const TableItem: React.FC<ITableItem> = ({
           {status == "UNPAID" && paymentMethod === "CASH" && (
             <PaymentCash orderId={id as string} />
           )}
-          {status !== "UNPAID" && (
+          {status == "UNPAID" && paymentMethod === "CASH" && (
+            <CanceledAction id={id as string} />
+          )}
+          {status === "PAID" && (
             <button
               onClick={() => onPrint(item)}
               className="hover:opacity-70 text-sm text-white px-3 py-1 rounded-md bg-black flex justify-center items-center"

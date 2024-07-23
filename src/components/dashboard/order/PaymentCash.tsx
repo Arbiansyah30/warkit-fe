@@ -1,17 +1,18 @@
 import { usePaymentUpdate } from "@hooks/home/useTransactionCreation";
-import React, { useEffect, useState } from "react";
-import Input from "../../global/Input";
 import { PaymentModel } from "@model/transaction";
 import { useAtom } from "jotai";
+import React, { useEffect, useState } from "react";
 import { loadingBarAtom } from "../../../store/loadingBar";
+import Input from "../../global/Input";
 
 const PaymentCash: React.FC<{ orderId: string }> = ({ orderId }) => {
   const mutation = usePaymentUpdate();
   const [isAlertOpen, setIsAlertOpen] = useState(false);
-  const [totalPaid, setTotalPaid] = useState("");
+  const [totalPaid, setTotalPaid] = useState<number | undefined>();
   const [errors, setErrors] = useState<
     Partial<Record<keyof PaymentModel, string>>
   >({});
+  const [formatedValue, setFormatedValue] = useState<string>("");
 
   // global
   const [, setLoadingBar] = useAtom(loadingBarAtom);
@@ -42,7 +43,7 @@ const PaymentCash: React.FC<{ orderId: string }> = ({ orderId }) => {
 
   const handleCloseAlert = () => {
     setIsAlertOpen(false);
-    setTotalPaid("");
+    setTotalPaid(undefined);
   };
 
   const handlePayment = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -71,19 +72,41 @@ const PaymentCash: React.FC<{ orderId: string }> = ({ orderId }) => {
           <div className="bg-white rounded-lg shadow-lg p-6 w-96">
             <h2 className="text-xl font-semibold mb-4">Enter Payment Value</h2>
             <form onSubmit={handlePayment}>
-              <Input
-                disabled={mutation.isPending}
-                name="payment"
-                type="number"
-                className="w-full p-2 border border-gray-300 rounded mb-4"
-                value={totalPaid}
-                onChange={(e) => setTotalPaid(e.target.value)}
-                error={errors.totalPaid}
-                placeholder="Enter payment amount"
-              />
+              <div className="flex items-center mb-4 gap-3">
+                <p className="text-lg">Rp.</p>
+
+                <div className="w-full">
+                  <Input
+                    type="text"
+                    placeholder="Enter Payment Amount"
+                    name="payment"
+                    error={errors.totalPaid}
+                    value={formatedValue || 0}
+                    onChange={(e) => {
+                      const numericValue = Number(
+                        e.target.value.replace(/\D/g, "")
+                      ); // Menghapus semua karakter non-digit
+                      const formatted = new Intl.NumberFormat("id-ID").format(
+                        numericValue
+                      );
+                      setFormatedValue(formatted);
+                      setTotalPaid(numericValue);
+                    }}
+                  ></Input>
+                </div>
+              </div>
               <div className="flex justify-end space-x-2">
-                <button className="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600">
-                  Pay
+                <button
+                  disabled={mutation.isPending}
+                  className={`px-4 py-2 ${
+                    mutation.isPending ? "bg-gray-500" : "bg-green-500"
+                  } text-white rounded ${
+                    mutation.isPending
+                      ? "hover:bg-gray-600"
+                      : "hover:bg-green-600"
+                  }`}
+                >
+                  {mutation.isPending ? "Loading..." : "Pay"}
                 </button>
                 <button
                   type="reset"

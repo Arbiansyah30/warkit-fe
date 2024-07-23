@@ -8,7 +8,7 @@ export interface TransactionModel {
     email: string,
     paymentMethod: PaymentMethod,
     details?: TransactionDetailModel[],
-    status?: string,
+    status?: 'PAID' | 'UNPAID' | 'CANCEL',
     totalQuantity?: number,
     totalAmount?: number,
     totalPaid?: number,
@@ -19,7 +19,7 @@ export interface TransactionModel {
     createdAt?: Date
 }
 
-export interface PaymentModel   {
+export interface PaymentModel {
     totalPaid: number,
 }
 

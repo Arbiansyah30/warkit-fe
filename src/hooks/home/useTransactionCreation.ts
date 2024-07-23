@@ -39,15 +39,20 @@ export function useTransaction(options?: Options) {
   const page = options?.page || searchParams.get("page") || 1;
   const perPage = options?.perPage || searchParams.get("perPage") || 10;
   const status = options?.perPage?.toString().toUpperCase() || searchParams.get("status")?.toUpperCase() || undefined
+  const from = searchParams.get("from")?.includes('undefined') ? undefined : searchParams.get("from") || undefined;
+  const to = searchParams.get("to") || undefined;
+
   const query = useQuery({
-    queryKey: ["transactions", { page, perPage, status, search }],
+    queryKey: ["transactions", { page, perPage, status, search, from, to }],
     queryFn: () =>
       transactionService.get({
         queryParams: {
           perPage: perPage ? Number(perPage) : undefined,
           page: page ? Number(page) : undefined,
-          status: status as 'PAID' | 'UNPAID',
-          search
+          status: status as 'PAID' | 'UNPAID' | 'CANCEL',
+          search,
+          from,
+          to: to ? to : from,
         },
       }),
   });
@@ -63,15 +68,16 @@ export const useTransactionCreation = () => {
       return transactionService.post(data);
     },
     onSuccess: (res) => {
+      localStorage.removeItem('cart')
       if (res.data?.redirect_url) {
         window.location.href = res.data?.redirect_url;
         return;
       }
-      alert(res.message);
+      toast.success(res.message as string);
       window.location.reload();
     },
     onError: (err: ApiErrorResponse<ApiResponse>) =>
-      alert(err.response?.data.message),
+      toast.error(err.response?.data.message as string),
   });
   return mutation;
 };
@@ -137,4 +143,25 @@ export function useTransactionWeek() {
     queryKey: ["TransactionWeek"],
     queryFn: () => transactionService.week(),
   });
+}
+
+export function useTransactionMonth(month: string) {
+  return useQuery({
+    queryKey: ["TransactionMonth", month],
+    queryFn: () => transactionService.month({ path: month }),
+  });
+}
+
+export function useCancelTransaction() {
+  const { refetch } = useTransaction();
+  const mutation = useMutation({
+    mutationFn: (id: string) => transactionService.cancel({ transactionId: id }),
+    onSuccess: (res) => {
+      toast.success(res.message as string);
+      refetch()
+    },
+    onError: (err: ApiErrorResponse<ApiResponse>) =>
+      toast.error(err.response?.data.message as string),
+  });
+  return mutation;
 }
