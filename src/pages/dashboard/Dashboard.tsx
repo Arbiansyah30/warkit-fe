@@ -18,6 +18,14 @@ import TableAdminLayout from "../../components/global/admin/TableAdminLayout";
 import { convertQueryParamsToObject, formatRupiah } from "../../libs/helper";
 import chartOption from "../../libs/helper/Chart";
 
+interface IncomeNew {
+  createdAt: string
+  id: string
+  nominal: number
+  transactionId: string
+  updatedAt: string
+}
+
 const Dashboard = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const queryParams = convertQueryParamsToObject(searchParams.toString());
@@ -73,6 +81,22 @@ const Dashboard = () => {
     return (
       transactions?.reduce(
         (total, transaction) => total + (transaction.totalAmount || 0),
+        0
+      ) || 0
+    );
+  };
+  const calculateTotalAmountnew = (
+    transactions: IncomeNew[] | undefined
+  ) => {
+    if (
+      searchParams.get("year") !== new Date().getFullYear().toString() &&
+      searchParams.get("year")
+    ) {
+      return 0;
+    }
+    return (
+      transactions?.reduce(
+        (total, transaction) => total + (transaction.nominal || 0),
         0
       ) || 0
     );
@@ -140,19 +164,19 @@ const Dashboard = () => {
 
   useEffect(() => {
     if (!isLoadingAllMonth()) {
-      const jan = calculateTotalAmount(january?.data);
-      const feb = calculateTotalAmount(february?.data);
-      const mar = calculateTotalAmount(march?.data);
-      const apr = calculateTotalAmount(april?.data);
-      const may = calculateTotalAmount(mayy?.data);
-      const jun = calculateTotalAmount(june?.data);
-      const jul = calculateTotalAmount(july?.data);
-      const aug = calculateTotalAmount(august?.data);
-      const sep = calculateTotalAmount(september?.data);
-      const oct = calculateTotalAmount(october?.data);
-      const nov = calculateTotalAmount(november?.data);
-      const dec = calculateTotalAmount(december?.data);
-      console.log(jul)
+      const jan = calculateTotalAmountnew(january?.data);
+      const feb = calculateTotalAmountnew(february?.data as IncomeNew[]);
+      const mar = calculateTotalAmountnew(march?.data as IncomeNew[]);
+      const apr = calculateTotalAmountnew(april?.data as IncomeNew[]);
+      const may = calculateTotalAmountnew(mayy?.data as IncomeNew[]);
+      const jun = calculateTotalAmountnew(june?.data as IncomeNew[]);
+      const jul = calculateTotalAmountnew(july?.data as IncomeNew[]);
+      const aug = calculateTotalAmountnew(august?.data as IncomeNew[]);
+      const sep = calculateTotalAmountnew(september?.data as IncomeNew[]);
+      const oct = calculateTotalAmountnew(october?.data as IncomeNew[]);
+      const nov = calculateTotalAmountnew(november?.data as IncomeNew[]);
+      const dec = calculateTotalAmountnew(december?.data as IncomeNew[]);
+      // console.log(jul)
       if (chartInstanceRef.current) {
         chartInstanceRef.current.destroy();
       }
@@ -178,7 +202,7 @@ const Dashboard = () => {
         chartInstanceRef.current.render();
       }
     }
-
+    console.log(july)
     return () => {
       if (chartInstanceRef.current) {
         chartInstanceRef.current.destroy();
