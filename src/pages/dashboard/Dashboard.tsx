@@ -19,6 +19,14 @@ import TableAdminLayout from "../../components/global/admin/TableAdminLayout";
 import { convertQueryParamsToObject, formatRupiah } from "../../libs/helper";
 import chartOption from "../../libs/helper/Chart";
 
+interface IncomeNew {
+  createdAt: string
+  id: string
+  nominal: number
+  transactionId: string
+  updatedAt: string
+}
+
 const Dashboard = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const queryParams = convertQueryParamsToObject(searchParams.toString());
@@ -78,6 +86,22 @@ const Dashboard = () => {
     return (
       transactions?.reduce(
         (total, transaction) => total + (transaction.totalAmount || 0),
+        0
+      ) || 0
+    );
+  };
+  const calculateTotalAmountnew = (
+    transactions: IncomeNew[] | undefined
+  ) => {
+    if (
+      searchParams.get("year") !== new Date().getFullYear().toString() &&
+      searchParams.get("year")
+    ) {
+      return 0;
+    }
+    return (
+      transactions?.reduce(
+        (total, transaction) => total + (transaction.nominal || 0),
         0
       ) || 0
     );
@@ -145,19 +169,19 @@ const Dashboard = () => {
 
   useEffect(() => {
     if (!isLoadingAllMonth()) {
-      const jan = calculateTotalAmount(january?.data);
-      const feb = calculateTotalAmount(february?.data);
-      const mar = calculateTotalAmount(march?.data);
-      const apr = calculateTotalAmount(april?.data);
-      const may = calculateTotalAmount(mayy?.data);
-      const jun = calculateTotalAmount(june?.data);
-      const jul = calculateTotalAmount(july?.data);
-      const aug = calculateTotalAmount(august?.data);
-      const sep = calculateTotalAmount(september?.data);
-      const oct = calculateTotalAmount(october?.data);
-      const nov = calculateTotalAmount(november?.data);
-      const dec = calculateTotalAmount(december?.data);
-
+      const jan = calculateTotalAmountnew(january?.data);
+      const feb = calculateTotalAmountnew(february?.data as IncomeNew[]);
+      const mar = calculateTotalAmountnew(march?.data as IncomeNew[]);
+      const apr = calculateTotalAmountnew(april?.data as IncomeNew[]);
+      const may = calculateTotalAmountnew(mayy?.data as IncomeNew[]);
+      const jun = calculateTotalAmountnew(june?.data as IncomeNew[]);
+      const jul = calculateTotalAmountnew(july?.data as IncomeNew[]);
+      const aug = calculateTotalAmountnew(august?.data as IncomeNew[]);
+      const sep = calculateTotalAmountnew(september?.data as IncomeNew[]);
+      const oct = calculateTotalAmountnew(october?.data as IncomeNew[]);
+      const nov = calculateTotalAmountnew(november?.data as IncomeNew[]);
+      const dec = calculateTotalAmountnew(december?.data as IncomeNew[]);
+      // console.log(jul)
       if (chartInstanceRef.current) {
         chartInstanceRef.current.destroy();
       }
@@ -183,7 +207,7 @@ const Dashboard = () => {
         chartInstanceRef.current.render();
       }
     }
-
+    console.log(july)
     return () => {
       if (chartInstanceRef.current) {
         chartInstanceRef.current.destroy();
@@ -290,34 +314,34 @@ const Dashboard = () => {
           </div>
           {(searchParams.get("filter") === "date" ||
             !searchParams.get("filter")) && (
-            <div className="flex flex-col gap-2">
-              <h2 className="font-medium text-base text-white">
-                Total Transaction By Date
-              </h2>
-              <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6">
-                <div className="rounded-md bg-gray-900 px-7 py-6">
-                  <div className="text-center">
-                    <h4 className="text-title-md font-bold text-white">
-                      Transaction Today
-                    </h4>
-                    <span className="text-sm font-medium text-white">
-                      {formatRupiah(totalTransactionDayAmount)}
-                    </span>
+              <div className="flex flex-col gap-2">
+                <h2 className="font-medium text-base text-white">
+                  Total Transaction By Date
+                </h2>
+                <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6">
+                  <div className="rounded-md bg-gray-900 px-7 py-6">
+                    <div className="text-center">
+                      <h4 className="text-title-md font-bold text-white">
+                        Transaction Today
+                      </h4>
+                      <span className="text-sm font-medium text-white">
+                        {formatRupiah(totalTransactionDayAmount)}
+                      </span>
+                    </div>
                   </div>
-                </div>
-                <div className="rounded-md bg-gray-900 px-7 py-6">
-                  <div className="text-center">
-                    <h4 className="text-title-md font-bold text-white">
-                      Transaction Week
-                    </h4>
-                    <span className="text-sm font-medium text-white">
-                      {formatRupiah(totalTransactionWeekAmount)}
-                    </span>
+                  <div className="rounded-md bg-gray-900 px-7 py-6">
+                    <div className="text-center">
+                      <h4 className="text-title-md font-bold text-white">
+                        Transaction Week
+                      </h4>
+                      <span className="text-sm font-medium text-white">
+                        {formatRupiah(totalTransactionWeekAmount)}
+                      </span>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-          )}
+            )}
           {searchParams.get("filter") === "payment" && (
             <div className="flex flex-col gap-2">
               <h2 className="font-medium text-base text-white">
