@@ -1,12 +1,24 @@
+import { MetaResponse } from "@core/libs/api/types";
+import { TransactionModel } from "@model/transaction";
+import { useSearchParams } from "react-router-dom";
+import { convertQueryParamsToObject } from "../../../libs/helper";
 import EmptyData from "../../global/EmptyData";
+import Pagination from "../../global/Pagination";
 import { Table, TableHead } from "../../global/Table";
 import { TableItem } from "./Table/TableItem";
-import { TransactionModel } from "@model/transaction";
 
 export const TransactionDay: React.FC<{
   Transaction: TransactionModel[] | undefined;
   isLoading: boolean;
-}> = ({ Transaction, isLoading }) => {
+  meta: MetaResponse;
+}> = ({ Transaction, isLoading, meta }) => {
+  const [searchParams, setSearchParams] = useSearchParams();
+  const queryParams = convertQueryParamsToObject(searchParams.toString());
+
+  const handleChangePage = (page: number) => {
+    setSearchParams({ ...queryParams, page: String(page) });
+  };
+
   return (
     <>
       <div className="rounded-md border border-stroke w-full bg-gray-900 px-5 shadow-default dark:bg-boxdark sm:px-7">
@@ -53,6 +65,11 @@ export const TransactionDay: React.FC<{
               ))
             )}
           </Table>
+          <Pagination
+            currentPage={meta?.page as number}
+            totalPages={meta?.totalPages as number}
+            onPageChange={handleChangePage}
+          />
         </div>
       </div>
     </>

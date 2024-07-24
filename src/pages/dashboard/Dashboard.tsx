@@ -1,3 +1,4 @@
+import { MetaResponse } from "@core/libs/api/types";
 import {
   useTransaction,
   useTransactionMonth,
@@ -64,9 +65,13 @@ const Dashboard = () => {
   const calculateTotalAmount = (
     transactions: TransactionModel[] | undefined
   ) => {
+    console.log(
+      searchParams.get("year") !== new Date().getFullYear().toString() &&
+        typeof searchParams.get("year") === "string"
+    );
     if (
       searchParams.get("year") !== new Date().getFullYear().toString() &&
-      searchParams.get("year")
+      typeof searchParams.get("year") === "string"
     ) {
       return 0;
     }
@@ -156,7 +161,7 @@ const Dashboard = () => {
       if (chartInstanceRef.current) {
         chartInstanceRef.current.destroy();
       }
-
+      console.log({ jul });
       if (chartRef.current) {
         chartInstanceRef.current = new ApexCharts(
           chartRef.current,
@@ -199,6 +204,26 @@ const Dashboard = () => {
     november,
     december,
     searchParams.get("year"),
+  ]);
+
+  useEffect(() => {
+    const month = searchParams.get("month");
+    const year = searchParams.get("year");
+
+    if (month?.includes("undefined") || month?.includes("NaN")) {
+      const { month, ...rest } = queryParams;
+      setSearchParams({ ...rest });
+    }
+    if (year?.includes("undefined")) {
+      const { year, ...rest } = queryParams;
+      setSearchParams({ ...rest });
+      return;
+    }
+  }, [
+    JSON.stringify({
+      month: searchParams.get("month"),
+      year: searchParams.get("year"),
+    }),
   ]);
 
   return (
@@ -372,12 +397,14 @@ const Dashboard = () => {
         <TransactionDay
           Transaction={dataTransactionDay?.data}
           isLoading={isLoadingDay}
+          meta={dataTransactionDay?.meta as MetaResponse}
         />
       </TableAdminLayout>
       <TableAdminLayout title="Transaction Week">
         <TransactionWeek
           Transaction={dataTransactionWeek?.data}
           isLoading={isLoadingWeek}
+          meta={dataTransactionWeek?.meta as MetaResponse}
         />
       </TableAdminLayout>
     </div>
