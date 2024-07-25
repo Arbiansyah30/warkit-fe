@@ -30,7 +30,10 @@ const Dashboard = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const queryParams = convertQueryParamsToObject(searchParams.toString());
   const [open, setOpen] = useState<boolean>(false);
-  const { data: Transaction, isLoading } = useTransaction();
+  const { data: Transaction, isLoading } = useTransaction({
+    page: 1,
+    perPage: 9999999,
+  });
   const {
     data: dataTransactionDay,
     isLoading: isLoadingDay,
