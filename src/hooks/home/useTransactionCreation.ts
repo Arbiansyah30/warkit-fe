@@ -30,6 +30,7 @@ interface Options {
   perPage?: number;
   transactionId?: string;
   search?: string;
+  status?: "PAID" | "UNPAID" | "CANCEL";
 }
 
 export function useTransaction(options?: Options) {
@@ -38,7 +39,7 @@ export function useTransaction(options?: Options) {
   const search = useDebounce(searchQuery || '', 500)
   const page = options?.page || searchParams.get("page") || 1;
   const perPage = options?.perPage || searchParams.get("perPage") || 10;
-  const status = options?.perPage?.toString().toUpperCase() || searchParams.get("status")?.toUpperCase() || undefined
+  const status = options?.status?.toString().toUpperCase() || searchParams.get("status")?.toUpperCase() || undefined
   const from = searchParams.get("from")?.includes('undefined') ? undefined : searchParams.get("from") || undefined;
   const to = searchParams.get("to") || undefined;
 
