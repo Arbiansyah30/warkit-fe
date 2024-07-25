@@ -1,7 +1,7 @@
 import { MetaResponse } from "@core/libs/api/types";
+import { useTransactionWeek } from "@hooks/home/useTransactionCreation";
 import { TransactionModel } from "@model/transaction";
-import { useSearchParams } from "react-router-dom";
-import { convertQueryParamsToObject } from "../../../libs/helper";
+import { useState } from "react";
 import EmptyData from "../../global/EmptyData";
 import Pagination from "../../global/Pagination";
 import { Table, TableHead } from "../../global/Table";
@@ -11,12 +11,14 @@ export const TransactionWeek: React.FC<{
   Transaction: TransactionModel[] | undefined;
   isLoading: boolean;
   meta: MetaResponse;
-}> = ({ Transaction, isLoading, meta }) => {
-  const [searchParams, setSearchParams] = useSearchParams();
-  const queryParams = convertQueryParamsToObject(searchParams.toString());
-
+}> = () => {
+  const [page, setPage] = useState<number>(1);
+  const {
+    data: dataTransactionWeek,
+    isLoading: isLoading,
+  } = useTransactionWeek(page);
   const handleChangePage = (page: number) => {
-    setSearchParams({ ...queryParams, page: String(page) });
+    setPage(page);
   };
   return (
     <>
@@ -50,7 +52,7 @@ export const TransactionWeek: React.FC<{
                   </td>
                 </tr>
               </tbody>
-            ) : !Transaction?.length ? (
+            ) : !dataTransactionWeek?.data?.length ? (
               <tbody>
                 <tr>
                   <td colSpan={7}>
@@ -59,14 +61,14 @@ export const TransactionWeek: React.FC<{
                 </tr>
               </tbody>
             ) : (
-              Transaction?.map((item, index) => (
+              dataTransactionWeek.data?.map((item, index) => (
                 <TableItem key={index} {...item} />
               ))
             )}
           </Table>
           <Pagination
-            currentPage={meta?.page as number}
-            totalPages={meta?.totalPages as number}
+            currentPage={dataTransactionWeek?.meta?.page as number}
+            totalPages={dataTransactionWeek?.meta?.totalPages as number}
             onPageChange={handleChangePage}
           />
         </div>

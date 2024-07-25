@@ -1,7 +1,7 @@
 import { MetaResponse } from "@core/libs/api/types";
+import { useTransactionToday } from "@hooks/home/useTransactionCreation";
 import { TransactionModel } from "@model/transaction";
-import { useSearchParams } from "react-router-dom";
-import { convertQueryParamsToObject } from "../../../libs/helper";
+import { useState } from "react";
 import EmptyData from "../../global/EmptyData";
 import Pagination from "../../global/Pagination";
 import { Table, TableHead } from "../../global/Table";
@@ -11,12 +11,15 @@ export const TransactionDay: React.FC<{
   Transaction: TransactionModel[] | undefined;
   isLoading: boolean;
   meta: MetaResponse;
-}> = ({ Transaction, isLoading, meta }) => {
-  const [searchParams, setSearchParams] = useSearchParams();
-  const queryParams = convertQueryParamsToObject(searchParams.toString());
+}> = () => {
+  const [page, setPage] = useState<number>(1);
+  const {
+    data: dataTransactionDay,
+    isLoading: isLoading,
+  } = useTransactionToday(page);
 
   const handleChangePage = (page: number) => {
-    setSearchParams({ ...queryParams, page: String(page) });
+    setPage(page);
   };
 
   return (
@@ -51,7 +54,7 @@ export const TransactionDay: React.FC<{
                   </td>
                 </tr>
               </tbody>
-            ) : !Transaction?.length ? (
+            ) : !dataTransactionDay?.data?.length ? (
               <tbody>
                 <tr>
                   <td colSpan={7}>
@@ -60,14 +63,14 @@ export const TransactionDay: React.FC<{
                 </tr>
               </tbody>
             ) : (
-              Transaction?.map((item, index) => (
+              dataTransactionDay.data?.map((item, index) => (
                 <TableItem key={index} {...item} />
               ))
             )}
           </Table>
           <Pagination
-            currentPage={meta?.page as number}
-            totalPages={meta?.totalPages as number}
+            currentPage={dataTransactionDay?.meta?.page as number}
+            totalPages={dataTransactionDay?.meta?.totalPages as number}
             onPageChange={handleChangePage}
           />
         </div>

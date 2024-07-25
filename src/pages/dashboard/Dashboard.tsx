@@ -20,11 +20,11 @@ import { convertQueryParamsToObject, formatRupiah } from "../../libs/helper";
 import chartOption from "../../libs/helper/Chart";
 
 interface IncomeNew {
-  createdAt: string
-  id: string
-  nominal: number
-  transactionId: string
-  updatedAt: string
+  createdAt: string;
+  id: string;
+  nominal: number;
+  transactionId: string;
+  updatedAt: string;
 }
 
 const Dashboard = () => {
@@ -73,10 +73,6 @@ const Dashboard = () => {
   const calculateTotalAmount = (
     transactions: TransactionModel[] | undefined
   ) => {
-    console.log(
-      searchParams.get("year") !== new Date().getFullYear().toString() &&
-        typeof searchParams.get("year") === "string"
-    );
     if (
       searchParams.get("year") !== new Date().getFullYear().toString() &&
       typeof searchParams.get("year") === "string"
@@ -90,9 +86,7 @@ const Dashboard = () => {
       ) || 0
     );
   };
-  const calculateTotalAmountnew = (
-    transactions: IncomeNew[] | undefined
-  ) => {
+  const calculateTotalAmountnew = (transactions: IncomeNew[] | undefined) => {
     if (
       searchParams.get("year") !== new Date().getFullYear().toString() &&
       searchParams.get("year")
@@ -207,7 +201,7 @@ const Dashboard = () => {
         chartInstanceRef.current.render();
       }
     }
-    console.log(july)
+    console.log(july);
     return () => {
       if (chartInstanceRef.current) {
         chartInstanceRef.current.destroy();
@@ -314,34 +308,34 @@ const Dashboard = () => {
           </div>
           {(searchParams.get("filter") === "date" ||
             !searchParams.get("filter")) && (
-              <div className="flex flex-col gap-2">
-                <h2 className="font-medium text-base text-white">
-                  Total Transaction By Date
-                </h2>
-                <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6">
-                  <div className="rounded-md bg-gray-900 px-7 py-6">
-                    <div className="text-center">
-                      <h4 className="text-title-md font-bold text-white">
-                        Transaction Today
-                      </h4>
-                      <span className="text-sm font-medium text-white">
-                        {formatRupiah(totalTransactionDayAmount)}
-                      </span>
-                    </div>
+            <div className="flex flex-col gap-2">
+              <h2 className="font-medium text-base text-white">
+                Total Transaction By Date
+              </h2>
+              <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6">
+                <div className="rounded-md bg-gray-900 px-7 py-6">
+                  <div className="text-center">
+                    <h4 className="text-title-md font-bold text-white">
+                      Transaction Today
+                    </h4>
+                    <span className="text-sm font-medium text-white">
+                      {formatRupiah(totalTransactionDayAmount)}
+                    </span>
                   </div>
-                  <div className="rounded-md bg-gray-900 px-7 py-6">
-                    <div className="text-center">
-                      <h4 className="text-title-md font-bold text-white">
-                        Transaction Week
-                      </h4>
-                      <span className="text-sm font-medium text-white">
-                        {formatRupiah(totalTransactionWeekAmount)}
-                      </span>
-                    </div>
+                </div>
+                <div className="rounded-md bg-gray-900 px-7 py-6">
+                  <div className="text-center">
+                    <h4 className="text-title-md font-bold text-white">
+                      Transaction Week
+                    </h4>
+                    <span className="text-sm font-medium text-white">
+                      {formatRupiah(totalTransactionWeekAmount)}
+                    </span>
                   </div>
                 </div>
               </div>
-            )}
+            </div>
+          )}
           {searchParams.get("filter") === "payment" && (
             <div className="flex flex-col gap-2">
               <h2 className="font-medium text-base text-white">
