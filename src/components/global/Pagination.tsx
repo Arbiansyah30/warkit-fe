@@ -33,7 +33,7 @@ const Pagination: React.FC<IPaginationProps> = ({
         className={
           currentPage === 1
             ? "border border-solid bg-blue-400 border-blue-400 w-8 h-8 rounded-md"
-            : "border border-solid border-blue-400 w-8 h-8 rounded-md"
+            : "border border-solid border-blue-400 w-8 h-8 rounded-md text-white"
         }
       >
         1
@@ -52,7 +52,7 @@ const Pagination: React.FC<IPaginationProps> = ({
           className={
             i === currentPage
               ? "border border-solid bg-blue-400 border-blue-400 w-8 h-8 rounded-md"
-              : "border border-solid border-blue-400 w-8 h-8 rounded-md"
+              : "border border-solid border-blue-400 w-8 h-8 rounded-md text-white"
           }
         >
           {i}
@@ -72,7 +72,7 @@ const Pagination: React.FC<IPaginationProps> = ({
           className={
             currentPage === totalPages
               ? "border border-solid bg-blue-400 border-blue-400 w-8 h-8 rounded-md"
-              : "border border-solid border-blue-400 w-8 h-8 rounded-md"
+              : "border border-solid border-blue-400 w-8 h-8 rounded-md text-white"
           }
         >
           {totalPages}

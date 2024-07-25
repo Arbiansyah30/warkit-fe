@@ -132,16 +132,16 @@ export function usePrintPayment() {
   return mutation;
 }
 
-export function useTransactionToday(page?: number) {
+export function useTransactionToday(page?: number, perPage?: number) {
   return useQuery({
-    queryKey: ["TransactionToday", page],
-    queryFn: () => transactionService.today({ queryParams: { page: page ? Number(page) : undefined } }),
+    queryKey: ["TransactionToday", { page, perPage }],
+    queryFn: () => transactionService.today({ queryParams: { page: page ? Number(page) : undefined, perPage: perPage ? Number(perPage) : undefined } }),
   });
 }
-export function useTransactionWeek(page?: number) {
+export function useTransactionWeek(page?: number, perPage?: number) {
   return useQuery({
-    queryKey: ["TransactionWeek", page],
-    queryFn: () => transactionService.week({ queryParams: { page: page ? Number(page) : undefined } }),
+    queryKey: ["TransactionWeek", { page, perPage }],
+    queryFn: () => transactionService.week({ queryParams: { page: page ? Number(page) : undefined, perPage: perPage ? Number(perPage) : undefined } }),
   });
 }
 

@@ -1,4 +1,3 @@
-import { MetaResponse } from "@core/libs/api/types";
 import {
   useTransaction,
   useTransactionMonth,
@@ -35,11 +34,12 @@ const Dashboard = () => {
   const {
     data: dataTransactionDay,
     isLoading: isLoadingDay,
-  } = useTransactionToday();
+  } = useTransactionToday(1, 99999);
   const {
     data: dataTransactionWeek,
     isLoading: isLoadingWeek,
-  } = useTransactionWeek();
+  } = useTransactionWeek(1, 199999999);
+
   const { data: january, isLoading: isLoadingJan } = useTransactionMonth("1");
   const { data: february, isLoading: isLoadingFeb } = useTransactionMonth("2");
   const { data: march, isLoading: isLoadingMar } = useTransactionMonth("3");
@@ -179,7 +179,6 @@ const Dashboard = () => {
       if (chartInstanceRef.current) {
         chartInstanceRef.current.destroy();
       }
-      console.log({ jul });
       if (chartRef.current) {
         chartInstanceRef.current = new ApexCharts(
           chartRef.current,
@@ -318,9 +317,15 @@ const Dashboard = () => {
                     <h4 className="text-title-md font-bold text-white">
                       Transaction Today
                     </h4>
-                    <span className="text-sm font-medium text-white">
-                      {formatRupiah(totalTransactionDayAmount)}
-                    </span>
+                    {isLoadingDay ? (
+                      <div className="text-title-md font-bold text-white">
+                        Loading...
+                      </div>
+                    ) : (
+                      <span className="text-sm font-medium text-white">
+                        {formatRupiah(totalTransactionDayAmount)}
+                      </span>
+                    )}
                   </div>
                 </div>
                 <div className="rounded-md bg-gray-900 px-7 py-6">
@@ -328,9 +333,15 @@ const Dashboard = () => {
                     <h4 className="text-title-md font-bold text-white">
                       Transaction Week
                     </h4>
-                    <span className="text-sm font-medium text-white">
-                      {formatRupiah(totalTransactionWeekAmount)}
-                    </span>
+                    {isLoadingWeek ? (
+                      <div className="text-title-md font-bold text-white">
+                        Loading...
+                      </div>
+                    ) : (
+                      <span className="text-sm font-medium text-white">
+                        {formatRupiah(totalTransactionWeekAmount)}
+                      </span>
+                    )}
                   </div>
                 </div>
               </div>
@@ -412,18 +423,10 @@ const Dashboard = () => {
       </div>
 
       <TableAdminLayout title="Transaction Today">
-        <TransactionDay
-          Transaction={dataTransactionDay?.data}
-          isLoading={isLoadingDay}
-          meta={dataTransactionDay?.meta as MetaResponse}
-        />
+        <TransactionDay />
       </TableAdminLayout>
       <TableAdminLayout title="Transaction Week">
-        <TransactionWeek
-          Transaction={dataTransactionWeek?.data}
-          isLoading={isLoadingWeek}
-          meta={dataTransactionWeek?.meta as MetaResponse}
-        />
+        <TransactionWeek />
       </TableAdminLayout>
     </div>
   );

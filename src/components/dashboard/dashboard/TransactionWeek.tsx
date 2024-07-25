@@ -1,17 +1,11 @@
-import { MetaResponse } from "@core/libs/api/types";
 import { useTransactionWeek } from "@hooks/home/useTransactionCreation";
-import { TransactionModel } from "@model/transaction";
 import { useState } from "react";
 import EmptyData from "../../global/EmptyData";
 import Pagination from "../../global/Pagination";
 import { Table, TableHead } from "../../global/Table";
 import { TableItem } from "./Table/TableItem";
 
-export const TransactionWeek: React.FC<{
-  Transaction: TransactionModel[] | undefined;
-  isLoading: boolean;
-  meta: MetaResponse;
-}> = () => {
+export const TransactionWeek = () => {
   const [page, setPage] = useState<number>(1);
   const {
     data: dataTransactionWeek,
