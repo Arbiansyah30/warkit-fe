@@ -9,7 +9,7 @@ import CardProduct from "./CardProduct";
 import FilterProduct from "./FilterProduct";
 
 const ListProduct = () => {
-  const { data: products } = useProduct();
+  const { data: products } = useProduct({ perPage: 99999999999999, page: 1 });
   const { isTablet } = useResponsive();
   const [searchParams, setSearchParams] = useSearchParams();
   const queryParams = convertQueryParamsToObject(searchParams.toString());
